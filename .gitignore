@@ -176,7 +176,7 @@ cleanup.bat
 cleanup.sh
 decompile.bat
 decompile.sh
-getchangedsrc.ba
+getchangedsrc.bat
 getchangedsrc.sh
 recompile.bat
 recompile.sh
