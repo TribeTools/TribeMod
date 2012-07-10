@@ -9,7 +9,7 @@ public class EntitySnowman extends EntityGolem
         super(par1World);
         texture = "/mob/snowman.png";
         setSize(0.4F, 1.8F);
-        getNavigator().func_48664_a(true);
+        getNavigator().setAvoidsWater(true);
         tasks.addTask(1, new EntityAIArrowAttack(this, 0.25F, 2, 20));
         tasks.addTask(2, new EntityAIWander(this, 0.2F));
         tasks.addTask(3, new EntityAIWatchClosest(this, net.minecraft.src.EntityPlayer.class, 6F));

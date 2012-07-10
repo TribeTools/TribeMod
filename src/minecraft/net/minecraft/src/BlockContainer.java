@@ -37,14 +37,18 @@ public abstract class BlockContainer extends Block
      */
     public abstract TileEntity getBlockEntity();
 
-    public void powerBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    /**
+     * Called when the block receives a client event - see World.sendClientEvent. By default, passes it on to the tile
+     * entity at this location. Args: world, x, y, z, event number, parameter
+     */
+    public void receiveClientEvent(World par1World, int par2, int par3, int par4, int par5, int par6)
     {
-        super.powerBlock(par1World, par2, par3, par4, par5, par6);
+        super.receiveClientEvent(par1World, par2, par3, par4, par5, par6);
         TileEntity tileentity = par1World.getBlockTileEntity(par2, par3, par4);
 
         if (tileentity != null)
         {
-            tileentity.onTileEntityPowered(par5, par6);
+            tileentity.receiveClientEvent(par5, par6);
         }
     }
 }

@@ -105,7 +105,7 @@ public class StructureVillagePieces
     }
 
     /**
-     * 'attempts to find a next Village Component to be spawned'
+     * attempts to find a next Village Component to be spawned
      */
     private static ComponentVillage getNextVillageComponent(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
     {
@@ -169,7 +169,7 @@ public class StructureVillagePieces
     }
 
     /**
-     * 'attempts to find a next Structure Component to be spawned, private Village function'
+     * attempts to find a next Structure Component to be spawned, private Village function
      */
     private static StructureComponent getNextVillageStructureComponent(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
     {
@@ -239,7 +239,7 @@ public class StructureVillagePieces
     }
 
     /**
-     * 'attempts to find a next Structure Component to be spawned'
+     * attempts to find a next Structure Component to be spawned
      */
     static StructureComponent getNextStructureComponent(ComponentVillageStartPiece par0ComponentVillageStartPiece, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
     {

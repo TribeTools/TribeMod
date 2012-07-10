@@ -155,7 +155,7 @@ public class GuiAchievements extends GuiScreen
         genAchievementBackground(par1, par2, par3);
         GL11.glDisable(GL11.GL_LIGHTING);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
-        func_27110_k();
+        drawTitle();
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_DEPTH_TEST);
     }
@@ -182,7 +182,10 @@ public class GuiAchievements extends GuiScreen
         }
     }
 
-    protected void func_27110_k()
+    /**
+     * Draws the "Achievements" title at the top of the GUI.
+     */
+    protected void drawTitle()
     {
         int i = (width - achievementsPaneWidth) / 2;
         int j = (height - achievementsPaneHeight) / 2;

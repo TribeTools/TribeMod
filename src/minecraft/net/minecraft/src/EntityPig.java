@@ -7,7 +7,7 @@ public class EntityPig extends EntityAnimal
         super(par1World);
         texture = "/mob/pig.png";
         setSize(0.9F, 0.9F);
-        getNavigator().func_48664_a(true);
+        getNavigator().setAvoidsWater(true);
         float f = 0.25F;
         tasks.addTask(0, new EntityAISwimming(this));
         tasks.addTask(1, new EntityAIPanic(this, 0.38F));

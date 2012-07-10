@@ -47,7 +47,10 @@ public class WorldProviderHell extends WorldProvider
         return new ChunkProviderHell(worldObj, worldObj.getSeed());
     }
 
-    public boolean func_48217_e()
+    /**
+     * Returns 'true' if in the "main surface world", but 'false' if in the Nether or End dimensions.
+     */
+    public boolean isSurfaceWorld()
     {
         return false;
     }

@@ -6,7 +6,7 @@ public class EntityAINearestAttackableTarget extends EntityAITarget
 {
     EntityLiving targetEntity;
     Class targetClass;
-    int field_48386_f;
+    int targetChance;
     private EntityAINearestAttackableTargetSorter field_48387_g;
 
     public EntityAINearestAttackableTarget(EntityLiving par1EntityLiving, Class par2Class, float par3, int par4, boolean par5)
@@ -18,8 +18,8 @@ public class EntityAINearestAttackableTarget extends EntityAITarget
     {
         super(par1EntityLiving, par3, par5, par6);
         targetClass = par2Class;
-        field_48379_d = par3;
-        field_48386_f = par4;
+        targetDistance = par3;
+        targetChance = par4;
         field_48387_g = new EntityAINearestAttackableTargetSorter(this, par1EntityLiving);
         setMutexBits(1);
     }
@@ -31,14 +31,14 @@ public class EntityAINearestAttackableTarget extends EntityAITarget
     {
         label0:
         {
-            if (field_48386_f > 0 && taskOwner.getRNG().nextInt(field_48386_f) != 0)
+            if (targetChance > 0 && taskOwner.getRNG().nextInt(targetChance) != 0)
             {
                 return false;
             }
 
             if (targetClass == (net.minecraft.src.EntityPlayer.class))
             {
-                EntityPlayer entityplayer = taskOwner.worldObj.getClosestVulnerablePlayerToEntity(taskOwner, field_48379_d);
+                EntityPlayer entityplayer = taskOwner.worldObj.getClosestVulnerablePlayerToEntity(taskOwner, targetDistance);
 
                 if (func_48376_a(entityplayer, false))
                 {
@@ -49,7 +49,7 @@ public class EntityAINearestAttackableTarget extends EntityAITarget
                 break label0;
             }
 
-            List list = taskOwner.worldObj.getEntitiesWithinAABB(targetClass, taskOwner.boundingBox.expand(field_48379_d, 4D, field_48379_d));
+            List list = taskOwner.worldObj.getEntitiesWithinAABB(targetClass, taskOwner.boundingBox.expand(targetDistance, 4D, targetDistance));
             Collections.sort(list, field_48387_g);
             Iterator iterator = list.iterator();
             EntityLiving entityliving;

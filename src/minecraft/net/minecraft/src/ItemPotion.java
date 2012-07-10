@@ -159,7 +159,7 @@ public class ItemPotion extends Item
         }
     }
 
-    public boolean func_46058_c()
+    public boolean requiresMultipleRenderPasses()
     {
         return true;
     }

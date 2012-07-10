@@ -35,10 +35,10 @@ public abstract class TileEntitySpecialRenderer
     }
 
     /**
-     * Called from TileEntityRenderer.cacheSpecialRenderInfo() to cache render-related references (currently world
-     * only). Used by TileEntityRendererPiston to create and store a RenderBlocks instance in the blockRenderer field.
+     * Called when the ingame world being rendered changes (e.g. on world -> nether travel) due to using one renderer
+     * per tile entity type, rather than instance
      */
-    public void cacheSpecialRenderInfo(World world)
+    public void onWorldChange(World world)
     {
     }
 

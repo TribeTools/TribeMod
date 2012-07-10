@@ -519,7 +519,7 @@ public class ChunkProviderGenerate implements IChunkProvider
             {
                 int l3 = worldObj.getPrecipitationHeight(i + k1, j + l2);
 
-                if (worldObj.isBlockHydratedDirectly(k1 + i, l3 - 1, l2 + j))
+                if (worldObj.isBlockFreezable(k1 + i, l3 - 1, l2 + j))
                 {
                     worldObj.setBlockWithNotify(k1 + i, l3 - 1, l2 + j, Block.ice.blockID);
                 }

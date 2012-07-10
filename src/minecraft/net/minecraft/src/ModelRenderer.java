@@ -88,7 +88,7 @@ public class ModelRenderer
     {
         par1Str = (new StringBuilder()).append(boxName).append(".").append(par1Str).toString();
         TextureOffset textureoffset = baseModel.getTextureOffset(par1Str);
-        setTextureOffset(textureoffset.field_40734_a, textureoffset.field_40733_b);
+        setTextureOffset(textureoffset.textureOffsetX, textureoffset.textureOffsetY);
         cubeList.add((new ModelBox(this, textureOffsetX, textureOffsetY, par2, par3, par4, par5, par6, par7, 0.0F)).func_40671_a(par1Str));
         return this;
     }

@@ -36,7 +36,7 @@ public class EntityPainting extends Entity
         {
             EnumArt enumart = aenumart[j];
             art = enumart;
-            func_412_b(par5);
+            setDirection(par5);
 
             if (onValidSurface())
             {
@@ -49,7 +49,7 @@ public class EntityPainting extends Entity
             art = (EnumArt)arraylist.get(rand.nextInt(arraylist.size()));
         }
 
-        func_412_b(par5);
+        setDirection(par5);
     }
 
     public EntityPainting(World par1World, int par2, int par3, int par4, int par5, String par6Str)
@@ -81,14 +81,17 @@ public class EntityPainting extends Entity
         }
         while (true);
 
-        func_412_b(par5);
+        setDirection(par5);
     }
 
     protected void entityInit()
     {
     }
 
-    public void func_412_b(int par1)
+    /**
+     * Sets the direction the painting faces.
+     */
+    public void setDirection(int par1)
     {
         direction = par1;
         prevRotationYaw = rotationYaw = par1 * 90;
@@ -322,7 +325,7 @@ public class EntityPainting extends Entity
             art = EnumArt.Kebab;
         }
 
-        func_412_b(direction);
+        setDirection(direction);
     }
 
     /**

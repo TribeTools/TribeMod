@@ -15,7 +15,7 @@ public class EntityOcelot extends EntityTameable
         super(par1World);
         texture = "/mob/ozelot.png";
         setSize(0.6F, 0.8F);
-        getNavigator().func_48664_a(true);
+        getNavigator().setAvoidsWater(true);
         tasks.addTask(1, new EntityAISwimming(this));
         tasks.addTask(2, aiSit);
         tasks.addTask(3, aiTempt = new EntityAITempt(this, 0.18F, Item.fishRaw.shiftedIndex, true));
@@ -81,7 +81,7 @@ public class EntityOcelot extends EntityTameable
      */
     public String getTexture()
     {
-        switch (func_48148_ad())
+        switch (getTameSkin())
         {
             case 0:
                 return "/mob/ozelot.png";
@@ -125,7 +125,7 @@ public class EntityOcelot extends EntityTameable
     public void writeEntityToNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.writeEntityToNBT(par1NBTTagCompound);
-        par1NBTTagCompound.setInteger("CatType", func_48148_ad());
+        par1NBTTagCompound.setInteger("CatType", getTameSkin());
     }
 
     /**
@@ -134,7 +134,7 @@ public class EntityOcelot extends EntityTameable
     public void readEntityFromNBT(NBTTagCompound par1NBTTagCompound)
     {
         super.readEntityFromNBT(par1NBTTagCompound);
-        func_48147_c(par1NBTTagCompound.getInteger("CatType"));
+        setTameSkin(par1NBTTagCompound.getInteger("CatType"));
     }
 
     /**
@@ -206,7 +206,7 @@ public class EntityOcelot extends EntityTameable
      */
     public boolean attackEntityFrom(DamageSource par1DamageSource, int par2)
     {
-        aiSit.func_48407_a(false);
+        aiSit.setIsSitting(false);
         return super.attackEntityFrom(par1DamageSource, par2);
     }
 
@@ -240,15 +240,15 @@ public class EntityOcelot extends EntityTameable
                     if (rand.nextInt(3) == 0)
                     {
                         setTamed(true);
-                        func_48147_c(1 + worldObj.rand.nextInt(3));
+                        setTameSkin(1 + worldObj.rand.nextInt(3));
                         setOwner(par1EntityPlayer.username);
-                        func_48142_a(true);
-                        aiSit.func_48407_a(true);
+                        playTameEffect(true);
+                        aiSit.setIsSitting(true);
                         worldObj.setEntityState(this, (byte)7);
                     }
                     else
                     {
-                        func_48142_a(false);
+                        playTameEffect(false);
                         worldObj.setEntityState(this, (byte)6);
                     }
                 }
@@ -259,7 +259,7 @@ public class EntityOcelot extends EntityTameable
 
         if (par1EntityPlayer.username.equalsIgnoreCase(getOwnerName()) && !worldObj.isRemote && !isWheat(itemstack))
         {
-            aiSit.func_48407_a(!isSitting());
+            aiSit.setIsSitting(!isSitting());
         }
 
         return super.interact(par1EntityPlayer);
@@ -276,7 +276,7 @@ public class EntityOcelot extends EntityTameable
         {
             entityocelot.setOwner(getOwnerName());
             entityocelot.setTamed(true);
-            entityocelot.func_48147_c(func_48148_ad());
+            entityocelot.setTameSkin(getTameSkin());
         }
 
         return entityocelot;
@@ -290,7 +290,10 @@ public class EntityOcelot extends EntityTameable
         return par1ItemStack != null && par1ItemStack.itemID == Item.fishRaw.shiftedIndex;
     }
 
-    public boolean func_48135_b(EntityAnimal par1EntityAnimal)
+    /**
+     * Returns true if the mob is currently able to mate with the specified mob.
+     */
+    public boolean canMateWith(EntityAnimal par1EntityAnimal)
     {
         if (par1EntityAnimal == this)
         {
@@ -319,12 +322,12 @@ public class EntityOcelot extends EntityTameable
         }
     }
 
-    public int func_48148_ad()
+    public int getTameSkin()
     {
         return dataWatcher.getWatchableObjectByte(18);
     }
 
-    public void func_48147_c(int par1)
+    public void setTameSkin(int par1)
     {
         dataWatcher.updateObject(18, Byte.valueOf((byte)par1));
     }

@@ -124,7 +124,7 @@ public class ContainerFurnace extends Container
                     return null;
                 }
             }
-            else if (TileEntityFurnace.func_52005_b(itemstack1))
+            else if (TileEntityFurnace.isItemFuel(itemstack1))
             {
                 if (!mergeItemStack(itemstack1, 1, 2, false))
                 {

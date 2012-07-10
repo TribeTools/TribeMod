@@ -52,7 +52,7 @@ public class ItemBow extends Item
 
             if (k > 0)
             {
-                entityarrow.func_46023_b(k);
+                entityarrow.setKnockbackStrength(k);
             }
 
             if (EnchantmentHelper.getEnchantmentLevel(Enchantment.flame.effectId, par1ItemStack) > 0)

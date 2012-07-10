@@ -106,7 +106,7 @@ public class GuiWinGame extends GuiScreen
                     s3 = s.substring(i + s1.length());
                 }
 
-                lines.addAll(mc.fontRenderer.func_50108_c(s, c));
+                lines.addAll(mc.fontRenderer.listFormattedStringToWidth(s, c));
                 lines.add("");
             }
 
@@ -121,7 +121,7 @@ public class GuiWinGame extends GuiScreen
             {
                 s = s.replaceAll("PLAYERNAME", mc.session.username);
                 s = s.replaceAll("\t", "    ");
-                lines.addAll(mc.fontRenderer.func_50108_c(s, c));
+                lines.addAll(mc.fontRenderer.listFormattedStringToWidth(s, c));
                 lines.add("");
             }
 
@@ -217,9 +217,9 @@ public class GuiWinGame extends GuiScreen
                 else
                 {
                     fontRenderer.fontRandom.setSeed((long)l * 0xfca99533L + (long)(updateCounter / 4));
-                    fontRenderer.func_50101_a(s, i + 1, k + 1, 0xffffff, true);
+                    fontRenderer.renderString(s, i + 1, k + 1, 0xffffff, true);
                     fontRenderer.fontRandom.setSeed((long)l * 0xfca99533L + (long)(updateCounter / 4));
-                    fontRenderer.func_50101_a(s, i, k, 0xffffff, false);
+                    fontRenderer.renderString(s, i, k, 0xffffff, false);
                 }
             }
 

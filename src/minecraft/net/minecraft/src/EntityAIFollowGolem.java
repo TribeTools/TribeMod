@@ -99,7 +99,7 @@ public class EntityAIFollowGolem extends EntityAIBase
 
         if (theGolem.func_48117_D_() == field_48402_c)
         {
-            theVillager.getNavigator().func_48667_a(theGolem, 0.15F);
+            theVillager.getNavigator().tryMoveToEntityLiving(theGolem, 0.15F);
             field_48400_d = true;
         }
 

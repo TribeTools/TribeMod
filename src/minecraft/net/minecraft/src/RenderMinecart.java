@@ -61,7 +61,7 @@ public class RenderMinecart extends Render
         GL11.glRotatef(180F - par8, 0.0F, 1.0F, 0.0F);
         GL11.glRotatef(-f3, 0.0F, 0.0F, 1.0F);
         float f4 = (float)par1EntityMinecart.func_41023_l() - par9;
-        float f5 = (float)par1EntityMinecart.func_41025_i() - par9;
+        float f5 = (float)par1EntityMinecart.getDamage() - par9;
 
         if (f5 < 0.0F)
         {

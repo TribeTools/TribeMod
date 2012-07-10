@@ -186,7 +186,7 @@ public class EntityPlayerSP extends EntityPlayer
         boolean flag = movementInput.jump;
         float f = 0.8F;
         boolean flag1 = movementInput.moveForward >= f;
-        movementInput.func_52013_a();
+        movementInput.updatePlayerMoveState();
 
         if (isUsingItem())
         {
@@ -400,7 +400,7 @@ public class EntityPlayerSP extends EntityPlayer
     }
 
     /**
-     * is called when the player performs a critical hit on the Entity. Args: entity that was hit critically
+     * Called when the player performs a critical hit on the Entity. Args: entity that was hit critically
      */
     public void onCriticalHit(Entity par1Entity)
     {
@@ -454,7 +454,7 @@ public class EntityPlayerSP extends EntityPlayer
         }
         else
         {
-            naturalArmorRating = i;
+            lastDamage = i;
             setEntityHealth(getHealth());
             heartsLife = heartsHalvesLife;
             damageEntity(DamageSource.generic, i);

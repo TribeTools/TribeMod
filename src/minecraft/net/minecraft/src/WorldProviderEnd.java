@@ -80,7 +80,10 @@ public class WorldProviderEnd extends WorldProvider
         return false;
     }
 
-    public boolean func_48217_e()
+    /**
+     * Returns 'true' if in the "main surface world", but 'false' if in the Nether or End dimensions.
+     */
+    public boolean isSurfaceWorld()
     {
         return false;
     }

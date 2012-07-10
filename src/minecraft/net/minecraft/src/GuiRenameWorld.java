@@ -38,7 +38,7 @@ public class GuiRenameWorld extends GuiScreen
         WorldInfo worldinfo = isaveformat.getWorldInfo(worldName);
         String s = worldinfo.getWorldName();
         theGuiTextField = new GuiTextField(fontRenderer, width / 2 - 100, 60, 200, 20);
-        theGuiTextField.func_50033_b(true);
+        theGuiTextField.setFocused(true);
         theGuiTextField.setText(s);
     }
 
@@ -77,7 +77,7 @@ public class GuiRenameWorld extends GuiScreen
      */
     protected void keyTyped(char par1, int par2)
     {
-        theGuiTextField.func_50037_a(par1, par2);
+        theGuiTextField.textboxKeyTyped(par1, par2);
         ((GuiButton)controlList.get(0)).enabled = theGuiTextField.getText().trim().length() > 0;
 
         if (par1 == '\r')

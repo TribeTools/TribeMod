@@ -404,7 +404,7 @@ public class ItemRenderer
                 GL11.glRotatef(180F, 0.0F, 1.0F, 0.0F);
             }
 
-            if (itemstack.getItem().func_46058_c())
+            if (itemstack.getItem().requiresMultipleRenderPasses())
             {
                 renderItem(entityplayersp, itemstack, 0);
                 int i1 = Item.itemsList[itemstack.itemID].getColorFromDamage(itemstack.getItemDamage(), 1);

@@ -4,14 +4,14 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderEnchantmentTable extends TileEntitySpecialRenderer
 {
-    private ModelBook field_40450_a;
+    private ModelBook enchantmentBook;
 
     public RenderEnchantmentTable()
     {
-        field_40450_a = new ModelBook();
+        enchantmentBook = new ModelBook();
     }
 
-    public void func_40449_a(TileEntityEnchantmentTable par1TileEntityEnchantmentTable, double par2, double par4, double par6, float par8)
+    public void renderTileEntityEnchantmentTableAt(TileEntityEnchantmentTable par1TileEntityEnchantmentTable, double par2, double par4, double par6, float par8)
     {
         GL11.glPushMatrix();
         GL11.glTranslatef((float)par2 + 0.5F, (float)par4 + 0.75F, (float)par6 + 0.5F);
@@ -53,12 +53,12 @@ public class RenderEnchantmentTable extends TileEntitySpecialRenderer
         }
 
         float f5 = par1TileEntityEnchantmentTable.bookSpreadPrev + (par1TileEntityEnchantmentTable.bookSpread - par1TileEntityEnchantmentTable.bookSpreadPrev) * par8;
-        field_40450_a.render(null, f, f3, f4, f5, 0.0F, 0.0625F);
+        enchantmentBook.render(null, f, f3, f4, f5, 0.0F, 0.0625F);
         GL11.glPopMatrix();
     }
 
     public void renderTileEntityAt(TileEntity par1TileEntity, double par2, double par4, double par6, float par8)
     {
-        func_40449_a((TileEntityEnchantmentTable)par1TileEntity, par2, par4, par6, par8);
+        renderTileEntityEnchantmentTableAt((TileEntityEnchantmentTable)par1TileEntity, par2, par4, par6, par8);
     }
 }

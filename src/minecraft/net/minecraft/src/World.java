@@ -78,7 +78,7 @@ public class World implements IBlockAccess
     /** Option > Difficulty setting (0 - 3) */
     public int difficultySetting;
 
-    /** RNG for world. */
+    /** RNG for World. */
     public Random rand;
 
     /**
@@ -147,7 +147,7 @@ public class World implements IBlockAccess
 
             if (chunk != null)
             {
-                return chunk.func_48490_a(par1 & 0xf, par2 & 0xf, worldProvider.worldChunkMgr);
+                return chunk.getBiomeGenForWorldCoords(par1 & 0xf, par2 & 0xf, worldProvider.worldChunkMgr);
             }
         }
 
@@ -470,7 +470,7 @@ public class World implements IBlockAccess
     }
 
     /**
-     * Saves the data for this World.  If passed true, then only save up to 2 chunks, otherwise, save all chunks.
+     * Saves the data for this World. If passed true, then only save up to 2 chunks, otherwise, save all chunks.
      */
     public void saveWorld(boolean par1, IProgressUpdate par2IProgressUpdate)
     {
@@ -1201,7 +1201,7 @@ public class World implements IBlockAccess
     }
 
     /**
-     * 'Any Light rendered on a 1.8 Block goes through here'
+     * Any Light rendered on a 1.8 Block goes through here
      */
     public int getLightBrightnessForSkyBlocks(int par1, int par2, int par3, int par4)
     {
@@ -1462,7 +1462,8 @@ public class World implements IBlockAccess
     }
 
     /**
-     * Plays a sound at the entity's position. Args: entity, sound, unknown1, volume (relative to 1.0)
+     * Plays a sound at the entity's position. Args: entity, sound, volume (relative to 1.0), and frequency (or pitch,
+     * also relative to 1.0).
      */
     public void playSoundAtEntity(Entity par1Entity, String par2Str, float par3, float par4)
     {
@@ -1573,7 +1574,8 @@ public class World implements IBlockAccess
     }
 
     /**
-     * Not sure what this does 100%, but from the calling methods this method should be called like this.
+     * Dismounts the entity (and anything riding the entity), sets the dead flag, and removes the player entity from the
+     * player entity list. Called by the playerLoggedOut function.
      */
     public void setEntityDead(Entity par1Entity)
     {
@@ -3130,7 +3132,7 @@ public class World implements IBlockAccess
                 int k2 = j1 >> 8 & 0xf;
                 int j3 = getPrecipitationHeight(l1 + k, k2 + l);
 
-                if (isBlockHydratedIndirectly(l1 + k, j3 - 1, k2 + l))
+                if (isBlockFreezableNaturally(l1 + k, j3 - 1, k2 + l))
                 {
                     setBlockWithNotify(l1 + k, j3 - 1, k2 + l, Block.ice.blockID);
                 }
@@ -3176,25 +3178,26 @@ public class World implements IBlockAccess
     }
 
     /**
-     * Checks if the block is hydrating itself.
+     * checks to see if a given block is both water and is cold enough to freeze
      */
-    public boolean isBlockHydratedDirectly(int par1, int par2, int par3)
+    public boolean isBlockFreezable(int par1, int par2, int par3)
     {
-        return isBlockHydrated(par1, par2, par3, false);
+        return canBlockFreeze(par1, par2, par3, false);
     }
 
     /**
-     * Check if the block is being hydrated by an adjacent block.
+     * checks to see if a given block is both water and has at least one immediately adjacent non-water block
      */
-    public boolean isBlockHydratedIndirectly(int par1, int par2, int par3)
+    public boolean isBlockFreezableNaturally(int par1, int par2, int par3)
     {
-        return isBlockHydrated(par1, par2, par3, true);
+        return canBlockFreeze(par1, par2, par3, true);
     }
 
     /**
-     * (I think)
+     * checks to see if a given block is both water, and cold enough to freeze - if the par4 boolean is set, this will
+     * only return true if there is a non-water block immediately adjacent to the specified block
      */
-    public boolean isBlockHydrated(int par1, int par2, int par3, boolean par4)
+    public boolean canBlockFreeze(int par1, int par2, int par3, boolean par4)
     {
         BiomeGenBase biomegenbase = getBiomeGenForCoords(par1, par3);
         float f = biomegenbase.getFloatTemperature();
@@ -3701,7 +3704,7 @@ public class World implements IBlockAccess
             int l = (par3 + rand.nextInt(byte0)) - rand.nextInt(byte0);
             int i1 = getBlockId(j, k, l);
 
-            if (i1 == 0 && rand.nextInt(8) > k && worldProvider.getWorldHasNoSky())
+            if (i1 == 0 && rand.nextInt(8) > k && worldProvider.getWorldHasVoidParticles())
             {
                 spawnParticle("depthsuspend", (float)j + rand.nextFloat(), (float)k + rand.nextFloat(), (float)l + rand.nextFloat(), 0.0D, 0.0D, 0.0D);
                 continue;
@@ -3871,7 +3874,7 @@ public class World implements IBlockAccess
 
     /**
      * Returns true if the specified block can be placed at the given coordinates, optionally making sure there are no
-     * entities in the way.  Args: blockID, x, y, z, ignoreEntities
+     * entities in the way. Args: blockID, x, y, z, ignoreEntities
      */
     public boolean canBlockBePlacedAt(int par1, int par2, int par3, int par4, boolean par5, int par6)
     {
@@ -4076,7 +4079,11 @@ public class World implements IBlockAccess
         return entityplayer;
     }
 
-    public EntityPlayer func_48456_a(double par1, double par3, double par5)
+    /**
+     * Finds the nearest player horizontally to a point. Args: X, Z, max distance. Returns null if no player is found
+     * within the maximum distance.
+     */
+    public EntityPlayer getClosestPlayerHorizontal(double par1, double par3, double par5)
     {
         double d = -1D;
         EntityPlayer entityplayer = null;
@@ -4301,15 +4308,16 @@ public class World implements IBlockAccess
     }
 
     /**
-     * plays a given note at x, y, z. args: x, y, z, instrument, note
+     * Calls receiveClientEvent of the tile entity at the given location on the server and all nearby clients with the
+     * given event number and parameter. Args: X, Y, Z, event number, parameter
      */
-    public void playNoteAt(int par1, int par2, int par3, int par4, int par5)
+    public void sendClientEvent(int par1, int par2, int par3, int par4, int par5)
     {
         int i = getBlockId(par1, par2, par3);
 
         if (i > 0)
         {
-            Block.blocksList[i].powerBlock(this, par1, par2, par3, par4, par5);
+            Block.blocksList[i].receiveClientEvent(this, par1, par2, par3, par4, par5);
         }
     }
 
@@ -4585,9 +4593,9 @@ public class World implements IBlockAccess
     }
 
     /**
-     * Gets sea level for use in rendering the horizen.
+     * Returns horizon height for use in rendering the sky.
      */
-    public double getSeaLevel()
+    public double getHorizon()
     {
         return worldInfo.getTerrainType() != WorldType.FLAT ? 63D : 0.0D;
     }

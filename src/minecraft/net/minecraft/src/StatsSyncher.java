@@ -66,7 +66,7 @@ public class StatsSyncher
 
         if (unsentDataFile.exists())
         {
-            par2StatFileWriter.func_27179_a(func_27415_a(unsentDataFile, unsentTempFile, unsentOldFile));
+            par2StatFileWriter.writeStats(func_27415_a(unsentDataFile, unsentTempFile, unsentOldFile));
         }
 
         beginReceiveStats();

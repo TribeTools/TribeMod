@@ -5,8 +5,11 @@ import org.lwjgl.opengl.GL11;
 
 public class GuiButton extends Gui
 {
-    protected int field_52008_a;
-    protected int field_52007_b;
+    /** Button width in pixels */
+    protected int width;
+
+    /** Button height in pixels */
+    protected int height;
 
     /** The x position of this control. */
     public int xPosition;
@@ -33,15 +36,15 @@ public class GuiButton extends Gui
 
     public GuiButton(int par1, int par2, int par3, int par4, int par5, String par6Str)
     {
-        field_52008_a = 200;
-        field_52007_b = 20;
+        width = 200;
+        height = 20;
         enabled = true;
         drawButton = true;
         id = par1;
         xPosition = par2;
         yPosition = par3;
-        field_52008_a = par4;
-        field_52007_b = par5;
+        width = par4;
+        height = par5;
         displayString = par6Str;
     }
 
@@ -78,10 +81,10 @@ public class GuiButton extends Gui
         FontRenderer fontrenderer = par1Minecraft.fontRenderer;
         GL11.glBindTexture(GL11.GL_TEXTURE_2D, par1Minecraft.renderEngine.getTexture("/gui/gui.png"));
         GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
-        boolean flag = par2 >= xPosition && par3 >= yPosition && par2 < xPosition + field_52008_a && par3 < yPosition + field_52007_b;
+        boolean flag = par2 >= xPosition && par3 >= yPosition && par2 < xPosition + width && par3 < yPosition + height;
         int i = getHoverState(flag);
-        drawTexturedModalRect(xPosition, yPosition, 0, 46 + i * 20, field_52008_a / 2, field_52007_b);
-        drawTexturedModalRect(xPosition + field_52008_a / 2, yPosition, 200 - field_52008_a / 2, 46 + i * 20, field_52008_a / 2, field_52007_b);
+        drawTexturedModalRect(xPosition, yPosition, 0, 46 + i * 20, width / 2, height);
+        drawTexturedModalRect(xPosition + width / 2, yPosition, 200 - width / 2, 46 + i * 20, width / 2, height);
         mouseDragged(par1Minecraft, par2, par3);
         int j = 0xe0e0e0;
 
@@ -94,7 +97,7 @@ public class GuiButton extends Gui
             j = 0xffffa0;
         }
 
-        drawCenteredString(fontrenderer, displayString, xPosition + field_52008_a / 2, yPosition + (field_52007_b - 8) / 2, j);
+        drawCenteredString(fontrenderer, displayString, xPosition + width / 2, yPosition + (height - 8) / 2, j);
     }
 
     /**
@@ -117,6 +120,6 @@ public class GuiButton extends Gui
      */
     public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3)
     {
-        return enabled && drawButton && par2 >= xPosition && par3 >= yPosition && par2 < xPosition + field_52008_a && par3 < yPosition + field_52007_b;
+        return enabled && drawButton && par2 >= xPosition && par3 >= yPosition && par2 < xPosition + width && par3 < yPosition + height;
     }
 }

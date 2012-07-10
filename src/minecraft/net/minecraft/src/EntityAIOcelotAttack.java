@@ -81,7 +81,7 @@ public class EntityAIOcelotAttack extends EntityAIBase
             f = 0.18F;
         }
 
-        theEntity.getNavigator().func_48667_a(field_48362_c, f);
+        theEntity.getNavigator().tryMoveToEntityLiving(field_48362_c, f);
         field_48360_d = Math.max(field_48360_d - 1, 0);
 
         if (d1 > d)

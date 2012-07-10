@@ -45,7 +45,7 @@ public class ChunkLoader
             ai[i] = par0AnvilConverterData.heightmap[i];
         }
 
-        par1NBTTagCompound.func_48183_a("HeightMap", ai);
+        par1NBTTagCompound.setIntArray("HeightMap", ai);
         par1NBTTagCompound.setBoolean("TerrainPopulated", par0AnvilConverterData.terrainPopulated);
         NBTTagList nbttaglist = new NBTTagList("Sections");
 

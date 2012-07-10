@@ -149,7 +149,7 @@ public class WorldGenLakes extends WorldGenerator
                 {
                     byte byte0 = 4;
 
-                    if (par1World.isBlockHydratedDirectly(par3 + k1, par4 + byte0, par5 + l2))
+                    if (par1World.isBlockFreezable(par3 + k1, par4 + byte0, par5 + l2))
                     {
                         par1World.setBlock(par3 + k1, par4 + byte0, par5 + l2, Block.ice.blockID);
                     }

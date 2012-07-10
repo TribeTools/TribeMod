@@ -417,7 +417,7 @@ public class Block
     }
 
     /**
-     * 'Goes straight to getLightBrightnessForSkyBlocks for Blocks, does some fancy computing for Fluids'
+     * Goes straight to getLightBrightnessForSkyBlocks for Blocks, does some fancy computing for Fluids
      */
     public int getMixedBrightnessForBlock(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
@@ -1024,7 +1024,7 @@ public class Block
         par2EntityPlayer.addStat(StatList.mineBlockStatArray[blockID], 1);
         par2EntityPlayer.addExhaustion(0.025F);
 
-        if (func_50074_q() && EnchantmentHelper.getSilkTouchModifier(par2EntityPlayer.inventory))
+        if (canSilkHarvest() && EnchantmentHelper.getSilkTouchModifier(par2EntityPlayer.inventory))
         {
             ItemStack itemstack = createStackedBlock(par6);
 
@@ -1040,7 +1040,10 @@ public class Block
         }
     }
 
-    protected boolean func_50074_q()
+    /**
+     * Return true if a player with SlikTouch can harvest this block directly, and not it's normal drops.
+     */
+    protected boolean canSilkHarvest()
     {
         return renderAsNormalBlock() && !isBlockContainer;
     }
@@ -1107,7 +1110,11 @@ public class Block
         return blockName;
     }
 
-    public void powerBlock(World world, int i, int j, int k, int l, int i1)
+    /**
+     * Called when the block receives a client event - see World.sendClientEvent. By default, passes it on to the tile
+     * entity at this location. Args: world, x, y, z, event number, parameter
+     */
+    public void receiveClientEvent(World world, int i, int j, int k, int l, int i1)
     {
     }
 

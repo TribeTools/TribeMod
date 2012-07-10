@@ -40,7 +40,10 @@ public class BiomeGenJungle extends BiomeGenBase
         }
     }
 
-    public WorldGenerator func_48410_b(Random par1Random)
+    /**
+     * Gets a WorldGen appropriate for this biome.
+     */
+    public WorldGenerator getRandomWorldGenForGrass(Random par1Random)
     {
         if (par1Random.nextInt(4) == 0)
         {

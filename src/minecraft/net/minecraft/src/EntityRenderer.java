@@ -1797,7 +1797,7 @@ public class EntityRenderer
         {
             float f4 = farPlaneDistance;
 
-            if (mc.theWorld.worldProvider.getWorldHasNoSky() && !flag)
+            if (mc.theWorld.worldProvider.getWorldHasVoidParticles() && !flag)
             {
                 double d = (double)((entityliving.getBrightnessForRender(par2) & 0xf00000) >> 20) / 16D + (entityliving.lastTickPosY + (entityliving.posY - entityliving.lastTickPosY) * (double)par2 + 4D) / 32D;
 

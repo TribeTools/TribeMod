@@ -66,11 +66,11 @@ public class ItemMap extends ItemMapBase
             j1 /= 2;
         }
 
-        par3MapData.field_28175_g++;
+        par3MapData.randomEffect++;
 
         for (int k1 = (l - j1) + 1; k1 < l + j1; k1++)
         {
-            if ((k1 & 0xf) != (par3MapData.field_28175_g & 0xf))
+            if ((k1 & 0xf) != (par3MapData.randomEffect & 0xf))
             {
                 continue;
             }
@@ -277,7 +277,7 @@ public class ItemMap extends ItemMapBase
         if (par3Entity instanceof EntityPlayer)
         {
             EntityPlayer entityplayer = (EntityPlayer)par3Entity;
-            mapdata.func_28169_a(entityplayer, par1ItemStack);
+            mapdata.updateVisiblePlayers(entityplayer, par1ItemStack);
         }
 
         if (par5)

@@ -256,7 +256,7 @@ public abstract class EntityThrowable extends Entity
         rotationPitch = prevRotationPitch + (rotationPitch - prevRotationPitch) * 0.2F;
         rotationYaw = prevRotationYaw + (rotationYaw - prevRotationYaw) * 0.2F;
         float f1 = 0.99F;
-        float f2 = func_40075_e();
+        float f2 = getGravityVelocity();
 
         if (isInWater())
         {
@@ -276,13 +276,16 @@ public abstract class EntityThrowable extends Entity
         setPosition(posX, posY, posZ);
     }
 
-    protected float func_40075_e()
+    /**
+     * Gets the amount of gravity to apply to the thrown entity with each tick.
+     */
+    protected float getGravityVelocity()
     {
         return 0.03F;
     }
 
     /**
-     * Called when the throwable hits a block or entity.
+     * Called when this EntityThrowable hits a block or entity.
      */
     protected abstract void onImpact(MovingObjectPosition movingobjectposition);
 

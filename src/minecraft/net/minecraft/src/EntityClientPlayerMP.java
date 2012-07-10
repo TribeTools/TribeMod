@@ -208,9 +208,9 @@ public class EntityClientPlayerMP extends EntityPlayerSP
      */
     public void sendChatMessage(String par1Str)
     {
-        if (mc.ingameGUI.func_50013_c().size() == 0 || !((String)mc.ingameGUI.func_50013_c().get(mc.ingameGUI.func_50013_c().size() - 1)).equals(par1Str))
+        if (mc.ingameGUI.getSentMessageList().size() == 0 || !((String)mc.ingameGUI.getSentMessageList().get(mc.ingameGUI.getSentMessageList().size() - 1)).equals(par1Str))
         {
-            mc.ingameGUI.func_50013_c().add(par1Str);
+            mc.ingameGUI.getSentMessageList().add(par1Str);
         }
 
         sendQueue.addToSendQueue(new Packet3Chat(par1Str));

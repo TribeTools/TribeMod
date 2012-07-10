@@ -71,12 +71,12 @@ public class EntityAIMoveIndoors extends EntityAIBase
 
             if (vec3d != null)
             {
-                entityObj.getNavigator().func_48666_a(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord, 0.3F);
+                entityObj.getNavigator().tryMoveToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord, 0.3F);
             }
         }
         else
         {
-            entityObj.getNavigator().func_48666_a((double)doorInfo.getInsidePosX() + 0.5D, doorInfo.getInsidePosY(), (double)doorInfo.getInsidePosZ() + 0.5D, 0.3F);
+            entityObj.getNavigator().tryMoveToXYZ((double)doorInfo.getInsidePosX() + 0.5D, doorInfo.getInsidePosY(), (double)doorInfo.getInsidePosZ() + 0.5D, 0.3F);
         }
     }
 

@@ -14,7 +14,9 @@ public class GuiIngame extends Gui
 
     /** A list with all the chat messages in. */
     private java.util.List chatMessageList;
-    private java.util.List field_50016_f;
+
+    /** A list with all the sent chat messages in it. */
+    private java.util.List sentMessageList;
     private Random rand;
     private Minecraft mc;
     private int updateCounter;
@@ -25,7 +27,7 @@ public class GuiIngame extends Gui
     /** How many ticks the record playing message will be displayed */
     private int recordPlayingUpFor;
     private boolean recordIsPlaying;
-    private int field_50017_n;
+    private int historyOffset;
     private boolean field_50018_o;
 
     /** Damage partial time (GUI) */
@@ -37,13 +39,13 @@ public class GuiIngame extends Gui
     public GuiIngame(Minecraft par1Minecraft)
     {
         chatMessageList = new ArrayList();
-        field_50016_f = new ArrayList();
+        sentMessageList = new ArrayList();
         rand = new Random();
         updateCounter = 0;
         recordPlaying = "";
         recordPlayingUpFor = 0;
         recordIsPlaying = false;
-        field_50017_n = 0;
+        historyOffset = 0;
         field_50018_o = false;
         prevVignetteBrightness = 1.0F;
         mc = par1Minecraft;
@@ -376,7 +378,7 @@ public class GuiIngame extends Gui
             if (mc.theWorld != null && mc.theWorld.blockExists(l7, l8, k9))
             {
                 Chunk chunk = mc.theWorld.getChunkFromBlockCoords(l7, k9);
-                drawString(fontrenderer, (new StringBuilder()).append("lc: ").append(chunk.getTopFilledSegment() + 15).append(" b: ").append(chunk.func_48490_a(l7 & 0xf, k9 & 0xf, mc.theWorld.getWorldChunkManager()).biomeName).append(" bl: ").append(chunk.getSavedLightValue(EnumSkyBlock.Block, l7 & 0xf, l8, k9 & 0xf)).append(" sl: ").append(chunk.getSavedLightValue(EnumSkyBlock.Sky, l7 & 0xf, l8, k9 & 0xf)).append(" rl: ").append(chunk.getBlockLightValue(l7 & 0xf, l8, k9 & 0xf, 0)).toString(), 2, 96, 0xe0e0e0);
+                drawString(fontrenderer, (new StringBuilder()).append("lc: ").append(chunk.getTopFilledSegment() + 15).append(" b: ").append(chunk.getBiomeGenForWorldCoords(l7 & 0xf, k9 & 0xf, mc.theWorld.getWorldChunkManager()).biomeName).append(" bl: ").append(chunk.getSavedLightValue(EnumSkyBlock.Block, l7 & 0xf, l8, k9 & 0xf)).append(" sl: ").append(chunk.getSavedLightValue(EnumSkyBlock.Sky, l7 & 0xf, l8, k9 & 0xf)).append(" rl: ").append(chunk.getBlockLightValue(l7 & 0xf, l8, k9 & 0xf, 0)).toString(), 2, 96, 0xe0e0e0);
             }
 
             if (!mc.theWorld.isRemote)
@@ -421,13 +423,13 @@ public class GuiIngame extends Gui
         GL11.glDisable(GL11.GL_ALPHA_TEST);
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, j - 48, 0.0F);
-        func_50010_a(fontrenderer);
+        renderChatOverlay(fontrenderer);
         GL11.glPopMatrix();
 
         if ((mc.thePlayer instanceof EntityClientPlayerMP) && mc.gameSettings.keyBindPlayerList.pressed)
         {
             NetClientHandler netclienthandler = ((EntityClientPlayerMP)mc.thePlayer).sendQueue;
-            java.util.List list = netclienthandler.playerNames;
+            java.util.List list = netclienthandler.playerInfoList;
             int k2 = netclienthandler.currentServerMaxPlayers;
             int j3 = k2;
             int i4 = 1;
@@ -503,7 +505,7 @@ public class GuiIngame extends Gui
         GL11.glEnable(GL11.GL_ALPHA_TEST);
     }
 
-    private void func_50010_a(FontRenderer par1FontRenderer)
+    private void renderChatOverlay(FontRenderer par1FontRenderer)
     {
         byte byte0 = 10;
         boolean flag = false;
@@ -521,14 +523,14 @@ public class GuiIngame extends Gui
             flag = true;
         }
 
-        for (int k = 0; k + field_50017_n < chatMessageList.size() && k < byte0; k++)
+        for (int k = 0; k + historyOffset < chatMessageList.size() && k < byte0; k++)
         {
             if (((ChatLine)chatMessageList.get(k)).updateCounter >= 200 && !flag)
             {
                 continue;
             }
 
-            ChatLine chatline = (ChatLine)chatMessageList.get(k + field_50017_n);
+            ChatLine chatline = (ChatLine)chatMessageList.get(k + historyOffset);
             double d = (double)chatline.updateCounter / 200D;
             d = 1.0D - d;
             d *= 10D;
@@ -569,7 +571,7 @@ public class GuiIngame extends Gui
             GL11.glTranslatef(0.0F, par1FontRenderer.FONT_HEIGHT, 0.0F);
             int l = j * par1FontRenderer.FONT_HEIGHT + j;
             int i1 = i * par1FontRenderer.FONT_HEIGHT + i;
-            int j1 = (field_50017_n * i1) / j;
+            int j1 = (historyOffset * i1) / j;
             int k1 = (i1 * i1) / l;
 
             if (l != i1)
@@ -599,7 +601,7 @@ public class GuiIngame extends Gui
         int i = scaledresolution.getScaledWidth();
         char c = '\266';
         int j = i / 2 - c / 2;
-        int k = (int)(((float)entitydragon.func_41010_ax() / (float)entitydragon.getMaxHealth()) * (float)(c + 1));
+        int k = (int)(((float)entitydragon.getDragonHealth() / (float)entitydragon.getMaxHealth()) * (float)(c + 1));
         byte byte0 = 12;
         drawTexturedModalRect(j, byte0, 0, 74, c, 5);
         drawTexturedModalRect(j, byte0, 0, 74, c, 5);
@@ -764,7 +766,7 @@ public class GuiIngame extends Gui
     public void clearChatMessages()
     {
         chatMessageList.clear();
-        field_50016_f.clear();
+        sentMessageList.clear();
     }
 
     /**
@@ -776,14 +778,14 @@ public class GuiIngame extends Gui
         boolean flag1 = true;
         String s;
 
-        for (Iterator iterator = mc.fontRenderer.func_50108_c(par1Str, 320).iterator(); iterator.hasNext(); chatMessageList.add(0, new ChatLine(s)))
+        for (Iterator iterator = mc.fontRenderer.listFormattedStringToWidth(par1Str, 320).iterator(); iterator.hasNext(); chatMessageList.add(0, new ChatLine(s)))
         {
             s = (String)iterator.next();
 
-            if (flag && field_50017_n > 0)
+            if (flag && historyOffset > 0)
             {
                 field_50018_o = true;
-                func_50011_a(1);
+                adjustHistoryOffset(1);
             }
 
             if (!flag1)
@@ -797,35 +799,44 @@ public class GuiIngame extends Gui
         for (; chatMessageList.size() > 100; chatMessageList.remove(chatMessageList.size() - 1)) { }
     }
 
-    public java.util.List func_50013_c()
+    /**
+     * Returns the list with the sent chat messages in it.
+     */
+    public java.util.List getSentMessageList()
     {
-        return field_50016_f;
+        return sentMessageList;
     }
 
     public void func_50014_d()
     {
-        field_50017_n = 0;
+        historyOffset = 0;
         field_50018_o = false;
     }
 
-    public void func_50011_a(int par1)
+    /**
+     * increment/decrement history scroll offset
+     */
+    public void adjustHistoryOffset(int par1)
     {
-        field_50017_n += par1;
+        historyOffset += par1;
         int i = chatMessageList.size();
 
-        if (field_50017_n > i - 20)
+        if (historyOffset > i - 20)
         {
-            field_50017_n = i - 20;
+            historyOffset = i - 20;
         }
 
-        if (field_50017_n <= 0)
+        if (historyOffset <= 0)
         {
-            field_50017_n = 0;
+            historyOffset = 0;
             field_50018_o = false;
         }
     }
 
-    public ChatClickData func_50012_a(int par1, int par2)
+    /**
+     * gets the click data from mouse position args:( mouse x, mouse y)
+     */
+    public ChatClickData getChatClickDataFromMouse(int par1, int par2)
     {
         if (!isChatOpen())
         {
@@ -845,8 +856,8 @@ public class GuiIngame extends Gui
 
         if (par1 <= 320 && par2 < mc.fontRenderer.FONT_HEIGHT * i + i)
         {
-            int j = par2 / (mc.fontRenderer.FONT_HEIGHT + 1) + field_50017_n;
-            return new ChatClickData(mc.fontRenderer, (ChatLine)chatMessageList.get(j), par1, (par2 - (j - field_50017_n) * mc.fontRenderer.FONT_HEIGHT) + j);
+            int j = par2 / (mc.fontRenderer.FONT_HEIGHT + 1) + historyOffset;
+            return new ChatClickData(mc.fontRenderer, (ChatLine)chatMessageList.get(j), par1, (par2 - (j - historyOffset) * mc.fontRenderer.FONT_HEIGHT) + j);
         }
         else
         {

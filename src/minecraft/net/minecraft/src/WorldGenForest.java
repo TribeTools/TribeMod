@@ -66,7 +66,7 @@ public class WorldGenForest extends WorldGenerator
             return false;
         }
 
-        func_50073_a(par1World, par3, par4 - 1, par5, Block.dirt.blockID);
+        setBlock(par1World, par3, par4 - 1, par5, Block.dirt.blockID);
 
         for (int l = (par4 - 3) + i; l <= par4 + i; l++)
         {

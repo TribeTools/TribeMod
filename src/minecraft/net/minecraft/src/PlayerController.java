@@ -150,7 +150,11 @@ public abstract class PlayerController
         par2EntityPlayer.craftingInventory = par2EntityPlayer.inventorySlots;
     }
 
-    public void func_40593_a(int i, int j)
+    /**
+     * GuiEnchantment uses this during multiplayer to tell PlayerControllerMP to send a packet indicating the
+     * enchantment action the player has taken.
+     */
+    public void sendEnchantPacket(int i, int j)
     {
     }
 

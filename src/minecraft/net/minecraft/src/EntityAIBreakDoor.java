@@ -4,7 +4,7 @@ import java.util.Random;
 
 public class EntityAIBreakDoor extends EntityAIDoorInteract
 {
-    private int field_48329_i;
+    private int breakingTime;
 
     public EntityAIBreakDoor(EntityLiving par1EntityLiving)
     {
@@ -22,7 +22,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
         }
         else
         {
-            return !targetDoor.func_48213_h(theEntity.worldObj, entityPosX, entityPosY, entityPosZ);
+            return !targetDoor.isDoorOpen(theEntity.worldObj, entityPosX, entityPosY, entityPosZ);
         }
     }
 
@@ -32,7 +32,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
     public void startExecuting()
     {
         super.startExecuting();
-        field_48329_i = 240;
+        breakingTime = 240;
     }
 
     /**
@@ -41,7 +41,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
     public boolean continueExecuting()
     {
         double d = theEntity.getDistanceSq(entityPosX, entityPosY, entityPosZ);
-        return field_48329_i >= 0 && !targetDoor.func_48213_h(theEntity.worldObj, entityPosX, entityPosY, entityPosZ) && d < 4D;
+        return breakingTime >= 0 && !targetDoor.isDoorOpen(theEntity.worldObj, entityPosX, entityPosY, entityPosZ) && d < 4D;
     }
 
     /**
@@ -56,7 +56,7 @@ public class EntityAIBreakDoor extends EntityAIDoorInteract
             theEntity.worldObj.playAuxSFX(1010, entityPosX, entityPosY, entityPosZ, 0);
         }
 
-        if (--field_48329_i == 0 && theEntity.worldObj.difficultySetting == 3)
+        if (--breakingTime == 0 && theEntity.worldObj.difficultySetting == 3)
         {
             theEntity.worldObj.setBlockWithNotify(entityPosX, entityPosY, entityPosZ, 0);
             theEntity.worldObj.playAuxSFX(1012, entityPosX, entityPosY, entityPosZ, 0);

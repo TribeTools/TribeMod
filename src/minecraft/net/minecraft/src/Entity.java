@@ -1959,7 +1959,10 @@ public abstract class Entity
         return this == par1Entity;
     }
 
-    public void func_48079_f(float f)
+    /**
+     * Sets the head's yaw rotation of the entity.
+     */
+    public void setHeadRotationYaw(float f)
     {
     }
 

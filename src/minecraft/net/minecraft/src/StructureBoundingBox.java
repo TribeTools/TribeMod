@@ -25,7 +25,7 @@ public class StructureBoundingBox
     }
 
     /**
-     * 'returns a new StructureBoundingBox with MAX values'
+     * returns a new StructureBoundingBox with MAX values
      */
     public static StructureBoundingBox getNewBoundingBox()
     {
@@ -33,7 +33,7 @@ public class StructureBoundingBox
     }
 
     /**
-     * 'used to project a possible new component Bounding Box - to check if it would cut anything already spawned'
+     * used to project a possible new component Bounding Box - to check if it would cut anything already spawned
      */
     public static StructureBoundingBox getComponentToAddBoundingBox(int par0, int par1, int par2, int par3, int par4, int par5, int par6, int par7, int par8, int par9)
     {

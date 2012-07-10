@@ -6,7 +6,7 @@ public abstract class EntityAITarget extends EntityAIBase
 {
     /** The entity that this task belongs to */
     protected EntityLiving taskOwner;
-    protected float field_48379_d;
+    protected float targetDistance;
     protected boolean field_48380_e;
     private boolean field_48383_a;
     private int field_48381_b;
@@ -24,7 +24,7 @@ public abstract class EntityAITarget extends EntityAIBase
         field_48377_f = 0;
         field_48378_g = 0;
         taskOwner = par1EntityLiving;
-        field_48379_d = par2;
+        targetDistance = par2;
         field_48380_e = par3;
         field_48383_a = par4;
     }
@@ -46,14 +46,14 @@ public abstract class EntityAITarget extends EntityAIBase
             return false;
         }
 
-        if (taskOwner.getDistanceSqToEntity(entityliving) > (double)(field_48379_d * field_48379_d))
+        if (taskOwner.getDistanceSqToEntity(entityliving) > (double)(targetDistance * targetDistance))
         {
             return false;
         }
 
         if (field_48380_e)
         {
-            if (!taskOwner.func_48090_aM().canSee(entityliving))
+            if (!taskOwner.getEntitySenses().canSee(entityliving))
             {
                 if (++field_48378_g > 60)
                 {
@@ -136,7 +136,7 @@ public abstract class EntityAITarget extends EntityAIBase
             return false;
         }
 
-        if (field_48380_e && !taskOwner.func_48090_aM().canSee(par1EntityLiving))
+        if (field_48380_e && !taskOwner.getEntitySenses().canSee(par1EntityLiving))
         {
             return false;
         }
@@ -165,7 +165,7 @@ public abstract class EntityAITarget extends EntityAIBase
     private boolean func_48375_a(EntityLiving par1EntityLiving)
     {
         field_48377_f = 10 + taskOwner.getRNG().nextInt(5);
-        PathEntity pathentity = taskOwner.getNavigator().func_48679_a(par1EntityLiving);
+        PathEntity pathentity = taskOwner.getNavigator().getPathToEntityLiving(par1EntityLiving);
 
         if (pathentity == null)
         {

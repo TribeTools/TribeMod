@@ -4,12 +4,13 @@ import org.lwjgl.opengl.GL11;
 
 public class RenderCreeper extends RenderLiving
 {
-    private ModelBase field_27008_a;
+    /** The creeper model */
+    private ModelBase creepermodel;
 
     public RenderCreeper()
     {
         super(new ModelCreeper(), 0.5F);
-        field_27008_a = new ModelCreeper(2.0F);
+        creepermodel = new ModelCreeper(2.0F);
     }
 
     /**
@@ -82,7 +83,7 @@ public class RenderCreeper extends RenderLiving
                 float f1 = f * 0.01F;
                 float f2 = f * 0.01F;
                 GL11.glTranslatef(f1, f2, 0.0F);
-                setRenderPassModel(field_27008_a);
+                setRenderPassModel(creepermodel);
                 GL11.glMatrixMode(GL11.GL_MODELVIEW);
                 GL11.glEnable(GL11.GL_BLEND);
                 float f3 = 0.5F;

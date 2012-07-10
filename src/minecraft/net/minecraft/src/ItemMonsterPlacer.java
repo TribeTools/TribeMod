@@ -45,7 +45,7 @@ public class ItemMonsterPlacer extends Item
         }
     }
 
-    public boolean func_46058_c()
+    public boolean requiresMultipleRenderPasses()
     {
         return true;
     }
@@ -84,7 +84,7 @@ public class ItemMonsterPlacer extends Item
             d = 0.5D;
         }
 
-        if (func_48440_a(par3World, par1ItemStack.getItemDamage(), (double)par4 + 0.5D, (double)par5 + d, (double)par6 + 0.5D) && !par2EntityPlayer.capabilities.isCreativeMode)
+        if (spawnCreature(par3World, par1ItemStack.getItemDamage(), (double)par4 + 0.5D, (double)par5 + d, (double)par6 + 0.5D) && !par2EntityPlayer.capabilities.isCreativeMode)
         {
             par1ItemStack.stackSize--;
         }
@@ -92,7 +92,11 @@ public class ItemMonsterPlacer extends Item
         return true;
     }
 
-    public static boolean func_48440_a(World par0World, int par1, double par2, double par4, double par6)
+    /**
+     * Spawns the creature specified by the egg's type in the location specified by the last three parameters.
+     * Parameters: world, entityID, x, y, z.
+     */
+    public static boolean spawnCreature(World par0World, int par1, double par2, double par4, double par6)
     {
         if (!EntityList.entityEggs.containsKey(Integer.valueOf(par1)))
         {

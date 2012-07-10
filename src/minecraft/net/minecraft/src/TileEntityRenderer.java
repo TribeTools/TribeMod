@@ -109,7 +109,7 @@ public class TileEntityRenderer
     {
         if (worldObj != par1World)
         {
-            cacheSpecialRenderInfo(par1World);
+            setWorld(par1World);
         }
 
         renderEngine = par2RenderEngine;
@@ -156,10 +156,9 @@ public class TileEntityRenderer
     }
 
     /**
-     * Called from cacheActiveRenderInfo() to cache render-related references for TileEntitySpecialRenderers in
-     * specialRendererMap. Currently only the world reference from cacheActiveRenderInfo() is passed to this method.
+     * Sets the world used by all TileEntitySpecialRender instances and notifies them of this change.
      */
-    public void cacheSpecialRenderInfo(World par1World)
+    public void setWorld(World par1World)
     {
         worldObj = par1World;
         Iterator iterator = specialRendererMap.values().iterator();
@@ -175,7 +174,7 @@ public class TileEntityRenderer
 
             if (tileentityspecialrenderer != null)
             {
-                tileentityspecialrenderer.cacheSpecialRenderInfo(par1World);
+                tileentityspecialrenderer.onWorldChange(par1World);
             }
         }
         while (true);

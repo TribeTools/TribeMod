@@ -7,8 +7,8 @@ public class Packet41EntityEffect extends Packet
     public int entityId;
     public byte effectId;
 
-    /** amplifier */
-    public byte effectAmp;
+    /** The effect's amplifier. */
+    public byte effectAmplifier;
     public short duration;
 
     public Packet41EntityEffect()
@@ -22,7 +22,7 @@ public class Packet41EntityEffect extends Packet
     {
         entityId = par1DataInputStream.readInt();
         effectId = par1DataInputStream.readByte();
-        effectAmp = par1DataInputStream.readByte();
+        effectAmplifier = par1DataInputStream.readByte();
         duration = par1DataInputStream.readShort();
     }
 
@@ -33,7 +33,7 @@ public class Packet41EntityEffect extends Packet
     {
         par1DataOutputStream.writeInt(entityId);
         par1DataOutputStream.writeByte(effectId);
-        par1DataOutputStream.writeByte(effectAmp);
+        par1DataOutputStream.writeByte(effectAmplifier);
         par1DataOutputStream.writeShort(duration);
     }
 

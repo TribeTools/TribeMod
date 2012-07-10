@@ -261,7 +261,7 @@ public class BiomeDecorator
             int j7 = chunk_X + randomGenerator.nextInt(16) + 8;
             int k11 = randomGenerator.nextInt(128);
             int j15 = chunk_Z + randomGenerator.nextInt(16) + 8;
-            WorldGenerator worldgenerator1 = biome.func_48410_b(randomGenerator);
+            WorldGenerator worldgenerator1 = biome.getRandomWorldGenForGrass(randomGenerator);
             worldgenerator1.generate(currentWorld, randomGenerator, j7, k11, j15);
         }
 

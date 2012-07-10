@@ -6,7 +6,9 @@ public class Packet9Respawn extends Packet
 {
     public int respawnDimension;
 
-    /** 0 thru 3 for Peaceful, Easy, Normal, Hard. 1 is always sent c->s */
+    /**
+     * The difficulty setting. 0 through 3 for peaceful, easy, normal, hard. The client always sends 1.
+     */
     public int difficulty;
 
     /** Defaults to 128 */
@@ -64,7 +66,7 @@ public class Packet9Respawn extends Packet
         par1DataOutputStream.writeByte(difficulty);
         par1DataOutputStream.writeByte(creativeMode);
         par1DataOutputStream.writeShort(worldHeight);
-        writeString(terrainType.func_48628_a(), par1DataOutputStream);
+        writeString(terrainType.getWorldTypeName(), par1DataOutputStream);
     }
 
     /**
@@ -72,6 +74,6 @@ public class Packet9Respawn extends Packet
      */
     public int getPacketSize()
     {
-        return 8 + terrainType.func_48628_a().length();
+        return 8 + terrainType.getWorldTypeName().length();
     }
 }

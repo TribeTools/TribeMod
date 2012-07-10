@@ -30,14 +30,14 @@ public class GuiSleepMP extends GuiChat
         }
         else if (par2 == 28)
         {
-            String s = field_50064_a.getText().trim();
+            String s = inputField.getText().trim();
 
             if (s.length() > 0)
             {
                 mc.thePlayer.sendChatMessage(s);
             }
 
-            field_50064_a.setText("");
+            inputField.setText("");
             mc.ingameGUI.func_50014_d();
         }
         else

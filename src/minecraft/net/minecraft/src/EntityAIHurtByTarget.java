@@ -31,7 +31,7 @@ public class EntityAIHurtByTarget extends EntityAITarget
 
         if (field_48395_a)
         {
-            List list = taskOwner.worldObj.getEntitiesWithinAABB(taskOwner.getClass(), AxisAlignedBB.getBoundingBoxFromPool(taskOwner.posX, taskOwner.posY, taskOwner.posZ, taskOwner.posX + 1.0D, taskOwner.posY + 1.0D, taskOwner.posZ + 1.0D).expand(field_48379_d, 4D, field_48379_d));
+            List list = taskOwner.worldObj.getEntitiesWithinAABB(taskOwner.getClass(), AxisAlignedBB.getBoundingBoxFromPool(taskOwner.posX, taskOwner.posY, taskOwner.posZ, taskOwner.posX + 1.0D, taskOwner.posY + 1.0D, taskOwner.posZ + 1.0D).expand(targetDistance, 4D, targetDistance));
             Iterator iterator = list.iterator();
 
             do

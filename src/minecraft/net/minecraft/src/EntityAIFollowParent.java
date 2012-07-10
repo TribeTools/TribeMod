@@ -113,7 +113,7 @@ public class EntityAIFollowParent extends EntityAIBase
         else
         {
             field_48246_d = 10;
-            childAnimal.getNavigator().func_48667_a(parentAnimal, field_48248_c);
+            childAnimal.getNavigator().tryMoveToEntityLiving(parentAnimal, field_48248_c);
             return;
         }
     }

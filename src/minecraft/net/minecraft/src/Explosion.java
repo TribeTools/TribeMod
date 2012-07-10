@@ -29,7 +29,7 @@ public class Explosion
     }
 
     /**
-     * Does the first part of explosion (destroy blocks)
+     * Does the first part of the explosion (destroy blocks)
      */
     public void doExplosionA()
     {
@@ -134,7 +134,7 @@ public class Explosion
     }
 
     /**
-     * Does the second part of explosion (sound, particles, drop spawn)
+     * Does the second part of the explosion (sound, particles, drop spawn)
      */
     public void doExplosionB(boolean par1)
     {

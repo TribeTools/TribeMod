@@ -9,7 +9,7 @@ public class EntityCow extends EntityAnimal
         super(par1World);
         texture = "/mob/cow.png";
         setSize(0.9F, 1.3F);
-        getNavigator().func_48664_a(true);
+        getNavigator().setAvoidsWater(true);
         tasks.addTask(0, new EntityAISwimming(this));
         tasks.addTask(1, new EntityAIPanic(this, 0.38F));
         tasks.addTask(2, new EntityAIMate(this, 0.2F));

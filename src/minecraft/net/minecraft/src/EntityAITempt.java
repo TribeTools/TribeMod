@@ -112,8 +112,8 @@ public class EntityAITempt extends EntityAIBase
         field_48273_d = temptingPlayer.posY;
         field_48274_e = temptingPlayer.posZ;
         field_48280_j = true;
-        field_48279_m = temptedEntity.getNavigator().func_48658_a();
-        temptedEntity.getNavigator().func_48664_a(false);
+        field_48279_m = temptedEntity.getNavigator().getAvoidsWater();
+        temptedEntity.getNavigator().setAvoidsWater(false);
     }
 
     /**
@@ -125,7 +125,7 @@ public class EntityAITempt extends EntityAIBase
         temptedEntity.getNavigator().clearPathEntity();
         delayTemptCounter = 100;
         field_48280_j = false;
-        temptedEntity.getNavigator().func_48664_a(field_48279_m);
+        temptedEntity.getNavigator().setAvoidsWater(field_48279_m);
     }
 
     /**
@@ -141,7 +141,7 @@ public class EntityAITempt extends EntityAIBase
         }
         else
         {
-            temptedEntity.getNavigator().func_48667_a(temptingPlayer, field_48275_b);
+            temptedEntity.getNavigator().tryMoveToEntityLiving(temptingPlayer, field_48275_b);
         }
     }
 

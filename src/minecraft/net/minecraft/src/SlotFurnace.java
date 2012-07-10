@@ -53,6 +53,7 @@ public class SlotFurnace extends Slot
     {
         par1ItemStack.onCrafting(thePlayer.worldObj, thePlayer, field_48437_f);
         field_48437_f = 0;
+        ModLoader.takenFromFurnace(thePlayer, par1ItemStack);
 
         if (par1ItemStack.itemID == Item.ingotIron.shiftedIndex)
         {

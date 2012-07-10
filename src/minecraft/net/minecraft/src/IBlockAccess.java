@@ -13,7 +13,7 @@ public interface IBlockAccess
     public abstract TileEntity getBlockTileEntity(int i, int j, int k);
 
     /**
-     * 'Any Light rendered on a 1.8 Block goes through here'
+     * Any Light rendered on a 1.8 Block goes through here
      */
     public abstract int getLightBrightnessForSkyBlocks(int i, int j, int k, int l);
 

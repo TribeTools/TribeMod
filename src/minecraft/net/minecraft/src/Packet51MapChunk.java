@@ -109,7 +109,7 @@ public class Packet51MapChunk extends Packet
      */
     public void processPacket(NetHandler par1NetHandler)
     {
-        par1NetHandler.func_48487_a(this);
+        par1NetHandler.handleMapChunk(this);
     }
 
     /**

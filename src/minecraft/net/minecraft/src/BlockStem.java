@@ -211,7 +211,11 @@ public class BlockStem extends BlockFlower
         return 19;
     }
 
-    public int func_35296_f(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    /**
+     * Returns the current state of the stem. Returns -1 if the stem is not fully grown, or a value between 0 and 3
+     * based on the direction the stem is facing.
+     */
+    public int getState(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
         int i = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
 

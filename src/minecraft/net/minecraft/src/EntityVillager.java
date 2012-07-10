@@ -25,7 +25,7 @@ public class EntityVillager extends EntityAgeable
         texture = "/mob/villager/villager.png";
         moveSpeed = 0.5F;
         getNavigator().setBreakDoors(true);
-        getNavigator().func_48664_a(true);
+        getNavigator().setAvoidsWater(true);
         tasks.addTask(0, new EntityAISwimming(this));
         tasks.addTask(1, new EntityAIAvoidEntity(this, net.minecraft.src.EntityZombie.class, 8F, 0.3F, 0.35F));
         tasks.addTask(2, new EntityAIMoveIndoors(this));

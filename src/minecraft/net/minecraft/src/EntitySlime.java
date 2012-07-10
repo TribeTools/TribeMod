@@ -77,7 +77,10 @@ public class EntitySlime extends EntityLiving implements IMob
         return "slime";
     }
 
-    protected String func_40138_aj()
+    /**
+     * Returns the name of the sound played when the slime jumps.
+     */
+    protected String getJumpSound()
     {
         return "mob.slime";
     }
@@ -110,9 +113,9 @@ public class EntitySlime extends EntityLiving implements IMob
                 worldObj.spawnParticle(getSlimeParticle(), posX + (double)f2, boundingBox.minY, posZ + (double)f3, 0.0D, 0.0D, 0.0D);
             }
 
-            if (func_40134_ak())
+            if (makesSoundOnLand())
             {
-                worldObj.playSoundAtEntity(this, func_40138_aj(), getSoundVolume(), ((rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+                worldObj.playSoundAtEntity(this, getJumpSound(), getSoundVolume(), ((rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F) / 0.8F);
             }
 
             field_40139_a = -0.5F;
@@ -133,7 +136,7 @@ public class EntitySlime extends EntityLiving implements IMob
 
         if (onGround && slimeJumpDelay-- <= 0)
         {
-            slimeJumpDelay = func_40131_af();
+            slimeJumpDelay = getJumpDelay();
 
             if (entityplayer != null)
             {
@@ -142,9 +145,9 @@ public class EntitySlime extends EntityLiving implements IMob
 
             isJumping = true;
 
-            if (func_40133_ao())
+            if (makesSoundOnJump())
             {
-                worldObj.playSoundAtEntity(this, func_40138_aj(), getSoundVolume(), ((rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
+                worldObj.playSoundAtEntity(this, getJumpSound(), getSoundVolume(), ((rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F) * 0.8F);
             }
 
             field_40139_a = 1.0F;
@@ -167,7 +170,10 @@ public class EntitySlime extends EntityLiving implements IMob
         field_40139_a = field_40139_a * 0.6F;
     }
 
-    protected int func_40131_af()
+    /**
+     * Gets the amount of time the slime needs to wait between jumps.
+     */
+    protected int getJumpDelay()
     {
         return rand.nextInt(20) + 10;
     }
@@ -207,23 +213,29 @@ public class EntitySlime extends EntityLiving implements IMob
      */
     public void onCollideWithPlayer(EntityPlayer par1EntityPlayer)
     {
-        if (func_40137_ah())
+        if (canDamagePlayer())
         {
             int i = getSlimeSize();
 
-            if (canEntityBeSeen(par1EntityPlayer) && (double)getDistanceToEntity(par1EntityPlayer) < 0.59999999999999998D * (double)i && par1EntityPlayer.attackEntityFrom(DamageSource.causeMobDamage(this), func_40130_ai()))
+            if (canEntityBeSeen(par1EntityPlayer) && (double)getDistanceToEntity(par1EntityPlayer) < 0.59999999999999998D * (double)i && par1EntityPlayer.attackEntityFrom(DamageSource.causeMobDamage(this), getAttackStrength()))
             {
                 worldObj.playSoundAtEntity(this, "mob.slimeattack", 1.0F, (rand.nextFloat() - rand.nextFloat()) * 0.2F + 1.0F);
             }
         }
     }
 
-    protected boolean func_40137_ah()
+    /**
+     * Indicates weather the slime is able to damage the player (based upon the slime's size)
+     */
+    protected boolean canDamagePlayer()
     {
         return getSlimeSize() > 1;
     }
 
-    protected int func_40130_ai()
+    /**
+     * Gets the amount of damage dealt to the player when "attacked" by the slime.
+     */
+    protected int getAttackStrength()
     {
         return getSlimeSize();
     }
@@ -293,12 +305,18 @@ public class EntitySlime extends EntityLiving implements IMob
         return 0;
     }
 
-    protected boolean func_40133_ao()
+    /**
+     * Returns true if the slime makes a sound when it jumps (based upon the slime's size)
+     */
+    protected boolean makesSoundOnJump()
     {
         return getSlimeSize() > 1;
     }
 
-    protected boolean func_40134_ak()
+    /**
+     * Returns true if the slime makes a sound when it lands after a jump (based upon the slime's size)
+     */
+    protected boolean makesSoundOnLand()
     {
         return getSlimeSize() > 2;
     }

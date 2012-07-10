@@ -36,7 +36,7 @@ public class EntitySpider extends EntityMob
 
         if (!worldObj.isRemote)
         {
-            func_40148_a(isCollidedHorizontally);
+            setBesideClimbableBlock(isCollidedHorizontally);
         }
     }
 
@@ -178,7 +178,7 @@ public class EntitySpider extends EntityMob
      */
     public boolean isOnLadder()
     {
-        return func_40149_l_();
+        return isBesideClimbableBlock();
     }
 
     /**
@@ -216,12 +216,20 @@ public class EntitySpider extends EntityMob
         }
     }
 
-    public boolean func_40149_l_()
+    /**
+     * Returns true if the WatchableObject (Byte) is 0x01 otherwise returns false. The WatchableObject is updated using
+     * setBesideClimableBlock.
+     */
+    public boolean isBesideClimbableBlock()
     {
         return (dataWatcher.getWatchableObjectByte(16) & 1) != 0;
     }
 
-    public void func_40148_a(boolean par1)
+    /**
+     * Updates the WatchableObject (Byte) created in entityInit(), setting it to 0x01 if par1 is true or 0x00 if it is
+     * false.
+     */
+    public void setBesideClimbableBlock(boolean par1)
     {
         byte byte0 = dataWatcher.getWatchableObjectByte(16);
 

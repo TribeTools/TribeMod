@@ -12,7 +12,9 @@ public class WorldClient extends World
 
     /** The packets that need to be sent to the server. */
     private NetClientHandler sendQueue;
-    private ChunkProviderClient field_20915_C;
+
+    /** The ChunkProviderClient instance */
+    private ChunkProviderClient clientChunkProvider;
 
     /**
      * The hash set of entities handled by this client. Uses the entity's ID as the hash set's key.
@@ -73,7 +75,7 @@ public class WorldClient extends World
             }
         }
 
-        field_20915_C.unload100OldestChunks();
+        clientChunkProvider.unload100OldestChunks();
         tickBlocksAndAmbiance();
     }
 
@@ -99,8 +101,8 @@ public class WorldClient extends World
      */
     protected IChunkProvider createChunkProvider()
     {
-        field_20915_C = new ChunkProviderClient(this);
-        return field_20915_C;
+        clientChunkProvider = new ChunkProviderClient(this);
+        return clientChunkProvider;
     }
 
     /**
@@ -149,11 +151,11 @@ public class WorldClient extends World
     {
         if (par3)
         {
-            field_20915_C.loadChunk(par1, par2);
+            clientChunkProvider.loadChunk(par1, par2);
         }
         else
         {
-            field_20915_C.func_539_c(par1, par2);
+            clientChunkProvider.unloadChunk(par1, par2);
         }
 
         if (!par3)
@@ -179,7 +181,8 @@ public class WorldClient extends World
     }
 
     /**
-     * Not sure what this does 100%, but from the calling methods this method should be called like this.
+     * Dismounts the entity (and anything riding the entity), sets the dead flag, and removes the player entity from the
+     * player entity list. Called by the playerLoggedOut function.
      */
     public void setEntityDead(Entity par1Entity)
     {

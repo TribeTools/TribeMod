@@ -19,7 +19,10 @@ public class EntityExpBottle extends EntityThrowable
         super(par1World, par2, par4, par6);
     }
 
-    protected float func_40075_e()
+    /**
+     * Gets the amount of gravity to apply to the thrown entity with each tick.
+     */
+    protected float getGravityVelocity()
     {
         return 0.07F;
     }
@@ -35,7 +38,7 @@ public class EntityExpBottle extends EntityThrowable
     }
 
     /**
-     * Called when the throwable hits a block or entity.
+     * Called when this EntityThrowable hits a block or entity.
      */
     protected void onImpact(MovingObjectPosition par1MovingObjectPosition)
     {

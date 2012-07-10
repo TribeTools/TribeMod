@@ -79,7 +79,7 @@ public class NBTTagList extends NBTBase
     }
 
     /**
-     * Adds the provided tag to the end of the list. There is no check to veriy this tag is of the same type as any
+     * Adds the provided tag to the end of the list. There is no check to verify this tag is of the same type as any
      * previous tag.
      */
     public void appendTag(NBTBase par1NBTBase)

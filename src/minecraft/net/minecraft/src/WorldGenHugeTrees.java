@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class WorldGenHugeTrees extends WorldGenerator
 {
-    private final int field_48195_a;
+    /** The base height of the tree */
+    private final int baseHeight;
 
     /** Sets the metadata for the wood blocks used */
     private final int woodMetadata;
@@ -15,14 +16,14 @@ public class WorldGenHugeTrees extends WorldGenerator
     public WorldGenHugeTrees(boolean par1, int par2, int par3, int par4)
     {
         super(par1);
-        field_48195_a = par2;
+        baseHeight = par2;
         woodMetadata = par3;
         leavesMetadata = par4;
     }
 
     public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
     {
-        int i = par2Random.nextInt(3) + field_48195_a;
+        int i = par2Random.nextInt(3) + baseHeight;
         boolean flag = true;
 
         if (par4 < 1 || par4 + i + 1 > 256)
@@ -81,14 +82,14 @@ public class WorldGenHugeTrees extends WorldGenerator
         par1World.setBlock(par3 + 1, par4 - 1, par5, Block.dirt.blockID);
         par1World.setBlock(par3, par4 - 1, par5 + 1, Block.dirt.blockID);
         par1World.setBlock(par3 + 1, par4 - 1, par5 + 1, Block.dirt.blockID);
-        func_48192_a(par1World, par3, par5, par4 + i, 2, par2Random);
+        growLeaves(par1World, par3, par5, par4 + i, 2, par2Random);
 
         for (int l = (par4 + i) - 2 - par2Random.nextInt(4); l > par4 + i / 2; l -= 2 + par2Random.nextInt(4))
         {
             float f = par2Random.nextFloat() * (float)Math.PI * 2.0F;
             int l1 = par3 + (int)(0.5F + MathHelper.cos(f) * 4F);
             int l2 = par5 + (int)(0.5F + MathHelper.sin(f) * 4F);
-            func_48192_a(par1World, l1, l2, l, 0, par2Random);
+            growLeaves(par1World, l1, l2, l, 0, par2Random);
 
             for (int j3 = 0; j3 < 5; j3++)
             {
@@ -193,7 +194,7 @@ public class WorldGenHugeTrees extends WorldGenerator
         return true;
     }
 
-    private void func_48192_a(World par1World, int par2, int par3, int par4, int par5, Random par6Random)
+    private void growLeaves(World par1World, int par2, int par3, int par4, int par5, Random par6Random)
     {
         byte byte0 = 2;
 

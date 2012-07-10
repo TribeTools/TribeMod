@@ -6,7 +6,7 @@ public abstract class StructureComponent
 {
     protected StructureBoundingBox boundingBox;
 
-    /** 'switches the Coordinate System base off the Bounding Box' */
+    /** switches the Coordinate System base off the Bounding Box */
     protected int coordBaseMode;
 
     /** The type ID of this component. */
@@ -19,15 +19,15 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'Initiates construction of the Structure Component picked, at the current Location of StructGen'
+     * Initiates construction of the Structure Component picked, at the current Location of StructGen
      */
     public void buildComponent(StructureComponent structurecomponent, List list, Random random)
     {
     }
 
     /**
-     * 'second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
-     * the end, it adds Fences...'
+     * second Part of Structure generating, this for example places Spiderwebs, Mob Spawners, it closes Mineshafts at
+     * the end, it adds Fences...
      */
     public abstract boolean addComponentParts(World world, Random random, StructureBoundingBox structureboundingbox);
 
@@ -68,7 +68,7 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'checks the entire StructureBoundingBox for Liquids'
+     * checks the entire StructureBoundingBox for Liquids
      */
     protected boolean isLiquidInStructureBoundingBox(World par1World, StructureBoundingBox par2StructureBoundingBox)
     {
@@ -412,7 +412,7 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'current Position depends on currently set Coordinates mode, is computed here'
+     * current Position depends on currently set Coordinates mode, is computed here
      */
     protected void placeBlockAtCurrentPosition(World par1World, int par2, int par3, int par4, int par5, int par6, StructureBoundingBox par7StructureBoundingBox)
     {
@@ -448,8 +448,8 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'arguments: (World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
-     * maxZ, int placeBlockId, int replaceBlockId, boolean alwaysreplace)'
+     * arguments: (World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
+     * maxZ, int placeBlockId, int replaceBlockId, boolean alwaysreplace)
      */
     protected void fillWithBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, int par9, int par10, boolean par11)
     {
@@ -478,8 +478,8 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'arguments: World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
-     * maxZ, boolean alwaysreplace, Random rand, StructurePieceBlockSelector blockselector'
+     * arguments: World worldObj, StructureBoundingBox structBB, int minX, int minY, int minZ, int maxX, int maxY, int
+     * maxZ, boolean alwaysreplace, Random rand, StructurePieceBlockSelector blockselector
      */
     protected void fillWithRandomizedBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, int par3, int par4, int par5, int par6, int par7, int par8, boolean par9, Random par10Random, StructurePieceBlockSelector par11StructurePieceBlockSelector)
     {
@@ -500,8 +500,8 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'arguments: World worldObj, StructureBoundingBox structBB, Random rand, float randLimit, int minX, int minY, int
-     * minZ, int maxX, int maxY, int maxZ, int olaceBlockId, int replaceBlockId, boolean alwaysreplace'
+     * arguments: World worldObj, StructureBoundingBox structBB, Random rand, float randLimit, int minX, int minY, int
+     * minZ, int maxX, int maxY, int maxZ, int olaceBlockId, int replaceBlockId, boolean alwaysreplace
      */
     protected void randomlyFillWithBlocks(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, float par4, int par5, int par6, int par7, int par8, int par9, int par10, int par11, int par12, boolean par13)
     {
@@ -530,7 +530,7 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'Randomly decides if placing or not. Used for Decoration such as Torches and Spiderwebs'
+     * Randomly decides if placing or not. Used for Decoration such as Torches and Spiderwebs
      */
     protected void randomlyPlaceBlock(World par1World, StructureBoundingBox par2StructureBoundingBox, Random par3Random, float par4, int par5, int par6, int par7, int par8, int par9)
     {
@@ -581,7 +581,7 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'deletes all continuous Blocks from selected Position upwards. Stops at hitting air'
+     * Deletes all continuous blocks from selected position upwards. Stops at hitting air.
      */
     protected void clearCurrentPositionBlocksUpwards(World par1World, int par2, int par3, int par4, StructureBoundingBox par5StructureBoundingBox)
     {
@@ -601,7 +601,7 @@ public abstract class StructureComponent
     }
 
     /**
-     * 'overwrites Air and Liquids from selected Position downwards, stops at hitting anything else'
+     * Overwrites air and liquids from selected position downwards, stops at hitting anything else.
      */
     protected void fillCurrentPositionBlocksDownwards(World par1World, int par2, int par3, int par4, int par5, int par6, StructureBoundingBox par7StructureBoundingBox)
     {

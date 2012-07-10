@@ -10,7 +10,7 @@ public class Packet102WindowClick extends Packet
     /** The clicked slot (-999 is outside of inventory) */
     public int inventorySlot;
 
-    /** 1 when right-clicking and otherwise 0 - I'm not sure... */
+    /** 1 when right-clicking and otherwise 0 */
     public int mouseClick;
 
     /** A unique number for the action, used for transaction handling */

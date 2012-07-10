@@ -15,7 +15,7 @@ public class StructureStrongholdPieces
     }
 
     /**
-     * 'sets up Arrays with the Structure pieces and their weights'
+     * sets up Arrays with the Structure pieces and their weights
      */
     public static void prepareStructurePieces()
     {
@@ -54,7 +54,7 @@ public class StructureStrongholdPieces
     }
 
     /**
-     * 'translates the PieceWeight class to the Component class'
+     * translates the PieceWeight class to the Component class
      */
     private static ComponentStronghold getStrongholdComponentFromWeightedPiece(Class par0Class, List par1List, Random par2Random, int par3, int par4, int par5, int par6, int par7)
     {

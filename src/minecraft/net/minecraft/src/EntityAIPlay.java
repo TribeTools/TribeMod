@@ -116,7 +116,7 @@ public class EntityAIPlay extends EntityAIBase
         {
             if (villagerObj.getDistanceSqToEntity(targetVillager) > 4D)
             {
-                villagerObj.getNavigator().func_48667_a(targetVillager, field_48358_c);
+                villagerObj.getNavigator().tryMoveToEntityLiving(targetVillager, field_48358_c);
             }
         }
         else if (villagerObj.getNavigator().noPath())
@@ -128,7 +128,7 @@ public class EntityAIPlay extends EntityAIBase
                 return;
             }
 
-            villagerObj.getNavigator().func_48666_a(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord, field_48358_c);
+            villagerObj.getNavigator().tryMoveToXYZ(vec3d.xCoord, vec3d.yCoord, vec3d.zCoord, field_48358_c);
         }
     }
 }

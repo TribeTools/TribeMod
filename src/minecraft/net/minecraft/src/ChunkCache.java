@@ -104,7 +104,7 @@ public class ChunkCache implements IBlockAccess
     }
 
     /**
-     * 'Any Light rendered on a 1.8 Block goes through here'
+     * Any Light rendered on a 1.8 Block goes through here
      */
     public int getLightBrightnessForSkyBlocks(int par1, int par2, int par3, int par4)
     {
@@ -356,7 +356,7 @@ public class ChunkCache implements IBlockAccess
     }
 
     /**
-     * 'is only used on stairs and tilled fields'
+     * is only used on stairs and tilled fields
      */
     public int getSpecialBlockBrightness(EnumSkyBlock par1EnumSkyBlock, int par2, int par3, int par4)
     {

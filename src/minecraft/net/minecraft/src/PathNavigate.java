@@ -58,12 +58,12 @@ public class PathNavigate
         pathSearchRange = par3;
     }
 
-    public void func_48664_a(boolean par1)
+    public void setAvoidsWater(boolean par1)
     {
         avoidsWater = par1;
     }
 
-    public boolean func_48658_a()
+    public boolean getAvoidsWater()
     {
         return avoidsWater;
     }
@@ -73,17 +73,26 @@ public class PathNavigate
         canPassClosedWoodenDoors = par1;
     }
 
-    public void func_48663_c(boolean par1)
+    /**
+     * Sets if the entity can enter open doors
+     */
+    public void setEnterDoors(boolean par1)
     {
         canPassOpenWoodenDoors = par1;
     }
 
-    public boolean func_48665_b()
+    /**
+     * Returns true if the entity can break doors, false otherwise
+     */
+    public boolean getCanBreakDoors()
     {
         return canPassClosedWoodenDoors;
     }
 
-    public void func_48680_d(boolean par1)
+    /**
+     * Sets if the path should avoid sunlight
+     */
+    public void setAvoidSun(boolean par1)
     {
         noSunPathfind = par1;
     }
@@ -96,7 +105,10 @@ public class PathNavigate
         speed = par1;
     }
 
-    public void func_48669_e(boolean par1)
+    /**
+     * Sets if the entity can swim
+     */
+    public void setCanSwim(boolean par1)
     {
         canSwim = par1;
     }
@@ -116,13 +128,19 @@ public class PathNavigate
         }
     }
 
-    public boolean func_48666_a(double par1, double par3, double par5, float par7)
+    /**
+     * Try to find and set a path to XYZ. Returns true if successful.
+     */
+    public boolean tryMoveToXYZ(double par1, double par3, double par5, float par7)
     {
         PathEntity pathentity = getPathToXYZ(MathHelper.floor_double(par1), (int)par3, MathHelper.floor_double(par5));
         return setPath(pathentity, par7);
     }
 
-    public PathEntity func_48679_a(EntityLiving par1EntityLiving)
+    /**
+     * Returns the path to the given EntityLiving
+     */
+    public PathEntity getPathToEntityLiving(EntityLiving par1EntityLiving)
     {
         if (!canNavigate())
         {
@@ -134,9 +152,12 @@ public class PathNavigate
         }
     }
 
-    public boolean func_48667_a(EntityLiving par1EntityLiving, float par2)
+    /**
+     * Try to find and set a path to EntityLiving. Returns true if successful.
+     */
+    public boolean tryMoveToEntityLiving(EntityLiving par1EntityLiving, float par2)
     {
-        PathEntity pathentity = func_48679_a(par1EntityLiving);
+        PathEntity pathentity = getPathToEntityLiving(par1EntityLiving);
 
         if (pathentity != null)
         {
@@ -160,7 +181,7 @@ public class PathNavigate
             return false;
         }
 
-        if (!par1PathEntity.func_48647_a(currentPath))
+        if (!par1PathEntity.isSamePath(currentPath))
         {
             currentPath = par1PathEntity;
         }
@@ -213,7 +234,7 @@ public class PathNavigate
             return;
         }
 
-        Vec3D vec3d = currentPath.getCurrentNodeVec3d(theEntity);
+        Vec3D vec3d = currentPath.getPosition(theEntity);
 
         if (vec3d == null)
         {
@@ -349,10 +370,13 @@ public class PathNavigate
      */
     private boolean canNavigate()
     {
-        return theEntity.onGround || canSwim && func_48657_k();
+        return theEntity.onGround || canSwim && isInFluid();
     }
 
-    private boolean func_48657_k()
+    /**
+     * Returns true if the entity is in water or lava, false otherwise
+     */
+    private boolean isInFluid()
     {
         return theEntity.isInWater() || theEntity.handleLavaMovement();
     }

@@ -36,7 +36,7 @@ public abstract class EntityPlayer extends EntityLiving
     public String playerCloakUrl;
 
     /**
-     * used by EntityPlayer to prevent too many xp orbs from getting absorbed at once.
+     * Used by EntityPlayer to prevent too many xp orbs from getting absorbed at once.
      */
     public int xpCooldown;
     public double field_20066_r;
@@ -94,7 +94,7 @@ public abstract class EntityPlayer extends EntityLiving
     public float experience;
 
     /**
-     * this is the item that is in use when the player is holding down the useItemButton (e.g., bow, food, sword)
+     * This is the item that is in use when the player is holding down the useItemButton (e.g., bow, food, sword)
      */
     private ItemStack itemInUse;
 
@@ -996,7 +996,7 @@ public abstract class EntityPlayer extends EntityLiving
 
             if (entitywolf1.isTamed() && entitywolf1.getEntityToAttack() == null && username.equals(entitywolf1.getOwnerName()) && (!par2 || !entitywolf1.isSitting()))
             {
-                entitywolf1.func_48140_f(false);
+                entitywolf1.setSitting(false);
                 entitywolf1.setTarget(par1EntityLiving);
             }
         }
@@ -1232,7 +1232,7 @@ public abstract class EntityPlayer extends EntityLiving
     }
 
     /**
-     * is called when the player performs a critical hit on the Entity. Args: entity that was hit critically
+     * Called when the player performs a critical hit on the Entity. Args: entity that was hit critically
      */
     public void onCriticalHit(Entity entity)
     {
@@ -1286,7 +1286,7 @@ public abstract class EntityPlayer extends EntityLiving
                 return EnumStatus.OTHER_PROBLEM;
             }
 
-            if (!worldObj.worldProvider.func_48217_e())
+            if (!worldObj.worldProvider.isSurfaceWorld())
             {
                 return EnumStatus.NOT_POSSIBLE_HERE;
             }
@@ -1558,7 +1558,7 @@ public abstract class EntityPlayer extends EntityLiving
     }
 
     /**
-     * jump, Causes this entity to do an upwards motion (jumping)
+     * Causes this entity to do an upwards motion (jumping).
      */
     protected void jump()
     {
@@ -1745,7 +1745,7 @@ public abstract class EntityPlayer extends EntityLiving
         }
         else
         {
-            if (par1ItemStack.getItem().func_46058_c())
+            if (par1ItemStack.getItem().requiresMultipleRenderPasses())
             {
                 return par1ItemStack.getItem().func_46057_a(par1ItemStack.getItemDamage(), par2);
             }

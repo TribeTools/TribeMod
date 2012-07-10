@@ -487,7 +487,7 @@ public final class ItemStack
     }
 
     /**
-     * called when the player releases the use item button. Args: world, entityplayer, itemInUseCount
+     * Called when the player releases the use item button. Args: world, entityplayer, itemInUseCount
      */
     public void onPlayerStoppedUsing(World par1World, EntityPlayer par2EntityPlayer, int par3)
     {
@@ -495,7 +495,7 @@ public final class ItemStack
     }
 
     /**
-     * Returns true if the ItemStack have a NBTTagCompound. Used currently to store enchantments.
+     * Returns true if the ItemStack has an NBTTagCompound. Currently used to store enchantments.
      */
     public boolean hasTagCompound()
     {
@@ -586,7 +586,7 @@ public final class ItemStack
     }
 
     /**
-     * Adds a enchantments with a desired level on the ItemStack.
+     * Adds an enchantment with a desired level on the ItemStack.
      */
     public void addEnchantment(Enchantment par1Enchantment, int par2)
     {

@@ -15,7 +15,12 @@ public class ChunkProviderClient implements IChunkProvider
      * The mapping between ChunkCoordinates and Chunks that ChunkProviderClient maintains.
      */
     private LongHashMap chunkMapping;
-    private List field_889_c;
+
+    /**
+     * This may have been intended to be an iterable version of all currently loaded chunks (MultiplayerChunkCache),
+     * with identical contents to chunkMapping's values. However it is never actually added to.
+     */
+    private List chunkListing;
 
     /** Reference to the World object. */
     private World worldObj;
@@ -23,7 +28,7 @@ public class ChunkProviderClient implements IChunkProvider
     public ChunkProviderClient(World par1World)
     {
         chunkMapping = new LongHashMap();
-        field_889_c = new ArrayList();
+        chunkListing = new ArrayList();
         blankChunk = new EmptyChunk(par1World, 0, 0);
         worldObj = par1World;
     }
@@ -36,7 +41,11 @@ public class ChunkProviderClient implements IChunkProvider
         return true;
     }
 
-    public void func_539_c(int par1, int par2)
+    /**
+     * Unload chunk from ChunkProviderClient's hashmap. Called in response to a Packet50PreChunk with its mode field set
+     * to false
+     */
+    public void unloadChunk(int par1, int par2)
     {
         Chunk chunk = provideChunk(par1, par2);
 
@@ -46,7 +55,7 @@ public class ChunkProviderClient implements IChunkProvider
         }
 
         chunkMapping.remove(ChunkCoordIntPair.chunkXZ2Int(par1, par2));
-        field_889_c.remove(chunk);
+        chunkListing.remove(chunk);
     }
 
     /**

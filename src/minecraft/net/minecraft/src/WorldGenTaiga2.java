@@ -68,7 +68,7 @@ public class WorldGenTaiga2 extends WorldGenerator
             return false;
         }
 
-        func_50073_a(par1World, par3, par4 - 1, par5, Block.dirt.blockID);
+        setBlock(par1World, par3, par4 - 1, par5, Block.dirt.blockID);
         int l1 = par2Random.nextInt(2);
         int j2 = 1;
         boolean flag1 = false;

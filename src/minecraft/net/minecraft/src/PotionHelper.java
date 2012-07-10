@@ -178,7 +178,7 @@ public class PotionHelper
         return i;
     }
 
-    private static int func_40355_a(String par0Str, int par1, int par2, int par3)
+    private static int parsePotionEffects(String par0Str, int par1, int par2, int par3)
     {
         if (par1 >= par0Str.length() || par2 < 0 || par1 >= par2)
         {
@@ -189,14 +189,14 @@ public class PotionHelper
 
         if (i >= 0 && i < par2)
         {
-            int j = func_40355_a(par0Str, par1, i - 1, par3);
+            int j = parsePotionEffects(par0Str, par1, i - 1, par3);
 
             if (j > 0)
             {
                 return j;
             }
 
-            int l = func_40355_a(par0Str, i + 1, par2, par3);
+            int l = parsePotionEffects(par0Str, i + 1, par2, par3);
 
             if (l > 0)
             {
@@ -212,14 +212,14 @@ public class PotionHelper
 
         if (k >= 0 && k < par2)
         {
-            int i1 = func_40355_a(par0Str, par1, k - 1, par3);
+            int i1 = parsePotionEffects(par0Str, par1, k - 1, par3);
 
             if (i1 <= 0)
             {
                 return 0;
             }
 
-            int j1 = func_40355_a(par0Str, k + 1, par2, par3);
+            int j1 = parsePotionEffects(par0Str, k + 1, par2, par3);
 
             if (j1 <= 0)
             {
@@ -373,7 +373,7 @@ public class PotionHelper
                 continue;
             }
 
-            int k = func_40355_a(s, 0, s.length(), par0);
+            int k = parsePotionEffects(s, 0, s.length(), par0);
 
             if (k <= 0)
             {
@@ -385,7 +385,7 @@ public class PotionHelper
 
             if (s1 != null)
             {
-                l = func_40355_a(s1, 0, s1.length(), par0);
+                l = parsePotionEffects(s1, 0, s1.length(), par0);
 
                 if (l < 0)
                 {

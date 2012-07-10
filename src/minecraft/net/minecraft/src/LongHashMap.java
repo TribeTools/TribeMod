@@ -95,7 +95,7 @@ public class LongHashMap
     }
 
     /**
-     * add the key value pair to the list
+     * Add a key-value pair.
      */
     public void add(long par1, Object par3Obj)
     {

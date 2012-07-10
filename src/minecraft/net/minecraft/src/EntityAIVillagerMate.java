@@ -93,7 +93,7 @@ public class EntityAIVillagerMate extends EntityAIBase
 
         if (villagerObj.getDistanceSqToEntity(mate) > 2.25D)
         {
-            villagerObj.getNavigator().func_48667_a(mate, 0.25F);
+            villagerObj.getNavigator().tryMoveToEntityLiving(mate, 0.25F);
         }
         else if (matingTimeout == 0 && mate.getIsMatingFlag())
         {

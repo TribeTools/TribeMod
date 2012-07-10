@@ -89,12 +89,15 @@ public class PathEntity
     /**
      * returns the current PathEntity target node as Vec3D
      */
-    public Vec3D getCurrentNodeVec3d(Entity par1Entity)
+    public Vec3D getPosition(Entity par1Entity)
     {
         return getVectorFromIndex(par1Entity, currentPathIndex);
     }
 
-    public boolean func_48647_a(PathEntity par1PathEntity)
+    /**
+     * Returns true if the EntityPath are the same. Non instance related equals.
+     */
+    public boolean isSamePath(PathEntity par1PathEntity)
     {
         if (par1PathEntity == null)
         {
@@ -117,7 +120,10 @@ public class PathEntity
         return true;
     }
 
-    public boolean func_48639_a(Vec3D par1Vec3D)
+    /**
+     * Returns true if the final PathPoint in the PathEntity is equal to Vec3D coords.
+     */
+    public boolean isDestinationSame(Vec3D par1Vec3D)
     {
         PathPoint pathpoint = getFinalPathPoint();
 

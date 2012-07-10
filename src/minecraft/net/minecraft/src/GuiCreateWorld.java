@@ -12,7 +12,7 @@ public class GuiCreateWorld extends GuiScreen
     private GuiTextField textboxSeed;
     private String folderName;
 
-    /** 'hardcore', 'creative' or 'survival' */
+    /** hardcore', 'creative' or 'survival */
     private String gameMode;
     private boolean field_35365_g;
     private boolean field_40232_h;
@@ -89,7 +89,7 @@ public class GuiCreateWorld extends GuiScreen
         controlList.add(worldTypeButton = new GuiButton(5, width / 2 + 5, 100, 150, 20, stringtranslate.translateKey("selectWorld.mapType")));
         worldTypeButton.drawButton = false;
         textboxWorldName = new GuiTextField(fontRenderer, width / 2 - 100, 60, 200, 20);
-        textboxWorldName.func_50033_b(true);
+        textboxWorldName.setFocused(true);
         textboxWorldName.setText(localizedNewWorldText);
         textboxSeed = new GuiTextField(fontRenderer, width / 2 - 100, 60, 200, 20);
         textboxSeed.setText(seed);
@@ -299,14 +299,14 @@ public class GuiCreateWorld extends GuiScreen
      */
     protected void keyTyped(char par1, int par2)
     {
-        if (textboxWorldName.func_50025_j() && !moreOptions)
+        if (textboxWorldName.getIsFocused() && !moreOptions)
         {
-            textboxWorldName.func_50037_a(par1, par2);
+            textboxWorldName.textboxKeyTyped(par1, par2);
             localizedNewWorldText = textboxWorldName.getText();
         }
-        else if (textboxSeed.func_50025_j() && moreOptions)
+        else if (textboxSeed.getIsFocused() && moreOptions)
         {
-            textboxSeed.func_50037_a(par1, par2);
+            textboxSeed.textboxKeyTyped(par1, par2);
             seed = textboxSeed.getText();
         }
 

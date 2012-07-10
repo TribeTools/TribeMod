@@ -44,38 +44,36 @@ public class BlockDispenser extends BlockContainer
      */
     private void setDispenserDefaultDirection(World par1World, int par2, int par3, int par4)
     {
-        if (par1World.isRemote)
+        if (!par1World.isRemote)
         {
-            return;
+            int i = par1World.getBlockId(par2, par3, par4 - 1);
+            int j = par1World.getBlockId(par2, par3, par4 + 1);
+            int k = par1World.getBlockId(par2 - 1, par3, par4);
+            int l = par1World.getBlockId(par2 + 1, par3, par4);
+            byte byte0 = 3;
+
+            if (Block.opaqueCubeLookup[i] && !Block.opaqueCubeLookup[j])
+            {
+                byte0 = 3;
+            }
+
+            if (Block.opaqueCubeLookup[j] && !Block.opaqueCubeLookup[i])
+            {
+                byte0 = 2;
+            }
+
+            if (Block.opaqueCubeLookup[k] && !Block.opaqueCubeLookup[l])
+            {
+                byte0 = 5;
+            }
+
+            if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[k])
+            {
+                byte0 = 4;
+            }
+
+            par1World.setBlockMetadataWithNotify(par2, par3, par4, byte0);
         }
-
-        int i = par1World.getBlockId(par2, par3, par4 - 1);
-        int j = par1World.getBlockId(par2, par3, par4 + 1);
-        int k = par1World.getBlockId(par2 - 1, par3, par4);
-        int l = par1World.getBlockId(par2 + 1, par3, par4);
-        byte byte0 = 3;
-
-        if (Block.opaqueCubeLookup[i] && !Block.opaqueCubeLookup[j])
-        {
-            byte0 = 3;
-        }
-
-        if (Block.opaqueCubeLookup[j] && !Block.opaqueCubeLookup[i])
-        {
-            byte0 = 2;
-        }
-
-        if (Block.opaqueCubeLookup[k] && !Block.opaqueCubeLookup[l])
-        {
-            byte0 = 5;
-        }
-
-        if (Block.opaqueCubeLookup[l] && !Block.opaqueCubeLookup[k])
-        {
-            byte0 = 4;
-        }
-
-        par1World.setBlockMetadataWithNotify(par2, par3, par4, byte0);
     }
 
     /**
@@ -92,16 +90,10 @@ public class BlockDispenser extends BlockContainer
         {
             return blockIndexInTexture + 17;
         }
-
-        int i = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
-
-        if (par5 != i)
-        {
-            return blockIndexInTexture;
-        }
         else
         {
-            return blockIndexInTexture + 1;
+            int i = par1IBlockAccess.getBlockMetadata(par2, par3, par4);
+            return par5 == i ? blockIndexInTexture + 1 : blockIndexInTexture;
         }
     }
 
@@ -110,24 +102,7 @@ public class BlockDispenser extends BlockContainer
      */
     public int getBlockTextureFromSide(int par1)
     {
-        if (par1 == 1)
-        {
-            return blockIndexInTexture + 17;
-        }
-
-        if (par1 == 0)
-        {
-            return blockIndexInTexture + 17;
-        }
-
-        if (par1 == 3)
-        {
-            return blockIndexInTexture + 1;
-        }
-        else
-        {
-            return blockIndexInTexture;
-        }
+        return par1 != 1 ? par1 != 0 ? par1 != 3 ? blockIndexInTexture : blockIndexInTexture + 1 : blockIndexInTexture + 17 : blockIndexInTexture + 17;
     }
 
     /**
@@ -192,65 +167,70 @@ public class BlockDispenser extends BlockContainer
             }
             else
             {
-                if (itemstack.itemID == Item.arrow.shiftedIndex)
+                boolean flag = ModLoader.dispenseEntity(par1World, d, d1, d2, j, k, itemstack);
+
+                if (!flag)
                 {
-                    EntityArrow entityarrow = new EntityArrow(par1World, d, d1, d2);
-                    entityarrow.setArrowHeading(j, 0.10000000149011612D, k, 1.1F, 6F);
-                    entityarrow.doesArrowBelongToPlayer = true;
-                    par1World.spawnEntityInWorld(entityarrow);
-                    par1World.playAuxSFX(1002, par2, par3, par4, 0);
-                }
-                else if (itemstack.itemID == Item.egg.shiftedIndex)
-                {
-                    EntityEgg entityegg = new EntityEgg(par1World, d, d1, d2);
-                    entityegg.setThrowableHeading(j, 0.10000000149011612D, k, 1.1F, 6F);
-                    par1World.spawnEntityInWorld(entityegg);
-                    par1World.playAuxSFX(1002, par2, par3, par4, 0);
-                }
-                else if (itemstack.itemID == Item.snowball.shiftedIndex)
-                {
-                    EntitySnowball entitysnowball = new EntitySnowball(par1World, d, d1, d2);
-                    entitysnowball.setThrowableHeading(j, 0.10000000149011612D, k, 1.1F, 6F);
-                    par1World.spawnEntityInWorld(entitysnowball);
-                    par1World.playAuxSFX(1002, par2, par3, par4, 0);
-                }
-                else if (itemstack.itemID == Item.potion.shiftedIndex && ItemPotion.isSplash(itemstack.getItemDamage()))
-                {
-                    EntityPotion entitypotion = new EntityPotion(par1World, d, d1, d2, itemstack.getItemDamage());
-                    entitypotion.setThrowableHeading(j, 0.10000000149011612D, k, 1.375F, 3F);
-                    par1World.spawnEntityInWorld(entitypotion);
-                    par1World.playAuxSFX(1002, par2, par3, par4, 0);
-                }
-                else if (itemstack.itemID == Item.expBottle.shiftedIndex)
-                {
-                    EntityExpBottle entityexpbottle = new EntityExpBottle(par1World, d, d1, d2);
-                    entityexpbottle.setThrowableHeading(j, 0.10000000149011612D, k, 1.375F, 3F);
-                    par1World.spawnEntityInWorld(entityexpbottle);
-                    par1World.playAuxSFX(1002, par2, par3, par4, 0);
-                }
-                else if (itemstack.itemID == Item.monsterPlacer.shiftedIndex)
-                {
-                    ItemMonsterPlacer.func_48440_a(par1World, itemstack.getItemDamage(), d + (double)j * 0.29999999999999999D, d1 - 0.29999999999999999D, d2 + (double)k * 0.29999999999999999D);
-                    par1World.playAuxSFX(1002, par2, par3, par4, 0);
-                }
-                else if (itemstack.itemID == Item.fireballCharge.shiftedIndex)
-                {
-                    EntitySmallFireball entitysmallfireball = new EntitySmallFireball(par1World, d + (double)j * 0.29999999999999999D, d1, d2 + (double)k * 0.29999999999999999D, (double)j + par5Random.nextGaussian() * 0.050000000000000003D, par5Random.nextGaussian() * 0.050000000000000003D, (double)k + par5Random.nextGaussian() * 0.050000000000000003D);
-                    par1World.spawnEntityInWorld(entitysmallfireball);
-                    par1World.playAuxSFX(1009, par2, par3, par4, 0);
-                }
-                else
-                {
-                    EntityItem entityitem = new EntityItem(par1World, d, d1 - 0.29999999999999999D, d2, itemstack);
-                    double d3 = par5Random.nextDouble() * 0.10000000000000001D + 0.20000000000000001D;
-                    entityitem.motionX = (double)j * d3;
-                    entityitem.motionY = 0.20000000298023224D;
-                    entityitem.motionZ = (double)k * d3;
-                    entityitem.motionX += par5Random.nextGaussian() * 0.0074999998323619366D * 6D;
-                    entityitem.motionY += par5Random.nextGaussian() * 0.0074999998323619366D * 6D;
-                    entityitem.motionZ += par5Random.nextGaussian() * 0.0074999998323619366D * 6D;
-                    par1World.spawnEntityInWorld(entityitem);
-                    par1World.playAuxSFX(1000, par2, par3, par4, 0);
+                    if (itemstack.itemID == Item.arrow.shiftedIndex)
+                    {
+                        EntityArrow entityarrow = new EntityArrow(par1World, d, d1, d2);
+                        entityarrow.setArrowHeading(j, 0.10000000149011612D, k, 1.1F, 6F);
+                        entityarrow.doesArrowBelongToPlayer = true;
+                        par1World.spawnEntityInWorld(entityarrow);
+                        par1World.playAuxSFX(1002, par2, par3, par4, 0);
+                    }
+                    else if (itemstack.itemID == Item.egg.shiftedIndex)
+                    {
+                        EntityEgg entityegg = new EntityEgg(par1World, d, d1, d2);
+                        entityegg.setThrowableHeading(j, 0.10000000149011612D, k, 1.1F, 6F);
+                        par1World.spawnEntityInWorld(entityegg);
+                        par1World.playAuxSFX(1002, par2, par3, par4, 0);
+                    }
+                    else if (itemstack.itemID == Item.snowball.shiftedIndex)
+                    {
+                        EntitySnowball entitysnowball = new EntitySnowball(par1World, d, d1, d2);
+                        entitysnowball.setThrowableHeading(j, 0.10000000149011612D, k, 1.1F, 6F);
+                        par1World.spawnEntityInWorld(entitysnowball);
+                        par1World.playAuxSFX(1002, par2, par3, par4, 0);
+                    }
+                    else if (itemstack.itemID == Item.potion.shiftedIndex && ItemPotion.isSplash(itemstack.getItemDamage()))
+                    {
+                        EntityPotion entitypotion = new EntityPotion(par1World, d, d1, d2, itemstack.getItemDamage());
+                        entitypotion.setThrowableHeading(j, 0.10000000149011612D, k, 1.375F, 3F);
+                        par1World.spawnEntityInWorld(entitypotion);
+                        par1World.playAuxSFX(1002, par2, par3, par4, 0);
+                    }
+                    else if (itemstack.itemID == Item.expBottle.shiftedIndex)
+                    {
+                        EntityExpBottle entityexpbottle = new EntityExpBottle(par1World, d, d1, d2);
+                        entityexpbottle.setThrowableHeading(j, 0.10000000149011612D, k, 1.375F, 3F);
+                        par1World.spawnEntityInWorld(entityexpbottle);
+                        par1World.playAuxSFX(1002, par2, par3, par4, 0);
+                    }
+                    else if (itemstack.itemID == Item.monsterPlacer.shiftedIndex)
+                    {
+                        ItemMonsterPlacer.spawnCreature(par1World, itemstack.getItemDamage(), d + (double)j * 0.29999999999999999D, d1 - 0.29999999999999999D, d2 + (double)k * 0.29999999999999999D);
+                        par1World.playAuxSFX(1002, par2, par3, par4, 0);
+                    }
+                    else if (itemstack.itemID == Item.fireballCharge.shiftedIndex)
+                    {
+                        EntitySmallFireball entitysmallfireball = new EntitySmallFireball(par1World, d + (double)j * 0.29999999999999999D, d1, d2 + (double)k * 0.29999999999999999D, (double)j + par5Random.nextGaussian() * 0.050000000000000003D, par5Random.nextGaussian() * 0.050000000000000003D, (double)k + par5Random.nextGaussian() * 0.050000000000000003D);
+                        par1World.spawnEntityInWorld(entitysmallfireball);
+                        par1World.playAuxSFX(1009, par2, par3, par4, 0);
+                    }
+                    else
+                    {
+                        EntityItem entityitem = new EntityItem(par1World, d, d1 - 0.29999999999999999D, d2, itemstack);
+                        double d3 = par5Random.nextDouble() * 0.10000000000000001D + 0.20000000000000001D;
+                        entityitem.motionX = (double)j * d3;
+                        entityitem.motionY = 0.20000000298023224D;
+                        entityitem.motionZ = (double)k * d3;
+                        entityitem.motionX += par5Random.nextGaussian() * 0.0074999998323619366D * 6D;
+                        entityitem.motionY += par5Random.nextGaussian() * 0.0074999998323619366D * 6D;
+                        entityitem.motionZ += par5Random.nextGaussian() * 0.0074999998323619366D * 6D;
+                        par1World.spawnEntityInWorld(entityitem);
+                        par1World.playAuxSFX(1000, par2, par3, par4, 0);
+                    }
                 }
 
                 par1World.playAuxSFX(2000, par2, par3, par4, j + 1 + (k + 1) * 3);
@@ -331,50 +311,40 @@ public class BlockDispenser extends BlockContainer
 
         if (tileentitydispenser != null)
         {
-            label0:
-
             for (int i = 0; i < tileentitydispenser.getSizeInventory(); i++)
             {
                 ItemStack itemstack = tileentitydispenser.getStackInSlot(i);
 
-                if (itemstack == null)
+                if (itemstack != null)
                 {
-                    continue;
+                    float f = random.nextFloat() * 0.8F + 0.1F;
+                    float f1 = random.nextFloat() * 0.8F + 0.1F;
+                    float f2 = random.nextFloat() * 0.8F + 0.1F;
+
+                    while (itemstack.stackSize > 0)
+                    {
+                        int j = random.nextInt(21) + 10;
+
+                        if (j > itemstack.stackSize)
+                        {
+                            j = itemstack.stackSize;
+                        }
+
+                        itemstack.stackSize -= j;
+                        EntityItem entityitem = new EntityItem(par1World, (float)par2 + f, (float)par3 + f1, (float)par4 + f2, new ItemStack(itemstack.itemID, j, itemstack.getItemDamage()));
+
+                        if (itemstack.hasTagCompound())
+                        {
+                            entityitem.item.setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
+                        }
+
+                        float f3 = 0.05F;
+                        entityitem.motionX = (float)random.nextGaussian() * f3;
+                        entityitem.motionY = (float)random.nextGaussian() * f3 + 0.2F;
+                        entityitem.motionZ = (float)random.nextGaussian() * f3;
+                        par1World.spawnEntityInWorld(entityitem);
+                    }
                 }
-
-                float f = random.nextFloat() * 0.8F + 0.1F;
-                float f1 = random.nextFloat() * 0.8F + 0.1F;
-                float f2 = random.nextFloat() * 0.8F + 0.1F;
-
-                do
-                {
-                    if (itemstack.stackSize <= 0)
-                    {
-                        continue label0;
-                    }
-
-                    int j = random.nextInt(21) + 10;
-
-                    if (j > itemstack.stackSize)
-                    {
-                        j = itemstack.stackSize;
-                    }
-
-                    itemstack.stackSize -= j;
-                    EntityItem entityitem = new EntityItem(par1World, (float)par2 + f, (float)par3 + f1, (float)par4 + f2, new ItemStack(itemstack.itemID, j, itemstack.getItemDamage()));
-
-                    if (itemstack.hasTagCompound())
-                    {
-                        entityitem.item.setTagCompound((NBTTagCompound)itemstack.getTagCompound().copy());
-                    }
-
-                    float f3 = 0.05F;
-                    entityitem.motionX = (float)random.nextGaussian() * f3;
-                    entityitem.motionY = (float)random.nextGaussian() * f3 + 0.2F;
-                    entityitem.motionZ = (float)random.nextGaussian() * f3;
-                    par1World.spawnEntityInWorld(entityitem);
-                }
-                while (true);
             }
         }
 

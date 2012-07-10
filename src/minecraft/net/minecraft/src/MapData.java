@@ -9,17 +9,30 @@ public class MapData extends WorldSavedData
     public byte dimension;
     public byte scale;
     public byte colors[];
-    public int field_28175_g;
-    public List field_28174_h;
-    private Map field_28172_j;
+
+    /**
+     * Incremented each update of the map item, used for the patchy updating map effect and the spinning player icons
+     * while in the End and Nether.
+     */
+    public int randomEffect;
+
+    /**
+     * Holds a reference to the MapInfo of the players who own a copy of the map
+     */
+    public List playersArrayList;
+
+    /**
+     * Holds a reference to the players who own a copy of the map and a reference to their MapInfo
+     */
+    private Map playersHashMap;
     public List playersVisibleOnMap;
 
     public MapData(String par1Str)
     {
         super(par1Str);
         colors = new byte[16384];
-        field_28174_h = new ArrayList();
-        field_28172_j = new HashMap();
+        playersArrayList = new ArrayList();
+        playersHashMap = new HashMap();
         playersVisibleOnMap = new ArrayList();
     }
 
@@ -93,25 +106,28 @@ public class MapData extends WorldSavedData
         par1NBTTagCompound.setByteArray("colors", colors);
     }
 
-    public void func_28169_a(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
+    /**
+     * Adds the player passed to the list of visible players and checks to see which players are visible
+     */
+    public void updateVisiblePlayers(EntityPlayer par1EntityPlayer, ItemStack par2ItemStack)
     {
-        if (!field_28172_j.containsKey(par1EntityPlayer))
+        if (!playersHashMap.containsKey(par1EntityPlayer))
         {
             MapInfo mapinfo = new MapInfo(this, par1EntityPlayer);
-            field_28172_j.put(par1EntityPlayer, mapinfo);
-            field_28174_h.add(mapinfo);
+            playersHashMap.put(par1EntityPlayer, mapinfo);
+            playersArrayList.add(mapinfo);
         }
 
         playersVisibleOnMap.clear();
 
-        for (int i = 0; i < field_28174_h.size(); i++)
+        for (int i = 0; i < playersArrayList.size(); i++)
         {
-            MapInfo mapinfo1 = (MapInfo)field_28174_h.get(i);
+            MapInfo mapinfo1 = (MapInfo)playersArrayList.get(i);
 
             if (mapinfo1.entityplayerObj.isDead || !mapinfo1.entityplayerObj.inventory.hasItemStack(par2ItemStack))
             {
-                field_28172_j.remove(mapinfo1.entityplayerObj);
-                field_28174_h.remove(mapinfo1);
+                playersHashMap.remove(mapinfo1.entityplayerObj);
+                playersArrayList.remove(mapinfo1);
                 continue;
             }
 
@@ -132,7 +148,7 @@ public class MapData extends WorldSavedData
 
             if (dimension < 0)
             {
-                int l = field_28175_g / 10;
+                int l = randomEffect / 10;
                 byte3 = (byte)(l * l * 0x209a771 + l * 121 >> 15 & 0xf);
             }
 
@@ -147,9 +163,9 @@ public class MapData extends WorldSavedData
     {
         super.markDirty();
 
-        for (int i = 0; i < field_28174_h.size(); i++)
+        for (int i = 0; i < playersArrayList.size(); i++)
         {
-            MapInfo mapinfo = (MapInfo)field_28174_h.get(i);
+            MapInfo mapinfo = (MapInfo)playersArrayList.get(i);
 
             if (mapinfo.field_28119_b[par1] < 0 || mapinfo.field_28119_b[par1] > par2)
             {
@@ -163,7 +179,10 @@ public class MapData extends WorldSavedData
         }
     }
 
-    public void func_28171_a(byte par1ArrayOfByte[])
+    /**
+     * Updates the client's map with information from other players in MP
+     */
+    public void updateMPMapData(byte par1ArrayOfByte[])
     {
         if (par1ArrayOfByte[0] == 0)
         {

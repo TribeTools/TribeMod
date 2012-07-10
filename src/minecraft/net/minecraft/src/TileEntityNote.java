@@ -84,6 +84,6 @@ public class TileEntityNote extends TileEntity
             byte0 = 4;
         }
 
-        par1World.playNoteAt(par2, par3, par4, byte0, note);
+        par1World.sendClientEvent(par2, par3, par4, byte0, note);
     }
 }

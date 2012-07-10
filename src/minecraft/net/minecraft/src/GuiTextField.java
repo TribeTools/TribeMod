@@ -10,6 +10,8 @@ public class GuiTextField extends Gui
     private final FontRenderer fontRenderer;
     private final int xPos;
     private final int yPos;
+
+    /** The width of this text field. */
     private final int width;
     private final int height;
 
@@ -17,33 +19,41 @@ public class GuiTextField extends Gui
     private String text;
     private int maxStringLength;
     private int cursorCounter;
-    private boolean field_50044_j;
-    private boolean field_50045_k;
+    private boolean enableBackgroundDrawing;
+
+    /**
+     * if true the textbox can lose focus by clicking elsewhere on the screen
+     */
+    private boolean canLoseFocus;
 
     /**
      * If this value is true along isEnabled, keyTyped will process the keys.
      */
     private boolean isFocused;
-    private boolean field_50043_m;
+
+    /**
+     * If this value is true along isFocused, keyTyped will process the keys.
+     */
+    private boolean isEnabled;
     private int field_50041_n;
     private int field_50042_o;
     private int field_50048_p;
-    private int field_50047_q;
-    private int field_50046_r;
+    private int enabledColor;
+    private int disabledColor;
 
     public GuiTextField(FontRenderer par1FontRenderer, int par2, int par3, int par4, int par5)
     {
         text = "";
         maxStringLength = 32;
-        field_50044_j = true;
-        field_50045_k = true;
+        enableBackgroundDrawing = true;
+        canLoseFocus = true;
         isFocused = false;
-        field_50043_m = true;
+        isEnabled = true;
         field_50041_n = 0;
         field_50042_o = 0;
         field_50048_p = 0;
-        field_50047_q = 0xe0e0e0;
-        field_50046_r = 0x707070;
+        enabledColor = 0xe0e0e0;
+        disabledColor = 0x707070;
         fontRenderer = par1FontRenderer;
         xPos = par2;
         yPos = par3;
@@ -94,7 +104,7 @@ public class GuiTextField extends Gui
     public void func_50031_b(String par1Str)
     {
         String s = "";
-        String s1 = ChatAllowedCharacters.func_52019_a(par1Str);
+        String s1 = ChatAllowedCharacters.filerAllowedCharacters(par1Str);
         int i = field_50042_o >= field_50048_p ? field_50048_p : field_50042_o;
         int j = field_50042_o >= field_50048_p ? field_50042_o : field_50048_p;
         int k = maxStringLength - text.length() - (i - field_50048_p);
@@ -250,9 +260,12 @@ public class GuiTextField extends Gui
         func_50030_e(text.length());
     }
 
-    public boolean func_50037_a(char par1, int par2)
+    /**
+     * Call this method from you GuiScreen to process the keys into textbox.
+     */
+    public boolean textboxKeyTyped(char par1, int par2)
     {
-        if (!field_50043_m || !isFocused)
+        if (!isEnabled || !isFocused)
         {
             return false;
         }
@@ -265,7 +278,7 @@ public class GuiTextField extends Gui
                 return true;
 
             case 3:
-                GuiScreen.func_50050_a(func_50039_c());
+                GuiScreen.setClipboardString(func_50039_c());
                 return true;
 
             case 22:
@@ -273,7 +286,7 @@ public class GuiTextField extends Gui
                 return true;
 
             case 24:
-                GuiScreen.func_50050_a(func_50039_c());
+                GuiScreen.setClipboardString(func_50039_c());
                 func_50031_b("");
                 return true;
         }
@@ -281,9 +294,9 @@ public class GuiTextField extends Gui
         switch (par2)
         {
             case 203:
-                if (GuiScreen.func_50049_m())
+                if (GuiScreen.isShiftKeyDown())
                 {
-                    if (GuiScreen.func_50051_l())
+                    if (GuiScreen.isCtrlKeyDown())
                     {
                         func_50032_g(func_50024_a(-1, func_50036_k()));
                     }
@@ -292,7 +305,7 @@ public class GuiTextField extends Gui
                         func_50032_g(func_50036_k() - 1);
                     }
                 }
-                else if (GuiScreen.func_50051_l())
+                else if (GuiScreen.isCtrlKeyDown())
                 {
                     func_50030_e(func_50028_c(-1));
                 }
@@ -304,9 +317,9 @@ public class GuiTextField extends Gui
                 return true;
 
             case 205:
-                if (GuiScreen.func_50049_m())
+                if (GuiScreen.isShiftKeyDown())
                 {
-                    if (GuiScreen.func_50051_l())
+                    if (GuiScreen.isCtrlKeyDown())
                     {
                         func_50032_g(func_50024_a(1, func_50036_k()));
                     }
@@ -315,7 +328,7 @@ public class GuiTextField extends Gui
                         func_50032_g(func_50036_k() + 1);
                     }
                 }
-                else if (GuiScreen.func_50051_l())
+                else if (GuiScreen.isCtrlKeyDown())
                 {
                     func_50030_e(func_50028_c(1));
                 }
@@ -327,7 +340,7 @@ public class GuiTextField extends Gui
                 return true;
 
             case 14:
-                if (GuiScreen.func_50051_l())
+                if (GuiScreen.isCtrlKeyDown())
                 {
                     func_50021_a(-1);
                 }
@@ -339,7 +352,7 @@ public class GuiTextField extends Gui
                 return true;
 
             case 211:
-                if (GuiScreen.func_50051_l())
+                if (GuiScreen.isCtrlKeyDown())
                 {
                     func_50021_a(1);
                 }
@@ -351,7 +364,7 @@ public class GuiTextField extends Gui
                 return true;
 
             case 199:
-                if (GuiScreen.func_50049_m())
+                if (GuiScreen.isShiftKeyDown())
                 {
                     func_50032_g(0);
                 }
@@ -363,7 +376,7 @@ public class GuiTextField extends Gui
                 return true;
 
             case 207:
-                if (GuiScreen.func_50049_m())
+                if (GuiScreen.isShiftKeyDown())
                 {
                     func_50032_g(text.length());
                 }
@@ -393,22 +406,22 @@ public class GuiTextField extends Gui
     {
         boolean flag = par1 >= xPos && par1 < xPos + width && par2 >= yPos && par2 < yPos + height;
 
-        if (field_50045_k)
+        if (canLoseFocus)
         {
-            func_50033_b(field_50043_m && flag);
+            setFocused(isEnabled && flag);
         }
 
         if (isFocused && par3 == 0)
         {
             int i = par1 - xPos;
 
-            if (field_50044_j)
+            if (enableBackgroundDrawing)
             {
                 i -= 4;
             }
 
-            String s = fontRenderer.func_50107_a(text.substring(field_50041_n), func_50019_l());
-            func_50030_e(fontRenderer.func_50107_a(s, i).length() + field_50041_n);
+            String s = fontRenderer.trimStringToWidth(text.substring(field_50041_n), func_50019_l());
+            func_50030_e(fontRenderer.trimStringToWidth(s, i).length() + field_50041_n);
         }
     }
 
@@ -417,20 +430,20 @@ public class GuiTextField extends Gui
      */
     public void drawTextBox()
     {
-        if (func_50022_i())
+        if (getEnableBackgroundDrawing())
         {
             drawRect(xPos - 1, yPos - 1, xPos + width + 1, yPos + height + 1, 0xffa0a0a0);
             drawRect(xPos, yPos, xPos + width, yPos + height, 0xff000000);
         }
 
-        int i = field_50043_m ? field_50047_q : field_50046_r;
+        int i = isEnabled ? enabledColor : disabledColor;
         int j = field_50042_o - field_50041_n;
         int k = field_50048_p - field_50041_n;
-        String s = fontRenderer.func_50107_a(text.substring(field_50041_n), func_50019_l());
+        String s = fontRenderer.trimStringToWidth(text.substring(field_50041_n), func_50019_l());
         boolean flag = j >= 0 && j <= s.length();
         boolean flag1 = isFocused && (cursorCounter / 6) % 2 == 0 && flag;
-        int l = field_50044_j ? xPos + 4 : xPos;
-        int i1 = field_50044_j ? yPos + (height - 8) / 2 : yPos;
+        int l = enableBackgroundDrawing ? xPos + 4 : xPos;
+        int i1 = enableBackgroundDrawing ? yPos + (height - 8) / 2 : yPos;
         int j1 = l;
 
         if (k > s.length())
@@ -532,17 +545,26 @@ public class GuiTextField extends Gui
         return field_50042_o;
     }
 
-    public boolean func_50022_i()
+    /**
+     * get enable drawing background and outline
+     */
+    public boolean getEnableBackgroundDrawing()
     {
-        return field_50044_j;
+        return enableBackgroundDrawing;
     }
 
-    public void func_50027_a(boolean par1)
+    /**
+     * enable drawing background and outline
+     */
+    public void setEnableBackgroundDrawing(boolean par1)
     {
-        field_50044_j = par1;
+        enableBackgroundDrawing = par1;
     }
 
-    public void func_50033_b(boolean par1)
+    /**
+     * setter for the focused field
+     */
+    public void setFocused(boolean par1)
     {
         if (par1 && !isFocused)
         {
@@ -552,7 +574,10 @@ public class GuiTextField extends Gui
         isFocused = par1;
     }
 
-    public boolean func_50025_j()
+    /**
+     * getter for the focused field
+     */
+    public boolean getIsFocused()
     {
         return isFocused;
     }
@@ -564,7 +589,7 @@ public class GuiTextField extends Gui
 
     public int func_50019_l()
     {
-        return func_50022_i() ? width - 8 : width;
+        return getEnableBackgroundDrawing() ? width - 8 : width;
     }
 
     public void func_50032_g(int par1)
@@ -591,12 +616,12 @@ public class GuiTextField extends Gui
             }
 
             int j = func_50019_l();
-            String s = fontRenderer.func_50107_a(text.substring(field_50041_n), j);
+            String s = fontRenderer.trimStringToWidth(text.substring(field_50041_n), j);
             int k = s.length() + field_50041_n;
 
             if (par1 == field_50041_n)
             {
-                field_50041_n -= fontRenderer.func_50104_a(text, j, true).length();
+                field_50041_n -= fontRenderer.trimStringToWidth(text, j, true).length();
             }
 
             if (par1 > k)
@@ -620,8 +645,11 @@ public class GuiTextField extends Gui
         }
     }
 
-    public void func_50026_c(boolean par1)
+    /**
+     * if true the textbox can lose focus by clicking elsewhere on the screen
+     */
+    public void setCanLoseFocus(boolean par1)
     {
-        field_50045_k = par1;
+        canLoseFocus = par1;
     }
 }

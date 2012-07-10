@@ -29,7 +29,10 @@ public abstract class WorldGenerator
     {
     }
 
-    protected void func_50073_a(World par1World, int par2, int par3, int par4, int par5)
+    /**
+     * Sets the block without metadata in the world, notifying neighbors if enabled.
+     */
+    protected void setBlock(World par1World, int par2, int par3, int par4, int par5)
     {
         setBlockAndMetadata(par1World, par2, par3, par4, par5, 0);
     }

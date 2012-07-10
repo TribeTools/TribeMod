@@ -7,7 +7,11 @@ public class SlotCrafting extends Slot
 
     /** The player that is using the GUI where this slot resides. */
     private EntityPlayer thePlayer;
-    private int field_48436_g;
+
+    /**
+     * The number of items that have been crafted so far. Gets passed to ItemStack.onCrafting before being reset.
+     */
+    private int amountCrafted;
 
     public SlotCrafting(EntityPlayer par1EntityPlayer, IInventory par2IInventory, IInventory par3IInventory, int par4, int par5, int par6)
     {
@@ -32,7 +36,7 @@ public class SlotCrafting extends Slot
     {
         if (getHasStack())
         {
-            field_48436_g += Math.min(par1, getStack().stackSize);
+            amountCrafted += Math.min(par1, getStack().stackSize);
         }
 
         return super.decrStackSize(par1);
@@ -40,14 +44,14 @@ public class SlotCrafting extends Slot
 
     protected void func_48435_a(ItemStack par1ItemStack, int par2)
     {
-        field_48436_g += par2;
+        amountCrafted += par2;
         func_48434_c(par1ItemStack);
     }
 
     protected void func_48434_c(ItemStack par1ItemStack)
     {
-        par1ItemStack.onCrafting(thePlayer.worldObj, thePlayer, field_48436_g);
-        field_48436_g = 0;
+        par1ItemStack.onCrafting(thePlayer.worldObj, thePlayer, amountCrafted);
+        amountCrafted = 0;
 
         if (par1ItemStack.itemID == Block.workbench.blockID)
         {
@@ -89,6 +93,8 @@ public class SlotCrafting extends Slot
         {
             thePlayer.addStat(AchievementList.bookcase, 1);
         }
+
+        ModLoader.takenFromCrafting(thePlayer, par1ItemStack, craftMatrix);
     }
 
     /**
@@ -102,32 +108,26 @@ public class SlotCrafting extends Slot
         {
             ItemStack itemstack = craftMatrix.getStackInSlot(i);
 
-            if (itemstack == null)
+            if (itemstack != null)
             {
-                continue;
-            }
+                craftMatrix.decrStackSize(i, 1);
 
-            craftMatrix.decrStackSize(i, 1);
+                if (itemstack.getItem().hasContainerItem())
+                {
+                    ItemStack itemstack1 = new ItemStack(itemstack.getItem().getContainerItem());
 
-            if (!itemstack.getItem().hasContainerItem())
-            {
-                continue;
-            }
-
-            ItemStack itemstack1 = new ItemStack(itemstack.getItem().getContainerItem());
-
-            if (itemstack.getItem().doesContainerItemLeaveCraftingGrid(itemstack) && thePlayer.inventory.addItemStackToInventory(itemstack1))
-            {
-                continue;
-            }
-
-            if (craftMatrix.getStackInSlot(i) == null)
-            {
-                craftMatrix.setInventorySlotContents(i, itemstack1);
-            }
-            else
-            {
-                thePlayer.dropPlayerItem(itemstack1);
+                    if (!itemstack.getItem().doesContainerItemLeaveCraftingGrid(itemstack) || !thePlayer.inventory.addItemStackToInventory(itemstack1))
+                    {
+                        if (craftMatrix.getStackInSlot(i) == null)
+                        {
+                            craftMatrix.setInventorySlotContents(i, itemstack1);
+                        }
+                        else
+                        {
+                            thePlayer.dropPlayerItem(itemstack1);
+                        }
+                    }
+                }
             }
         }
     }

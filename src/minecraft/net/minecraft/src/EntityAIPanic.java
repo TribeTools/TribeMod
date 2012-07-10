@@ -3,7 +3,7 @@ package net.minecraft.src;
 public class EntityAIPanic extends EntityAIBase
 {
     private EntityCreature field_48316_a;
-    private float field_48314_b;
+    private float speed;
     private double field_48315_c;
     private double field_48312_d;
     private double field_48313_e;
@@ -11,7 +11,7 @@ public class EntityAIPanic extends EntityAIBase
     public EntityAIPanic(EntityCreature par1EntityCreature, float par2)
     {
         field_48316_a = par1EntityCreature;
-        field_48314_b = par2;
+        speed = par2;
         setMutexBits(1);
     }
 
@@ -45,7 +45,7 @@ public class EntityAIPanic extends EntityAIBase
      */
     public void startExecuting()
     {
-        field_48316_a.getNavigator().func_48666_a(field_48315_c, field_48312_d, field_48313_e, field_48314_b);
+        field_48316_a.getNavigator().tryMoveToXYZ(field_48315_c, field_48312_d, field_48313_e, speed);
     }
 
     /**

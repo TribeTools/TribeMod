@@ -177,7 +177,7 @@ public class StringTranslate
         return translateTable.getProperty((new StringBuilder()).append(par1Str).append(".name").toString(), "");
     }
 
-    public static boolean isBidrectional(String par0Str)
+    public static boolean isBidirectional(String par0Str)
     {
         return "ar_SA".equals(par0Str) || "he_IL".equals(par0Str);
     }

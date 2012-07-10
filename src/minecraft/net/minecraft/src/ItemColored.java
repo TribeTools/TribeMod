@@ -39,7 +39,7 @@ public class ItemColored extends ItemBlock
     }
 
     /**
-     * sets the array of strings to be used for name lookups from item damage to metadata
+     * Sets the array of strings to be used for name lookups from item damage to metadata
      */
     public ItemColored setBlockNames(String par1ArrayOfStr[])
     {

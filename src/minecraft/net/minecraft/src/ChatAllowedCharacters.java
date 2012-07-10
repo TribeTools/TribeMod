@@ -60,7 +60,10 @@ public class ChatAllowedCharacters
         return par0 != '\247' && (allowedCharacters.indexOf(par0) >= 0 || par0 > ' ');
     }
 
-    public static String func_52019_a(String par0Str)
+    /**
+     * Filter string by only keeping those characters for which isAllowedCharacter() returns true.
+     */
+    public static String filerAllowedCharacters(String par0Str)
     {
         StringBuilder stringbuilder = new StringBuilder();
         char ac[] = par0Str.toCharArray();

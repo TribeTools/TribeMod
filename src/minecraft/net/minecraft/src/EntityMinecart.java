@@ -176,9 +176,9 @@ public class EntityMinecart extends Entity implements IInventory
         func_41029_h(-func_41030_m());
         func_41028_c(10);
         setBeenAttacked();
-        func_41024_b(func_41025_i() + par2 * 10);
+        setDamage(getDamage() + par2 * 10);
 
-        if (func_41025_i() > 40)
+        if (getDamage() > 40)
         {
             if (riddenByEntity != null)
             {
@@ -249,7 +249,7 @@ public class EntityMinecart extends Entity implements IInventory
     {
         func_41029_h(-func_41030_m());
         func_41028_c(10);
-        func_41024_b(func_41025_i() + func_41025_i() * 10);
+        setDamage(getDamage() + getDamage() * 10);
     }
 
     /**
@@ -324,9 +324,9 @@ public class EntityMinecart extends Entity implements IInventory
             func_41028_c(func_41023_l() - 1);
         }
 
-        if (func_41025_i() > 0)
+        if (getDamage() > 0)
         {
-            func_41024_b(func_41025_i() - 1);
+            setDamage(getDamage() - 1);
         }
 
         if (posY < -64D)
@@ -1270,12 +1270,20 @@ public class EntityMinecart extends Entity implements IInventory
     {
     }
 
-    public void func_41024_b(int par1)
+    /**
+     * Sets the current amount of damage the minecart has taken. Decreases over time. The cart breaks when this is over
+     * 40.
+     */
+    public void setDamage(int par1)
     {
         dataWatcher.updateObject(19, Integer.valueOf(par1));
     }
 
-    public int func_41025_i()
+    /**
+     * Gets the current amount of damage the minecart has taken. Decreases over time. The cart breaks when this is over
+     * 40.
+     */
+    public int getDamage()
     {
         return dataWatcher.getWatchableObjectInt(19);
     }

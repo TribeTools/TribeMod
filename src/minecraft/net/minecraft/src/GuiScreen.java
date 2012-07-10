@@ -79,7 +79,10 @@ public class GuiScreen extends Gui
         return "";
     }
 
-    public static void func_50050_a(String par0Str)
+    /**
+     * store a string in the system clipboard
+     */
+    public static void setClipboardString(String par0Str)
     {
         try
         {
@@ -264,12 +267,12 @@ public class GuiScreen extends Gui
     {
     }
 
-    public static boolean func_50051_l()
+    public static boolean isCtrlKeyDown()
     {
         return Keyboard.isKeyDown(29) || Keyboard.isKeyDown(157);
     }
 
-    public static boolean func_50049_m()
+    public static boolean isShiftKeyDown()
     {
         return Keyboard.isKeyDown(42) || Keyboard.isKeyDown(54);
     }

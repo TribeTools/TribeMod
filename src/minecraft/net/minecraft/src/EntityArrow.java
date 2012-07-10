@@ -21,7 +21,9 @@ public class EntityArrow extends Entity
     private int ticksInGround;
     private int ticksInAir;
     private double damage;
-    private int field_46027_au;
+
+    /** The amount of knockback an arrow applies when it hits a mob. */
+    private int knockbackStrength;
 
     /** Is this arrow a critical hit? (Controls particles and damage) */
     public boolean arrowCritical;
@@ -321,13 +323,13 @@ public class EntityArrow extends Entity
                     {
                         ((EntityLiving)movingobjectposition.entityHit).arrowHitTempCounter++;
 
-                        if (field_46027_au > 0)
+                        if (knockbackStrength > 0)
                         {
                             float f7 = MathHelper.sqrt_double(motionX * motionX + motionZ * motionZ);
 
                             if (f7 > 0.0F)
                             {
-                                movingobjectposition.entityHit.addVelocity((motionX * (double)field_46027_au * 0.60000002384185791D) / (double)f7, 0.10000000000000001D, (motionZ * (double)field_46027_au * 0.60000002384185791D) / (double)f7);
+                                movingobjectposition.entityHit.addVelocity((motionX * (double)knockbackStrength * 0.60000002384185791D) / (double)f7, 0.10000000000000001D, (motionZ * (double)knockbackStrength * 0.60000002384185791D) / (double)f7);
                             }
                         }
                     }
@@ -480,9 +482,12 @@ public class EntityArrow extends Entity
         return damage;
     }
 
-    public void func_46023_b(int par1)
+    /**
+     * Sets the amount of knockback the arrow applies when it hits a mob.
+     */
+    public void setKnockbackStrength(int par1)
     {
-        field_46027_au = par1;
+        knockbackStrength = par1;
     }
 
     /**

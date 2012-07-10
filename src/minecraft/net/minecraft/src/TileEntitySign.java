@@ -51,12 +51,15 @@ public class TileEntitySign extends TileEntity
         }
     }
 
-    public boolean func_50007_a()
+    public boolean isEditable()
     {
         return isEditable;
     }
 
-    public void func_50006_a(boolean par1)
+    /**
+     * Sets the sign's isEditable flag to the specified parameter.
+     */
+    public void setEditable(boolean par1)
     {
         isEditable = par1;
     }

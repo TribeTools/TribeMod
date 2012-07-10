@@ -47,11 +47,11 @@ public class EntityAIOcelotSit extends EntityAIBase
      */
     public void startExecuting()
     {
-        field_50085_a.getNavigator().func_48666_a((double)(float)field_50082_e + 0.5D, field_50079_f + 1, (double)(float)field_50080_g + 0.5D, field_50083_b);
+        field_50085_a.getNavigator().tryMoveToXYZ((double)(float)field_50082_e + 0.5D, field_50079_f + 1, (double)(float)field_50080_g + 0.5D, field_50083_b);
         field_50084_c = 0;
         field_52011_h = 0;
         field_50081_d = field_50085_a.getRNG().nextInt(field_50085_a.getRNG().nextInt(1200) + 1200) + 1200;
-        field_50085_a.func_50008_ai().func_48407_a(false);
+        field_50085_a.func_50008_ai().setIsSitting(false);
     }
 
     /**
@@ -59,7 +59,7 @@ public class EntityAIOcelotSit extends EntityAIBase
      */
     public void resetTask()
     {
-        field_50085_a.func_48140_f(false);
+        field_50085_a.setSitting(false);
     }
 
     /**
@@ -68,17 +68,17 @@ public class EntityAIOcelotSit extends EntityAIBase
     public void updateTask()
     {
         field_50084_c++;
-        field_50085_a.func_50008_ai().func_48407_a(false);
+        field_50085_a.func_50008_ai().setIsSitting(false);
 
         if (field_50085_a.getDistanceSq(field_50082_e, field_50079_f + 1, field_50080_g) > 1.0D)
         {
-            field_50085_a.func_48140_f(false);
-            field_50085_a.getNavigator().func_48666_a((double)(float)field_50082_e + 0.5D, field_50079_f + 1, (double)(float)field_50080_g + 0.5D, field_50083_b);
+            field_50085_a.setSitting(false);
+            field_50085_a.getNavigator().tryMoveToXYZ((double)(float)field_50082_e + 0.5D, field_50079_f + 1, (double)(float)field_50080_g + 0.5D, field_50083_b);
             field_52011_h++;
         }
         else if (!field_50085_a.isSitting())
         {
-            field_50085_a.func_48140_f(true);
+            field_50085_a.setSitting(true);
         }
         else
         {

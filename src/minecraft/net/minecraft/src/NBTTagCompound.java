@@ -136,7 +136,10 @@ public class NBTTagCompound extends NBTBase
         tagMap.put(par1Str, new NBTTagByteArray(par1Str, par2ArrayOfByte));
     }
 
-    public void func_48183_a(String par1Str, int par2ArrayOfInteger[])
+    /**
+     * Stores a new NBTTagIntArray with the given array as data into the map with the given string key.
+     */
+    public void setIntArray(String par1Str, int par2ArrayOfInteger[])
     {
         tagMap.put(par1Str, new NBTTagIntArray(par1Str, par2ArrayOfInteger));
     }
@@ -293,7 +296,10 @@ public class NBTTagCompound extends NBTBase
         }
     }
 
-    public int[] func_48182_l(String par1Str)
+    /**
+     * Retrieves an int array using the specified key, or a zero-length array if no such key was stored.
+     */
+    public int[] getIntArray(String par1Str)
     {
         if (!tagMap.containsKey(par1Str))
         {

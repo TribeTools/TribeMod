@@ -33,8 +33,8 @@ public class RenderItem extends Render
         random.setSeed(187L);
         ItemStack itemstack = par1EntityItem.item;
         GL11.glPushMatrix();
-        float f = MathHelper.sin(((float)par1EntityItem.age + par9) / 10F + par1EntityItem.field_804_d) * 0.1F + 0.1F;
-        float f1 = (((float)par1EntityItem.age + par9) / 20F + par1EntityItem.field_804_d) * (180F / (float)Math.PI);
+        float f = MathHelper.sin(((float)par1EntityItem.age + par9) / 10F + par1EntityItem.hoverStart) * 0.1F + 0.1F;
+        float f1 = (((float)par1EntityItem.age + par9) / 20F + par1EntityItem.hoverStart) * (180F / (float)Math.PI);
         byte byte0 = 1;
 
         if (par1EntityItem.item.stackSize > 1)
@@ -86,7 +86,7 @@ public class RenderItem extends Render
                 GL11.glPopMatrix();
             }
         }
-        else if (itemstack.getItem().func_46058_c())
+        else if (itemstack.getItem().requiresMultipleRenderPasses())
         {
             GL11.glScalef(0.5F, 0.5F, 0.5F);
             loadTexture("/gui/items.png");
@@ -204,7 +204,7 @@ public class RenderItem extends Render
             renderBlocks.useInventoryTint = true;
             GL11.glPopMatrix();
         }
-        else if (Item.itemsList[par3].func_46058_c())
+        else if (Item.itemsList[par3].requiresMultipleRenderPasses())
         {
             GL11.glDisable(GL11.GL_LIGHTING);
             par2RenderEngine.bindTexture(par2RenderEngine.getTexture("/gui/items.png"));

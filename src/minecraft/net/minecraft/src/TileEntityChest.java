@@ -6,31 +6,31 @@ public class TileEntityChest extends TileEntity implements IInventory
 {
     private ItemStack chestContents[];
 
-    /** determines if the check for adjacent chests has taken place. */
+    /** Determines if the check for adjacent chests has taken place. */
     public boolean adjacentChestChecked;
 
-    /** contains the chest tile located adjacent to this one (if any) */
+    /** Contains the chest tile located adjacent to this one (if any) */
     public TileEntityChest adjacentChestZNeg;
 
-    /** contains the chest tile located adjacent to this one (if any) */
+    /** Contains the chest tile located adjacent to this one (if any) */
     public TileEntityChest adjacentChestXPos;
 
-    /** contains the chest tile located adjacent to this one (if any) */
+    /** Contains the chest tile located adjacent to this one (if any) */
     public TileEntityChest adjacentChestXNeg;
 
-    /** contains the chest tile located adjacent to this one (if any) */
-    public TileEntityChest adjacentChestZPos;
+    /** Contains the chest tile located adjacent to this one (if any) */
+    public TileEntityChest adjacentChestZPosition;
 
-    /** the current angle of the lid (between 0 and 1) */
+    /** The current angle of the lid (between 0 and 1) */
     public float lidAngle;
 
-    /** the angle of the lid last tick */
+    /** The angle of the lid last tick */
     public float prevLidAngle;
 
-    /** the number of players currently using this chest */
+    /** The number of players currently using this chest */
     public int numUsingPlayers;
 
-    /** server sync counter (once per 20 ticks) */
+    /** Server sync counter (once per 20 ticks) */
     private int ticksSinceSync;
 
     public TileEntityChest()
@@ -194,7 +194,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     }
 
     /**
-     * causes the TileEntity to reset all it's cached values for it's container block, blockID, metaData and in the case
+     * Causes the TileEntity to reset all it's cached values for it's container block, blockID, metaData and in the case
      * of chests, the adjcacent chest check
      */
     public void updateContainingBlockInfo()
@@ -204,7 +204,7 @@ public class TileEntityChest extends TileEntity implements IInventory
     }
 
     /**
-     * performs the check for adjacent chests to determine if this chest is double or not.
+     * Performs the check for adjacent chests to determine if this chest is double or not.
      */
     public void checkForAdjacentChests()
     {
@@ -217,7 +217,7 @@ public class TileEntityChest extends TileEntity implements IInventory
         adjacentChestZNeg = null;
         adjacentChestXPos = null;
         adjacentChestXNeg = null;
-        adjacentChestZPos = null;
+        adjacentChestZPosition = null;
 
         if (worldObj.getBlockId(xCoord - 1, yCoord, zCoord) == Block.chest.blockID)
         {
@@ -236,7 +236,7 @@ public class TileEntityChest extends TileEntity implements IInventory
 
         if (worldObj.getBlockId(xCoord, yCoord, zCoord + 1) == Block.chest.blockID)
         {
-            adjacentChestZPos = (TileEntityChest)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + 1);
+            adjacentChestZPosition = (TileEntityChest)worldObj.getBlockTileEntity(xCoord, yCoord, zCoord + 1);
         }
 
         if (adjacentChestZNeg != null)
@@ -244,9 +244,9 @@ public class TileEntityChest extends TileEntity implements IInventory
             adjacentChestZNeg.updateContainingBlockInfo();
         }
 
-        if (adjacentChestZPos != null)
+        if (adjacentChestZPosition != null)
         {
-            adjacentChestZPos.updateContainingBlockInfo();
+            adjacentChestZPosition.updateContainingBlockInfo();
         }
 
         if (adjacentChestXPos != null)
@@ -271,7 +271,7 @@ public class TileEntityChest extends TileEntity implements IInventory
 
         if ((++ticksSinceSync % 20) * 4 == 0)
         {
-            worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
+            worldObj.sendClientEvent(xCoord, yCoord, zCoord, 1, numUsingPlayers);
         }
 
         prevLidAngle = lidAngle;
@@ -282,7 +282,7 @@ public class TileEntityChest extends TileEntity implements IInventory
             double d = (double)xCoord + 0.5D;
             double d1 = (double)zCoord + 0.5D;
 
-            if (adjacentChestZPos != null)
+            if (adjacentChestZPosition != null)
             {
                 d1 += 0.5D;
             }
@@ -320,7 +320,7 @@ public class TileEntityChest extends TileEntity implements IInventory
                 double d2 = (double)xCoord + 0.5D;
                 double d3 = (double)zCoord + 0.5D;
 
-                if (adjacentChestZPos != null)
+                if (adjacentChestZPosition != null)
                 {
                     d3 += 0.5D;
                 }
@@ -340,7 +340,10 @@ public class TileEntityChest extends TileEntity implements IInventory
         }
     }
 
-    public void onTileEntityPowered(int par1, int par2)
+    /**
+     * Called when a client event is received with the event number and argument, see World.sendClientEvent
+     */
+    public void receiveClientEvent(int par1, int par2)
     {
         if (par1 == 1)
         {
@@ -351,13 +354,13 @@ public class TileEntityChest extends TileEntity implements IInventory
     public void openChest()
     {
         numUsingPlayers++;
-        worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
+        worldObj.sendClientEvent(xCoord, yCoord, zCoord, 1, numUsingPlayers);
     }
 
     public void closeChest()
     {
         numUsingPlayers--;
-        worldObj.playNoteAt(xCoord, yCoord, zCoord, 1, numUsingPlayers);
+        worldObj.sendClientEvent(xCoord, yCoord, zCoord, 1, numUsingPlayers);
     }
 
     /**

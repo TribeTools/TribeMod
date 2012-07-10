@@ -4,10 +4,17 @@ import java.util.Random;
 
 public class WorldGenTrees extends WorldGenerator
 {
-    private final int field_48202_a;
-    private final boolean field_48200_b;
-    private final int field_48201_c;
-    private final int field_48199_d;
+    /** The minimum height of a generated tree. */
+    private final int minTreeHeight;
+
+    /** Indicator that the tree generator needs to grown vines on the trees. */
+    private final boolean growVines;
+
+    /** The metadata value of the wood to use in tree generation. */
+    private final int metaWood;
+
+    /** The metadata value of the leaves to use in tree generation. */
+    private final int metaLeaves;
 
     public WorldGenTrees(boolean par1)
     {
@@ -17,15 +24,15 @@ public class WorldGenTrees extends WorldGenerator
     public WorldGenTrees(boolean par1, int par2, int par3, int par4, boolean par5)
     {
         super(par1);
-        field_48202_a = par2;
-        field_48201_c = par3;
-        field_48199_d = par4;
-        field_48200_b = par5;
+        minTreeHeight = par2;
+        metaWood = par3;
+        metaLeaves = par4;
+        growVines = par5;
     }
 
     public boolean generate(World par1World, Random par2Random, int par3, int par4, int par5)
     {
-        int i = par2Random.nextInt(3) + field_48202_a;
+        int i = par2Random.nextInt(3) + minTreeHeight;
         boolean flag = true;
 
         if (par4 < 1 || par4 + i + 1 > 256)
@@ -80,7 +87,7 @@ public class WorldGenTrees extends WorldGenerator
             return false;
         }
 
-        func_50073_a(par1World, par3, par4 - 1, par5, Block.dirt.blockID);
+        setBlock(par1World, par3, par4 - 1, par5, Block.dirt.blockID);
         byte byte1 = 3;
         int i1 = 0;
 
@@ -99,7 +106,7 @@ public class WorldGenTrees extends WorldGenerator
 
                     if ((Math.abs(j4) != j3 || Math.abs(i5) != j3 || par2Random.nextInt(2) != 0 && k2 != 0) && !Block.opaqueCubeLookup[par1World.getBlockId(l3, k1, l4)])
                     {
-                        setBlockAndMetadata(par1World, l3, k1, l4, Block.leaves.blockID, field_48199_d);
+                        setBlockAndMetadata(par1World, l3, k1, l4, Block.leaves.blockID, metaLeaves);
                     }
                 }
             }
@@ -114,9 +121,9 @@ public class WorldGenTrees extends WorldGenerator
                 continue;
             }
 
-            setBlockAndMetadata(par1World, par3, par4 + l1, par5, Block.wood.blockID, field_48201_c);
+            setBlockAndMetadata(par1World, par3, par4 + l1, par5, Block.wood.blockID, metaWood);
 
-            if (!field_48200_b || l1 <= 0)
+            if (!growVines || l1 <= 0)
             {
                 continue;
             }
@@ -142,7 +149,7 @@ public class WorldGenTrees extends WorldGenerator
             }
         }
 
-        if (field_48200_b)
+        if (growVines)
         {
             for (int i2 = (par4 - 3) + i; i2 <= par4 + i; i2++)
             {

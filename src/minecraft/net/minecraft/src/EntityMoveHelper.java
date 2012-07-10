@@ -66,7 +66,7 @@ public class EntityMoveHelper
 
         float f = (float)((Math.atan2(d1, d) * 180D) / Math.PI) - 90F;
         entity.rotationYaw = func_48185_a(entity.rotationYaw, f, 30F);
-        entity.func_48098_g(speed);
+        entity.setAIMoveSpeed(speed);
 
         if (d2 > 0.0D && d * d + d1 * d1 < 1.0D)
         {

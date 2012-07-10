@@ -70,7 +70,7 @@ public class Packet1Login extends Packet
         }
         else
         {
-            writeString(terrainType.func_48628_a(), par1DataOutputStream);
+            writeString(terrainType.getWorldTypeName(), par1DataOutputStream);
         }
 
         par1DataOutputStream.writeInt(serverMode);
@@ -97,7 +97,7 @@ public class Packet1Login extends Packet
 
         if (terrainType != null)
         {
-            i = terrainType.func_48628_a().length();
+            i = terrainType.getWorldTypeName().length();
         }
 
         return 4 + username.length() + 4 + 7 + 7 + i;

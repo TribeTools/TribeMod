@@ -2,12 +2,15 @@ package net.minecraft.src;
 
 public class TextureOffset
 {
-    public final int field_40734_a;
-    public final int field_40733_b;
+    /** The x coordinate offset of the texture */
+    public final int textureOffsetX;
+
+    /** The y coordinate offset of the texture */
+    public final int textureOffsetY;
 
     public TextureOffset(int par1, int par2)
     {
-        field_40734_a = par1;
-        field_40733_b = par2;
+        textureOffsetX = par1;
+        textureOffsetY = par2;
     }
 }

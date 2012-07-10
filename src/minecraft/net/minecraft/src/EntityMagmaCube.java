@@ -94,9 +94,12 @@ public class EntityMagmaCube extends EntitySlime
         return false;
     }
 
-    protected int func_40131_af()
+    /**
+     * Gets the amount of time the slime needs to wait between jumps.
+     */
+    protected int getJumpDelay()
     {
-        return super.func_40131_af() * 4;
+        return super.getJumpDelay() * 4;
     }
 
     protected void func_40136_ag()
@@ -105,7 +108,7 @@ public class EntityMagmaCube extends EntitySlime
     }
 
     /**
-     * jump, Causes this entity to do an upwards motion (jumping)
+     * Causes this entity to do an upwards motion (jumping).
      */
     protected void jump()
     {
@@ -120,14 +123,20 @@ public class EntityMagmaCube extends EntitySlime
     {
     }
 
-    protected boolean func_40137_ah()
+    /**
+     * Indicates weather the slime is able to damage the player (based upon the slime's size)
+     */
+    protected boolean canDamagePlayer()
     {
         return true;
     }
 
-    protected int func_40130_ai()
+    /**
+     * Gets the amount of damage dealt to the player when "attacked" by the slime.
+     */
+    protected int getAttackStrength()
     {
-        return super.func_40130_ai() + 2;
+        return super.getAttackStrength() + 2;
     }
 
     /**
@@ -146,7 +155,10 @@ public class EntityMagmaCube extends EntitySlime
         return "mob.slime";
     }
 
-    protected String func_40138_aj()
+    /**
+     * Returns the name of the sound played when the slime jumps.
+     */
+    protected String getJumpSound()
     {
         if (getSlimeSize() > 1)
         {
@@ -166,7 +178,10 @@ public class EntityMagmaCube extends EntitySlime
         return false;
     }
 
-    protected boolean func_40134_ak()
+    /**
+     * Returns true if the slime makes a sound when it lands after a jump (based upon the slime's size)
+     */
+    protected boolean makesSoundOnLand()
     {
         return true;
     }

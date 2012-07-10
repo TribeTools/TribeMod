@@ -72,7 +72,7 @@ public class GuiEnchantment extends GuiContainer
 
             if (l >= 0 && i1 >= 0 && l < 108 && i1 < 19 && containerEnchantment.enchantItem(mc.thePlayer, k))
             {
-                mc.playerController.func_40593_a(containerEnchantment.windowId, k);
+                mc.playerController.sendEnchantPacket(containerEnchantment.windowId, k);
             }
         }
     }

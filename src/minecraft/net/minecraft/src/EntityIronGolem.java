@@ -16,7 +16,7 @@ public class EntityIronGolem extends EntityGolem
         villageObj = null;
         texture = "/mob/villager_golem.png";
         setSize(1.4F, 2.9F);
-        getNavigator().func_48664_a(true);
+        getNavigator().setAvoidsWater(true);
         tasks.addTask(1, new EntityAIAttackOnCollide(this, 0.25F, true));
         tasks.addTask(2, new EntityAIMoveTowardsTarget(this, 0.22F, 32F));
         tasks.addTask(3, new EntityAIMoveThroughVillage(this, 0.16F, true));

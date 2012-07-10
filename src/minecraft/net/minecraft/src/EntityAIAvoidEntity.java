@@ -60,7 +60,7 @@ public class EntityAIAvoidEntity extends EntityAIBase
             field_48240_d = (Entity)list.get(0);
         }
 
-        if (!theEntity.func_48090_aM().canSee(field_48240_d))
+        if (!theEntity.getEntitySenses().canSee(field_48240_d))
         {
             return false;
         }
@@ -84,7 +84,7 @@ public class EntityAIAvoidEntity extends EntityAIBase
             return false;
         }
 
-        return field_48238_f.func_48639_a(vec3d);
+        return field_48238_f.isDestinationSame(vec3d);
     }
 
     /**

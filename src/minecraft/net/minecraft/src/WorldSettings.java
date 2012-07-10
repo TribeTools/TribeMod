@@ -5,7 +5,7 @@ public final class WorldSettings
     /** The seed for the map. */
     private final long seed;
 
-    /** The game mode, 1 for creative, 0 for survival. */
+    /** The type of the map. 0 is survival, 1 is creative. */
     private final int gameType;
 
     /**
@@ -51,7 +51,7 @@ public final class WorldSettings
     }
 
     /**
-     * Returns if map features are enabled, caves, mines, etc..
+     * Get whether the map features (e.g. strongholds) generation is enabled or disabled.
      */
     public boolean isMapFeaturesEnabled()
     {

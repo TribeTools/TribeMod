@@ -3,7 +3,7 @@ package net.minecraft.src;
 public class ItemSeeds extends Item
 {
     /**
-     * the type of block this seed turns into (wheat or pumpkin stems for instance)
+     * The type of block this seed turns into (wheat or pumpkin stems for instance)
      */
     private int blockType;
 

@@ -7,7 +7,7 @@ import java.util.*;
 
 public class RegionFileCache
 {
-    /** A map containing Files and keys and RegionFiles as values */
+    /** A map containing Files as keys and RegionFiles as values */
     private static final Map regionsByFilename = new HashMap();
 
     private RegionFileCache()

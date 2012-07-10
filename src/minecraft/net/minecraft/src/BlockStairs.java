@@ -142,7 +142,7 @@ public class BlockStairs extends Block
     }
 
     /**
-     * 'Goes straight to getLightBrightnessForSkyBlocks for Blocks, does some fancy computing for Fluids'
+     * Goes straight to getLightBrightnessForSkyBlocks for Blocks, does some fancy computing for Fluids
      */
     public int getMixedBrightnessForBlock(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {

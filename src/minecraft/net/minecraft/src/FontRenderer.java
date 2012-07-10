@@ -13,7 +13,10 @@ import org.lwjgl.opengl.GL11;
 
 public class FontRenderer
 {
-    private static final Pattern field_52015_r = Pattern.compile("(?i)\\u00A7[0-9A-FK-OR]");
+    /**
+     * Compiled regular expression pattern for matching color codes in a string
+     */
+    private static final Pattern colorCodeRegex = Pattern.compile("(?i)\\u00A7[0-9A-FK-OR]");
     private int charWidth[];
     public int fontTextureName;
 
@@ -47,10 +50,18 @@ public class FontRenderer
      * If true, the Unicode Bidirectional Algorithm should be run before rendering any string.
      */
     private boolean bidiFlag;
-    private float field_50115_n;
-    private float field_50116_o;
-    private float field_50118_p;
-    private float field_50117_q;
+
+    /** Used to specify new red value for the current color. */
+    private float red;
+
+    /** Used to specify new blue value for the current color. */
+    private float blue;
+
+    /** Used to specify new green value for the current color. */
+    private float green;
+
+    /** Used to speify new alpha value for the current color. */
+    private float alpha;
 
     FontRenderer()
     {
@@ -172,7 +183,10 @@ public class FontRenderer
         }
     }
 
-    private float func_50112_a(int par1, char par2, boolean par3)
+    /**
+     * Pick how to render a single character and return the width used.
+     */
+    private float renderCharAtPos(int par1, char par2, boolean par3)
     {
         if (par2 == ' ')
         {
@@ -181,15 +195,18 @@ public class FontRenderer
 
         if (par1 > 0 && !unicodeFlag)
         {
-            return func_50106_a(par1 + 32, par3);
+            return renderDefaultChar(par1 + 32, par3);
         }
         else
         {
-            return func_50111_a(par2, par3);
+            return renderUnicodeChar(par2, par3);
         }
     }
 
-    private float func_50106_a(int par1, boolean par2)
+    /**
+     * Render a single character with the default.png font at current (posX,posY) location...
+     */
+    private float renderDefaultChar(int par1, boolean par2)
     {
         float f = (par1 % 16) * 8;
         float f1 = (par1 / 16) * 8;
@@ -239,7 +256,10 @@ public class FontRenderer
         boundTextureName = glyphTextureName[par1];
     }
 
-    private float func_50111_a(char par1, boolean par2)
+    /**
+     * Render a single Unicode character at current (posX,posY) location using one of the /font/glyph_XX.png files...
+     */
+    private float renderUnicodeChar(char par1, boolean par2)
     {
         if (glyphWidth[par1] == 0)
         {
@@ -290,8 +310,8 @@ public class FontRenderer
             par1Str = bidiReorder(par1Str);
         }
 
-        int i = func_50101_a(par1Str, par2 + 1, par3 + 1, par4, true);
-        i = Math.max(i, func_50101_a(par1Str, par2, par3, par4, false));
+        int i = renderString(par1Str, par2 + 1, par3 + 1, par4, true);
+        i = Math.max(i, renderString(par1Str, par2, par3, par4, false));
         return i;
     }
 
@@ -305,7 +325,7 @@ public class FontRenderer
             par1Str = bidiReorder(par1Str);
         }
 
-        func_50101_a(par1Str, par2, par3, par4, false);
+        renderString(par1Str, par2, par3, par4, false);
     }
 
     /**
@@ -461,7 +481,7 @@ public class FontRenderer
                     flag4 = false;
                     flag3 = false;
                     flag2 = false;
-                    GL11.glColor4f(field_50115_n, field_50116_o, field_50118_p, field_50117_q);
+                    GL11.glColor4f(red, blue, green, alpha);
                 }
 
                 i++;
@@ -483,12 +503,12 @@ public class FontRenderer
                 k = i1;
             }
 
-            float f = func_50112_a(k, c, flag2);
+            float f = renderCharAtPos(k, c, flag2);
 
             if (flag1)
             {
                 posX++;
-                func_50112_a(k, c, flag2);
+                renderCharAtPos(k, c, flag2);
                 posX--;
                 f++;
             }
@@ -524,7 +544,7 @@ public class FontRenderer
         }
     }
 
-    public int func_50101_a(String par1Str, int par2, int par3, int par4, boolean par5)
+    public int renderString(String par1Str, int par2, int par3, int par4, boolean par5)
     {
         if (par1Str != null)
         {
@@ -540,11 +560,11 @@ public class FontRenderer
                 par4 = (par4 & 0xfcfcfc) >> 2 | par4 & 0xff000000;
             }
 
-            field_50115_n = (float)(par4 >> 16 & 0xff) / 255F;
-            field_50116_o = (float)(par4 >> 8 & 0xff) / 255F;
-            field_50118_p = (float)(par4 & 0xff) / 255F;
-            field_50117_q = (float)(par4 >> 24 & 0xff) / 255F;
-            GL11.glColor4f(field_50115_n, field_50116_o, field_50118_p, field_50117_q);
+            red = (float)(par4 >> 16 & 0xff) / 255F;
+            blue = (float)(par4 >> 8 & 0xff) / 255F;
+            green = (float)(par4 & 0xff) / 255F;
+            alpha = (float)(par4 >> 24 & 0xff) / 255F;
+            GL11.glColor4f(red, blue, green, alpha);
             posX = par2;
             posY = par3;
             renderStringAtPos(par1Str, par5);
@@ -572,7 +592,7 @@ public class FontRenderer
         for (int j = 0; j < par1Str.length(); j++)
         {
             char c = par1Str.charAt(j);
-            int k = func_50105_a(c);
+            int k = getCharWidth(c);
 
             if (k < 0 && j < par1Str.length() - 1)
             {
@@ -587,7 +607,7 @@ public class FontRenderer
                     flag = false;
                 }
 
-                k = func_50105_a(c1);
+                k = getCharWidth(c1);
             }
 
             i += k;
@@ -601,7 +621,10 @@ public class FontRenderer
         return i;
     }
 
-    public int func_50105_a(char par1)
+    /**
+     * Returns the width of this character as rendered.
+     */
+    public int getCharWidth(char par1)
     {
         if (par1 == '\247')
         {
@@ -634,12 +657,18 @@ public class FontRenderer
         }
     }
 
-    public String func_50107_a(String par1Str, int par2)
+    /**
+     * Trims a string to fit a specified Width.
+     */
+    public String trimStringToWidth(String par1Str, int par2)
     {
-        return func_50104_a(par1Str, par2, false);
+        return trimStringToWidth(par1Str, par2, false);
     }
 
-    public String func_50104_a(String par1Str, int par2, boolean par3)
+    /**
+     * Trims a string to a specified width, and will reverse it if par3 is set.
+     */
+    public String trimStringToWidth(String par1Str, int par2, boolean par3)
     {
         StringBuilder stringbuilder = new StringBuilder();
         int i = 0;
@@ -651,7 +680,7 @@ public class FontRenderer
         for (int k = j; k >= 0 && k < par1Str.length() && i < par2; k += byte0)
         {
             char c = par1Str.charAt(k);
-            int l = func_50105_a(c);
+            int l = getCharWidth(c);
 
             if (flag)
             {
@@ -771,7 +800,7 @@ public class FontRenderer
                     s = (new StringBuilder()).append("\247").append(s2.charAt(s2.lastIndexOf("\247") + 1)).toString();
                 }
 
-                func_50101_a(s2, par2, par3, par5, par6);
+                renderString(s2, par2, par3, par5, par6);
                 par3 += FONT_HEIGHT;
             }
 
@@ -782,7 +811,7 @@ public class FontRenderer
                     s = (new StringBuilder()).append("\247").append(s1.charAt(s1.lastIndexOf("\247") + 1)).toString();
                 }
 
-                func_50101_a(s1, par2, par3, par5, par6);
+                renderString(s1, par2, par3, par5, par6);
                 par3 += FONT_HEIGHT;
             }
         }
@@ -867,14 +896,20 @@ public class FontRenderer
         bidiFlag = par1;
     }
 
-    public java.util.List func_50108_c(String par1Str, int par2)
+    /**
+     * Breaks a string into a list of pieces that will fit a specified width.
+     */
+    public java.util.List listFormattedStringToWidth(String par1Str, int par2)
     {
-        return Arrays.asList(func_50113_d(par1Str, par2).split("\n"));
+        return Arrays.asList(wrapFormattedStringToWidth(par1Str, par2).split("\n"));
     }
 
-    String func_50113_d(String par1Str, int par2)
+    /**
+     * Inserts newline and formatting into a string to wrap it within the specified width.
+     */
+    String wrapFormattedStringToWidth(String par1Str, int par2)
     {
-        int i = func_50102_e(par1Str, par2);
+        int i = sizeStringToWidth(par1Str, par2);
 
         if (par1Str.length() <= i)
         {
@@ -883,12 +918,15 @@ public class FontRenderer
         else
         {
             String s = par1Str.substring(0, i);
-            String s1 = (new StringBuilder()).append(func_50114_c(s)).append(par1Str.substring(i + (par1Str.charAt(i) != ' ' ? 0 : 1))).toString();
-            return (new StringBuilder()).append(s).append("\n").append(func_50113_d(s1, par2)).toString();
+            String s1 = (new StringBuilder()).append(getFormatFromString(s)).append(par1Str.substring(i + (par1Str.charAt(i) != ' ' ? 0 : 1))).toString();
+            return (new StringBuilder()).append(s).append("\n").append(wrapFormattedStringToWidth(s1, par2)).toString();
         }
     }
 
-    private int func_50102_e(String par1Str, int par2)
+    /**
+     * Determines how many characters from the string will fit into the specified width.
+     */
+    private int sizeStringToWidth(String par1Str, int par2)
     {
         int i = par1Str.length();
         int j = 0;
@@ -928,7 +966,7 @@ public class FontRenderer
                     l = k;
 
                 default:
-                    j += func_50105_a(c);
+                    j += getCharWidth(c);
 
                     if (flag)
                     {
@@ -963,17 +1001,26 @@ public class FontRenderer
         }
     }
 
-    private static boolean func_50110_b(char par0)
+    /**
+     * Checks if the char code is a hexadecimal character, used to set colour.
+     */
+    private static boolean isFormatColor(char par0)
     {
         return par0 >= '0' && par0 <= '9' || par0 >= 'a' && par0 <= 'f' || par0 >= 'A' && par0 <= 'F';
     }
 
-    private static boolean func_50109_c(char par0)
+    /**
+     * Checks if the char code is O-K...lLrRk-o... used to set special formatting.
+     */
+    private static boolean isFormatSpecial(char par0)
     {
         return par0 >= 'k' && par0 <= 'o' || par0 >= 'K' && par0 <= 'O' || par0 == 'r' || par0 == 'R';
     }
 
-    private static String func_50114_c(String par0Str)
+    /**
+     * Digests a string for nonprinting formatting characters then returns a string containing only that formatting.
+     */
+    private static String getFormatFromString(String par0Str)
     {
         String s = "";
         int i = -1;
@@ -990,11 +1037,11 @@ public class FontRenderer
             {
                 char c = par0Str.charAt(i + 1);
 
-                if (func_50110_b(c))
+                if (isFormatColor(c))
                 {
                     s = (new StringBuilder()).append("\247").append(c).toString();
                 }
-                else if (func_50109_c(c))
+                else if (isFormatSpecial(c))
                 {
                     s = (new StringBuilder()).append(s).append("\247").append(c).toString();
                 }
@@ -1005,8 +1052,11 @@ public class FontRenderer
         return s;
     }
 
-    public static String func_52014_d(String par0Str)
+    /**
+     * Remove all embedded color codes from a string
+     */
+    public static String stripColorCodes(String par0Str)
     {
-        return field_52015_r.matcher(par0Str).replaceAll("");
+        return colorCodeRegex.matcher(par0Str).replaceAll("");
     }
 }

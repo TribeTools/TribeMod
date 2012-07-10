@@ -14,6 +14,6 @@ class GuiChatConfirmLink extends GuiConfirmOpenLink
 
     public void func_50052_d()
     {
-        func_50050_a(field_50056_a.func_50088_a());
+        setClipboardString(field_50056_a.func_50088_a());
     }
 }

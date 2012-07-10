@@ -342,7 +342,11 @@ public class PlayerControllerMP extends PlayerController
         return itemstack;
     }
 
-    public void func_40593_a(int par1, int par2)
+    /**
+     * GuiEnchantment uses this during multiplayer to tell PlayerControllerMP to send a packet indicating the
+     * enchantment action the player has taken.
+     */
+    public void sendEnchantPacket(int par1, int par2)
     {
         netClientHandler.addToSendQueue(new Packet108EnchantItem(par1, par2));
     }

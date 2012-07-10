@@ -80,7 +80,7 @@ public class WorldGenSwamp extends WorldGenerator
             return false;
         }
 
-        func_50073_a(par1World, par3, par4 - 1, par5, Block.dirt.blockID);
+        setBlock(par1World, par3, par4 - 1, par5, Block.dirt.blockID);
 
         for (int l = (par4 - 3) + i; l <= par4 + i; l++)
         {
@@ -97,7 +97,7 @@ public class WorldGenSwamp extends WorldGenerator
 
                     if ((Math.abs(i4) != l2 || Math.abs(l4) != l2 || par2Random.nextInt(2) != 0 && l1 != 0) && !Block.opaqueCubeLookup[par1World.getBlockId(k3, l, k4)])
                     {
-                        func_50073_a(par1World, k3, l, k4, Block.leaves.blockID);
+                        setBlock(par1World, k3, l, k4, Block.leaves.blockID);
                     }
                 }
             }
@@ -109,7 +109,7 @@ public class WorldGenSwamp extends WorldGenerator
 
             if (i2 == 0 || i2 == Block.leaves.blockID || i2 == Block.waterMoving.blockID || i2 == Block.waterStill.blockID)
             {
-                func_50073_a(par1World, par3, par4 + i1, par5, Block.wood.blockID);
+                setBlock(par1World, par3, par4 + i1, par5, Block.wood.blockID);
             }
         }
 

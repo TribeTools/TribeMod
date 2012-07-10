@@ -54,6 +54,6 @@ public class EntityAIMoveTwardsRestriction extends EntityAIBase
      */
     public void startExecuting()
     {
-        theEntity.getNavigator().func_48666_a(movePosX, movePosY, movePosZ, field_48352_e);
+        theEntity.getNavigator().tryMoveToXYZ(movePosX, movePosY, movePosZ, field_48352_e);
     }
 }

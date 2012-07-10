@@ -65,8 +65,8 @@ public class EntityAIFollowOwner extends EntityAIBase
     public void startExecuting()
     {
         field_48310_h = 0;
-        field_48311_i = thePet.getNavigator().func_48658_a();
-        thePet.getNavigator().func_48664_a(false);
+        field_48311_i = thePet.getNavigator().getAvoidsWater();
+        thePet.getNavigator().setAvoidsWater(false);
     }
 
     /**
@@ -76,7 +76,7 @@ public class EntityAIFollowOwner extends EntityAIBase
     {
         theOwner = null;
         petPathfinder.clearPathEntity();
-        thePet.getNavigator().func_48664_a(field_48311_i);
+        thePet.getNavigator().setAvoidsWater(field_48311_i);
     }
 
     /**
@@ -98,7 +98,7 @@ public class EntityAIFollowOwner extends EntityAIBase
 
         field_48310_h = 10;
 
-        if (petPathfinder.func_48667_a(theOwner, field_48303_f))
+        if (petPathfinder.tryMoveToEntityLiving(theOwner, field_48303_f))
         {
             return;
         }

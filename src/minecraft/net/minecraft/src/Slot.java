@@ -86,7 +86,7 @@ public class Slot
     }
 
     /**
-     * Helper fnct to put a stack in the slot.
+     * Helper method to put a stack in the slot.
      */
     public void putStack(ItemStack par1ItemStack)
     {

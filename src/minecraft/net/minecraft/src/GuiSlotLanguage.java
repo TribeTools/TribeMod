@@ -38,9 +38,9 @@ class GuiSlotLanguage extends GuiSlot
     {
         StringTranslate.getInstance().setLanguage((String)field_44013_b.get(par1));
         field_44015_a.mc.fontRenderer.setUnicodeFlag(StringTranslate.getInstance().isUnicode());
-        GuiLanguage.func_44005_a(field_44015_a).language = (String)field_44013_b.get(par1);
-        field_44015_a.fontRenderer.setBidiFlag(StringTranslate.isBidrectional(GuiLanguage.func_44005_a(field_44015_a).language));
-        GuiLanguage.func_46028_b(field_44015_a).displayString = StringTranslate.getInstance().translateKey("gui.done");
+        GuiLanguage.Returns(field_44015_a).language = (String)field_44013_b.get(par1);
+        field_44015_a.fontRenderer.setBidiFlag(StringTranslate.isBidirectional(GuiLanguage.Returns(field_44015_a).language));
+        GuiLanguage.getDoneButton(field_44015_a).displayString = StringTranslate.getInstance().translateKey("gui.done");
     }
 
     /**
@@ -68,6 +68,6 @@ class GuiSlotLanguage extends GuiSlot
     {
         field_44015_a.fontRenderer.setBidiFlag(true);
         field_44015_a.drawCenteredString(field_44015_a.fontRenderer, (String)field_44014_c.get(field_44013_b.get(par1)), field_44015_a.width / 2, par3 + 1, 0xffffff);
-        field_44015_a.fontRenderer.setBidiFlag(StringTranslate.isBidrectional(GuiLanguage.func_44005_a(field_44015_a).language));
+        field_44015_a.fontRenderer.setBidiFlag(StringTranslate.isBidirectional(GuiLanguage.Returns(field_44015_a).language));
     }
 }

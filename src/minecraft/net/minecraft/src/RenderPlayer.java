@@ -310,7 +310,7 @@ public class RenderPlayer extends RenderLiving
                 GL11.glRotatef(20F, 0.0F, 0.0F, 1.0F);
             }
 
-            if (itemstack1.getItem().func_46058_c())
+            if (itemstack1.getItem().requiresMultipleRenderPasses())
             {
                 for (int j = 0; j <= 1; j++)
                 {

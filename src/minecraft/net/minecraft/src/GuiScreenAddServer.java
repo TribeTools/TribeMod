@@ -37,7 +37,7 @@ public class GuiScreenAddServer extends GuiScreen
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 12, stringtranslate.translateKey("addServer.add")));
         controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, stringtranslate.translateKey("gui.cancel")));
         serverName = new GuiTextField(fontRenderer, width / 2 - 100, 76, 200, 20);
-        serverName.func_50033_b(true);
+        serverName.setFocused(true);
         serverName.setText(serverNBTStorage.name);
         serverAddress = new GuiTextField(fontRenderer, width / 2 - 100, 116, 200, 20);
         serverAddress.setMaxStringLength(128);
@@ -80,20 +80,20 @@ public class GuiScreenAddServer extends GuiScreen
      */
     protected void keyTyped(char par1, int par2)
     {
-        serverName.func_50037_a(par1, par2);
-        serverAddress.func_50037_a(par1, par2);
+        serverName.textboxKeyTyped(par1, par2);
+        serverAddress.textboxKeyTyped(par1, par2);
 
         if (par1 == '\t')
         {
-            if (serverName.func_50025_j())
+            if (serverName.getIsFocused())
             {
-                serverName.func_50033_b(false);
-                serverAddress.func_50033_b(true);
+                serverName.setFocused(false);
+                serverAddress.setFocused(true);
             }
             else
             {
-                serverName.func_50033_b(true);
-                serverAddress.func_50033_b(false);
+                serverName.setFocused(true);
+                serverAddress.setFocused(false);
             }
         }
 

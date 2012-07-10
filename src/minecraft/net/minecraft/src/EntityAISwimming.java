@@ -10,7 +10,7 @@ public class EntityAISwimming extends EntityAIBase
     {
         theEntity = par1EntityLiving;
         setMutexBits(4);
-        par1EntityLiving.getNavigator().func_48669_e(true);
+        par1EntityLiving.getNavigator().setCanSwim(true);
     }
 
     /**

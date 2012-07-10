@@ -925,7 +925,7 @@ public class RenderGlobal implements IWorldAccess
             return;
         }
 
-        if (!mc.theWorld.worldProvider.func_48217_e())
+        if (!mc.theWorld.worldProvider.isSurfaceWorld())
         {
             return;
         }
@@ -1050,7 +1050,7 @@ public class RenderGlobal implements IWorldAccess
         GL11.glPopMatrix();
         GL11.glDisable(GL11.GL_TEXTURE_2D);
         GL11.glColor3f(0.0F, 0.0F, 0.0F);
-        d = mc.thePlayer.getPosition(par1).yCoord - worldObj.getSeaLevel();
+        d = mc.thePlayer.getPosition(par1).yCoord - worldObj.getHorizon();
 
         if (d < 0.0D)
         {
@@ -1106,7 +1106,7 @@ public class RenderGlobal implements IWorldAccess
 
     public void renderClouds(float par1)
     {
-        if (!mc.theWorld.worldProvider.func_48217_e())
+        if (!mc.theWorld.worldProvider.isSurfaceWorld())
         {
             return;
         }
@@ -1782,7 +1782,7 @@ public class RenderGlobal implements IWorldAccess
     }
 
     /**
-     * Plays the specified sound. Arg: x, y, z, soundName, unknown1, unknown2
+     * Plays the specified sound. Arg: soundName, x, y, z, volume, pitch
      */
     public void playSound(String par1Str, double par2, double par4, double par6, float par8, float par9)
     {
@@ -1875,7 +1875,7 @@ public class RenderGlobal implements IWorldAccess
         else if (par1Str.equals("magicCrit"))
         {
             obj = new EntityCritFX(worldObj, par2, par4, par6, par8, par10, par12);
-            ((EntityFX)(obj)).func_40097_b(((EntityFX)(obj)).func_40098_n() * 0.3F, ((EntityFX)(obj)).func_40101_o() * 0.8F, ((EntityFX)(obj)).func_40102_p());
+            ((EntityFX)(obj)).setRBGColorF(((EntityFX)(obj)).getRedColorF() * 0.3F, ((EntityFX)(obj)).getGreenColorF() * 0.8F, ((EntityFX)(obj)).getBlueColorF());
             ((EntityFX)(obj)).setParticleTextureIndex(((EntityFX)(obj)).getParticleTextureIndex() + 1);
         }
         else if (par1Str.equals("smoke"))
@@ -1885,7 +1885,7 @@ public class RenderGlobal implements IWorldAccess
         else if (par1Str.equals("mobSpell"))
         {
             obj = new EntitySpellParticleFX(worldObj, par2, par4, par6, 0.0D, 0.0D, 0.0D);
-            ((EntityFX)(obj)).func_40097_b((float)par8, (float)par10, (float)par12);
+            ((EntityFX)(obj)).setRBGColorF((float)par8, (float)par10, (float)par12);
         }
         else if (par1Str.equals("spell"))
         {
@@ -2127,7 +2127,7 @@ public class RenderGlobal implements IWorldAccess
                     if (entityfx != null)
                     {
                         float f3 = 0.75F + random.nextFloat() * 0.25F;
-                        entityfx.func_40097_b(f * f3, f1 * f3, f2 * f3);
+                        entityfx.setRBGColorF(f * f3, f1 * f3, f2 * f3);
                         entityfx.multiplyVelocity((float)d16);
                     }
                 }

@@ -150,7 +150,7 @@ public class BlockDoor extends Block
         return getFullMetadata(par1IBlockAccess, par2, par3, par4) & 3;
     }
 
-    public boolean func_48213_h(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
+    public boolean isDoorOpen(IBlockAccess par1IBlockAccess, int par2, int par3, int par4)
     {
         return (getFullMetadata(par1IBlockAccess, par2, par3, par4) & 4) != 0;
     }

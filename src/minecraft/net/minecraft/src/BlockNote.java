@@ -86,7 +86,11 @@ public class BlockNote extends BlockContainer
         return new TileEntityNote();
     }
 
-    public void powerBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    /**
+     * Called when the block receives a client event - see World.sendClientEvent. By default, passes it on to the tile
+     * entity at this location. Args: world, x, y, z, event number, parameter
+     */
+    public void receiveClientEvent(World par1World, int par2, int par3, int par4, int par5, int par6)
     {
         float f = (float)Math.pow(2D, (double)(par6 - 12) / 12D);
         String s = "harp";

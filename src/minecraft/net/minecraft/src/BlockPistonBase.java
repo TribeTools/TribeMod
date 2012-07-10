@@ -136,13 +136,13 @@ public class BlockPistonBase extends Block
             if (canExtend(par1World, par2, par3, par4, j))
             {
                 par1World.setBlockMetadata(par2, par3, par4, j | 8);
-                par1World.playNoteAt(par2, par3, par4, 0, j);
+                par1World.sendClientEvent(par2, par3, par4, 0, j);
             }
         }
         else if (!flag && isExtended(i))
         {
             par1World.setBlockMetadata(par2, par3, par4, j);
-            par1World.playNoteAt(par2, par3, par4, 1, j);
+            par1World.sendClientEvent(par2, par3, par4, 1, j);
         }
     }
 
@@ -209,7 +209,11 @@ public class BlockPistonBase extends Block
         return par1World.isBlockIndirectlyProvidingPowerTo(par2 + 1, par3 + 1, par4, 5);
     }
 
-    public void powerBlock(World par1World, int par2, int par3, int par4, int par5, int par6)
+    /**
+     * Called when the block receives a client event - see World.sendClientEvent. By default, passes it on to the tile
+     * entity at this location. Args: world, x, y, z, event number, parameter
+     */
+    public void receiveClientEvent(World par1World, int par2, int par3, int par4, int par5, int par6)
     {
         ignoreUpdates = true;
         int i = par6;

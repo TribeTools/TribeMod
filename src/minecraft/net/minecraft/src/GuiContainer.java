@@ -155,7 +155,7 @@ public abstract class GuiContainer extends GuiScreen
 
                     if (j4 == 0)
                     {
-                        s = (new StringBuilder()).append("\247").append(Integer.toHexString(itemstack.getRarity().nameColor)).append(s).toString();
+                        s = (new StringBuilder()).append("\247").append(Integer.toHexString(itemstack.getRarity().rarityColor)).append(s).toString();
                     }
                     else
                     {

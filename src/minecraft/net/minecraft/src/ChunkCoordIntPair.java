@@ -43,14 +43,14 @@ public class ChunkCoordIntPair
         return (chunkXPos << 4) + 8;
     }
 
-    public int getCenterZPos()
+    public int getCenterZPosition()
     {
         return (chunkZPos << 4) + 8;
     }
 
     public ChunkPosition getChunkPosition(int par1)
     {
-        return new ChunkPosition(getCenterXPos(), par1, getCenterZPos());
+        return new ChunkPosition(getCenterXPos(), par1, getCenterZPosition());
     }
 
     public String toString()

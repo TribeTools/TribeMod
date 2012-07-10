@@ -67,24 +67,24 @@ public class EntityFX extends Entity
         return this;
     }
 
-    public void func_40097_b(float par1, float par2, float par3)
+    public void setRBGColorF(float par1, float par2, float par3)
     {
         particleRed = par1;
         particleGreen = par2;
         particleBlue = par3;
     }
 
-    public float func_40098_n()
+    public float getRedColorF()
     {
         return particleRed;
     }
 
-    public float func_40101_o()
+    public float getGreenColorF()
     {
         return particleGreen;
     }
 
-    public float func_40102_p()
+    public float getBlueColorF()
     {
         return particleBlue;
     }

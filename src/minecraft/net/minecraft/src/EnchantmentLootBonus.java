@@ -14,7 +14,7 @@ public class EnchantmentLootBonus extends Enchantment
     }
 
     /**
-     * Returns the minimal value of enchantability nedded on the enchantment level passed.
+     * Returns the minimal value of enchantability needed on the enchantment level passed.
      */
     public int getMinEnchantability(int par1)
     {

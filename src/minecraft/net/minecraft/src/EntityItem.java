@@ -15,22 +15,24 @@ public class EntityItem extends Entity
 
     /** The health of this EntityItem. (For example, damage for tools) */
     private int health;
-    public float field_804_d;
+
+    /** The EntityItem's random initial float height. */
+    public float hoverStart;
 
     public EntityItem(World par1World, double par2, double par4, double par6, ItemStack par8ItemStack)
     {
         super(par1World);
         age = 0;
         health = 5;
-        field_804_d = (float)(Math.random() * Math.PI * 2D);
+        hoverStart = (float)(Math.random() * Math.PI * 2D);
         setSize(0.25F, 0.25F);
         yOffset = height / 2.0F;
         setPosition(par2, par4, par6);
         item = par8ItemStack;
         rotationYaw = (float)(Math.random() * 360D);
-        motionX = (float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D);
-        motionY = 0.20000000298023224D;
-        motionZ = (float)(Math.random() * 0.20000000298023224D - 0.10000000149011612D);
+        motionX = (float)(Math.random() * 0.20000000298023221D - 0.10000000149011611D);
+        motionY = 0.20000000298023221D;
+        motionZ = (float)(Math.random() * 0.20000000298023221D - 0.10000000149011611D);
     }
 
     /**
@@ -47,7 +49,7 @@ public class EntityItem extends Entity
         super(par1World);
         age = 0;
         health = 5;
-        field_804_d = (float)(Math.random() * Math.PI * 2D);
+        hoverStart = (float)(Math.random() * Math.PI * 2D);
         setSize(0.25F, 0.25F);
         yOffset = height / 2.0F;
     }
@@ -75,7 +77,7 @@ public class EntityItem extends Entity
 
         if (worldObj.getBlockMaterial(MathHelper.floor_double(posX), MathHelper.floor_double(posY), MathHelper.floor_double(posZ)) == Material.lava)
         {
-            motionY = 0.20000000298023224D;
+            motionY = 0.20000000298023221D;
             motionX = (rand.nextFloat() - rand.nextFloat()) * 0.2F;
             motionZ = (rand.nextFloat() - rand.nextFloat()) * 0.2F;
             worldObj.playSoundAtEntity(this, "random.fizz", 0.4F, 2.0F + rand.nextFloat() * 0.4F);
@@ -206,6 +208,7 @@ public class EntityItem extends Entity
                 par1EntityPlayer.triggerAchievement(AchievementList.blazeRod);
             }
 
+            ModLoader.onItemPickup(par1EntityPlayer, item);
             worldObj.playSoundAtEntity(this, "random.pop", 0.2F, ((rand.nextFloat() - rand.nextFloat()) * 0.7F + 1.0F) * 2.0F);
             par1EntityPlayer.onItemPickup(this, i);
 

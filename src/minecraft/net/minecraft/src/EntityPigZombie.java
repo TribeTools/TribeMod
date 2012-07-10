@@ -186,7 +186,7 @@ public class EntityPigZombie extends EntityZombie
         if (par1 > 0)
         {
             ItemStack itemstack = new ItemStack(Item.swordGold);
-            EnchantmentHelper.func_48441_a(rand, itemstack, 5);
+            EnchantmentHelper.addRandomEnchantment(rand, itemstack, 5);
             entityDropItem(itemstack, 0.0F);
         }
         else

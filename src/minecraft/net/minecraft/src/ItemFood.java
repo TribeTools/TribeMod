@@ -4,7 +4,8 @@ import java.util.Random;
 
 public class ItemFood extends Item
 {
-    public final int field_35430_a = 32;
+    /** Number of ticks to run while 'EnumAction'ing until result. */
+    public final int itemUseDuration = 32;
 
     /** The amount this food item heals the player. */
     private final int healAmount;

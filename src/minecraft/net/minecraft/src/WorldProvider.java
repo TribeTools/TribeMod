@@ -63,14 +63,7 @@ public abstract class WorldProvider
      */
     protected void registerWorldChunkManager()
     {
-        if (worldObj.getWorldInfo().getTerrainType() == WorldType.FLAT)
-        {
-            worldChunkMgr = new WorldChunkManagerHell(BiomeGenBase.plains, 0.5F, 0.5F);
-        }
-        else
-        {
-            worldChunkMgr = new WorldChunkManager(worldObj);
-        }
+        worldChunkMgr = terrainType.getChunkManager(worldObj);
     }
 
     /**
@@ -78,14 +71,7 @@ public abstract class WorldProvider
      */
     public IChunkProvider getChunkProvider()
     {
-        if (terrainType == WorldType.FLAT)
-        {
-            return new ChunkProviderFlat(worldObj, worldObj.getSeed(), worldObj.getWorldInfo().isMapFeaturesEnabled());
-        }
-        else
-        {
-            return new ChunkProviderGenerate(worldObj, worldObj.getSeed(), worldObj.getWorldInfo().isMapFeaturesEnabled());
-        }
+        return terrainType.getChunkGenerator(worldObj);
     }
 
     /**
@@ -126,7 +112,10 @@ public abstract class WorldProvider
         return (int)(par1 / 24000L) % 8;
     }
 
-    public boolean func_48217_e()
+    /**
+     * Returns 'true' if in the "main surface world", but 'false' if in the Nether or End dimensions.
+     */
+    public boolean isSurfaceWorld()
     {
         return true;
     }
@@ -193,24 +182,7 @@ public abstract class WorldProvider
 
     public static WorldProvider getProviderForDimension(int par0)
     {
-        if (par0 == -1)
-        {
-            return new WorldProviderHell();
-        }
-
-        if (par0 == 0)
-        {
-            return new WorldProviderSurface();
-        }
-
-        if (par0 == 1)
-        {
-            return new WorldProviderEnd();
-        }
-        else
-        {
-            return null;
-        }
+        return ((WorldProvider)(par0 != -1 ? par0 != 0 ? par0 != 1 ? null : new WorldProviderEnd() : new WorldProviderSurface() : new WorldProviderHell()));
     }
 
     /**
@@ -236,15 +208,16 @@ public abstract class WorldProvider
 
     public int getAverageGroundLevel()
     {
-        return terrainType != WorldType.FLAT ? 64 : 4;
+        return terrainType.getSeaLevel(worldObj);
     }
 
     /**
-     * returns true if there should be no sky, false otherwise
+     * returns true if this dimension is supposed to display void particles and pull in the far plane based on the
+     * user's Y offset.
      */
-    public boolean getWorldHasNoSky()
+    public boolean getWorldHasVoidParticles()
     {
-        return terrainType != WorldType.FLAT && !hasNoSky;
+        return terrainType.hasVoidParticles(hasNoSky);
     }
 
     /**
@@ -254,7 +227,7 @@ public abstract class WorldProvider
      */
     public double getVoidFogYFactor()
     {
-        return terrainType != WorldType.FLAT ? 0.03125D : 1.0D;
+        return terrainType.voidFadeMagnitude();
     }
 
     public boolean func_48218_b(int par1, int par2)
