@@ -7,39 +7,39 @@ public class GuiTextField extends Gui
     /**
      * Have the font renderer from GuiScreen to render the textbox text into the screen.
      */
-    private final FontRenderer fontRenderer;
-    private final int xPos;
-    private final int yPos;
+    protected final FontRenderer fontRenderer;
+    protected final int xPos;
+    protected final int yPos;
 
     /** The width of this text field. */
-    private final int width;
-    private final int height;
+    protected final int width;
+    protected final int height;
 
     /** Have the current text beign edited on the textbox. */
-    private String text;
-    private int maxStringLength;
-    private int cursorCounter;
-    private boolean enableBackgroundDrawing;
+    protected String text;
+    protected int maxStringLength;
+    protected int cursorCounter;
+    protected boolean enableBackgroundDrawing;
 
     /**
      * if true the textbox can lose focus by clicking elsewhere on the screen
      */
-    private boolean canLoseFocus;
+    protected boolean canLoseFocus;
 
     /**
      * If this value is true along isEnabled, keyTyped will process the keys.
      */
-    private boolean isFocused;
+    protected boolean isFocused;
 
     /**
      * If this value is true along isFocused, keyTyped will process the keys.
      */
-    private boolean isEnabled;
-    private int field_50041_n;
-    private int field_50042_o;
-    private int field_50048_p;
-    private int enabledColor;
-    private int disabledColor;
+    protected boolean isEnabled;
+    protected int field_50041_n;
+    protected int field_50042_o;
+    protected int field_50048_p;
+    protected int enabledColor;
+    protected int disabledColor;
 
     public GuiTextField(FontRenderer par1FontRenderer, int par2, int par3, int par4, int par5)
     {
@@ -494,7 +494,7 @@ public class GuiTextField extends Gui
         }
     }
 
-    private void func_50029_c(int par1, int par2, int par3, int par4)
+    protected void func_50029_c(int par1, int par2, int par3, int par4)
     {
         if (par1 < par3)
         {
