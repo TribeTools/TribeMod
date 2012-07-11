@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 
 
+import org.frantictools.franticmod.gui.GuiFModMenu;
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
@@ -46,13 +47,9 @@ public class FranticMod {
 	}
 	
 	public void processKeybind(KeyBinding event) {
-//		if (event == this.keyBindOpenMenu && GuiTools.isIdle()) {
-//			if (Temp.loggedIn) {
-//				fw.showScreen(mc.thePlayer, new GuiFModMenu());
-//			} else {
-//				fw.showScreen(mc.thePlayer, new GuiLogin(mc.currentScreen));
-//			}
-//		}
+		if (event == this.keyBindOpenMenu) {
+			ModLoader.openGUI(mc.thePlayer, new GuiFModMenu());
+		}
 	}
 
 }

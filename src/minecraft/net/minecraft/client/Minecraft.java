@@ -112,7 +112,7 @@ import net.minecraft.src.WorldRenderer;
 import net.minecraft.src.WorldSettings;
 import net.minecraft.src.WorldType;
 
-import org.frantictools.franticmod.gui.GuiTest;
+import org.frantictools.franticmod.gui.GuiLogin;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
 import org.lwjgl.input.Controllers;
@@ -484,7 +484,7 @@ public abstract class Minecraft implements Runnable
         }
         else
         {
-            displayGuiScreen(new GuiTest());
+            displayGuiScreen(new GuiLogin());
         }
 
         loadingScreen = new LoadingScreenRenderer(this);
