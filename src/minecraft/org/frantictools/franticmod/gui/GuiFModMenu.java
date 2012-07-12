@@ -2,6 +2,7 @@ package org.frantictools.franticmod.gui;
 
 import net.minecraft.src.GuiAchievements;
 import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiButtonLanguage;
 import net.minecraft.src.GuiMainMenu;
 import net.minecraft.src.GuiOptions;
 import net.minecraft.src.GuiScreen;
@@ -26,6 +27,8 @@ public class GuiFModMenu extends GuiScreen
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + byte0, "Settings"));
         controlList.add(new GuiButton(5, width / 2 - 100, height / 4 + 48 + byte0, 98, 20, "Ban Guest"));
         controlList.add(new GuiButton(6, width / 2 + 2, height / 4 + 48 + byte0, 98, 20, "Ban Player"));
+        
+        controlList.add(new GuiButtonLanguage(7, width / 2 - 124, height / 4 + 120 + byte0));
     }
 
     /**

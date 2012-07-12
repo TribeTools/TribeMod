@@ -5,6 +5,7 @@ import java.lang.reflect.Field;
 
 
 import org.frantictools.franticmod.gui.GuiFModMenu;
+import org.frantictools.franticmod.gui.GuiLogin;
 import org.lwjgl.input.Keyboard;
 
 import net.minecraft.client.Minecraft;
@@ -25,6 +26,9 @@ public class FranticMod {
 
 	public Minecraft mc = ModLoader.getMinecraftInstance();
 	private mod_FranticMod fMod;
+	
+	public boolean loggedIn;
+	public volatile boolean loggingIn;
 	
 	private KeyBinding keyBindOpenMenu = new KeyBinding("key.fmodmenu", Keyboard.KEY_BACK);
 
@@ -48,7 +52,10 @@ public class FranticMod {
 	
 	public void processKeybind(KeyBinding event) {
 		if (event == this.keyBindOpenMenu) {
-			ModLoader.openGUI(mc.thePlayer, new GuiFModMenu());
+			if (loggedIn)
+				ModLoader.openGUI(mc.thePlayer, new GuiFModMenu());
+			else
+				ModLoader.openGUI(mc.thePlayer, new GuiLogin());
 		}
 	}
 

@@ -484,7 +484,7 @@ public abstract class Minecraft implements Runnable
         }
         else
         {
-            displayGuiScreen(new GuiLogin());
+            displayGuiScreen(new GuiMainMenu());
         }
 
         loadingScreen = new LoadingScreenRenderer(this);

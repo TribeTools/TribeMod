@@ -41,7 +41,7 @@ public class GuiLogin extends GuiScreen {
         Keyboard.enableRepeatEvents(true);
         controlList.clear();
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 12, "Login"));
-        controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, "Quit"));
+        controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, "Cancel"));
         
         userField = new GuiTextField(fontRenderer, width / 2 - 100, 76, 200, 20);
         userField.setFocused(true);
