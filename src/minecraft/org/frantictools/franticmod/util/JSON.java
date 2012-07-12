@@ -1,5 +1,7 @@
 package org.frantictools.franticmod.util;
 
+import java.util.HashMap;
+
 import com.google.gson.Gson;
 
 public class JSON {
@@ -12,7 +14,7 @@ public class JSON {
 
 	    public static Object Decode(String AString) {
 	        Gson gson = new Gson();
-	        Object obj = gson.fromJson(AString, Object.class);
+	        Object obj = gson.fromJson(AString, HashMap.class);
 	        return obj;
 	    }
 }
