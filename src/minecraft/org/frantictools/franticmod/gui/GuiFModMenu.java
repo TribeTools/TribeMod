@@ -53,13 +53,11 @@ public class GuiFModMenu extends GuiScreen
                 break;
 
             case 4:
-                mc.displayGuiScreen(null);
-                mc.setIngameFocus();
+                mc.displayGuiScreen(new GuiSearch(this));
                 break;
 
             case 5:
-                mc.displayGuiScreen(null);
-                mc.setIngameFocus();
+                mc.displayGuiScreen(new GuiBanGuest(this));
                 break;
 
             case 6:
