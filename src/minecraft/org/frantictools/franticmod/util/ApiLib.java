@@ -17,8 +17,13 @@ import org.apache.http.protocol.HTTP;
 import org.frantictools.franticmod.FranticMod;
 import org.yaml.snakeyaml.Yaml;
 
+@Deprecated
 public class ApiLib
 {
+/***
+ * DEPRECATED
+ * DO NOT USE THIS CLASS
+ */
 	public static boolean login(String username, String password)
 	{
 		HttpClient client = new DefaultHttpClient();

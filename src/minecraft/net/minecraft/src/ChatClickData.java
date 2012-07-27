@@ -68,6 +68,10 @@ public class ChatClickData
         return null;
     }
 
+    public String getWord() 
+    {
+    	return func_50088_a();
+    }
     private String func_50090_c()
     {
         int i = field_50091_f.lastIndexOf(" ", field_50091_f.length()) + 1;

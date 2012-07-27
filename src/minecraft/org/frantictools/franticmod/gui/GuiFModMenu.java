@@ -44,7 +44,7 @@ public class GuiFModMenu extends GuiScreen
                 break;
 
             case 0:
-                mc.displayGuiScreen(new GuiOptions(this, mc.gameSettings));
+                mc.displayGuiScreen(new GuiSearchResults(this, "bleh"));
                 break;
 
             case 1:

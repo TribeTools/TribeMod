@@ -67,7 +67,7 @@ public class GuiSearch extends GuiScreen
         }
         else if (par1GuiButton.id == 0)
         {
-        	//Search that motherfucker
+        	mc.displayGuiScreen(new GuiSearchResults(this, searchField.getText()));
         }
     }
 
@@ -101,8 +101,8 @@ public class GuiSearch extends GuiScreen
     {
         StringTranslate stringtranslate = StringTranslate.getInstance();
         drawDefaultBackground();
-        drawCenteredString(fontRenderer, stringtranslate.translateKey("selectWorld.renameTitle"), width / 2, (height / 4 - 60) + 20, 0xffffff);
-        drawString(fontRenderer, stringtranslate.translateKey("selectWorld.enterName"), width / 2 - 100, 47, 0xa0a0a0);
+        drawCenteredString(fontRenderer, "Lookup Player", width / 2, (height / 4 - 60) + 20, 0xffffff);
+        drawString(fontRenderer, "Enter Name", width / 2 - 100, 47, 0xa0a0a0);
         searchField.drawTextBox();
         super.drawScreen(par1, par2, par3);
     }

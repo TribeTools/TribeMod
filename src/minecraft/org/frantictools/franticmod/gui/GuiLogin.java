@@ -13,6 +13,8 @@ import net.minecraft.src.GuiScreen;
 import net.minecraft.src.GuiTextField;
 import net.minecraft.src.ModLoader;
 
+import org.frantictools.franticapi.FranticMeAPI;
+import org.frantictools.franticapi.ICallback;
 import org.frantictools.franticmod.FranticMod;
 import org.frantictools.franticmod.gui.controls.GuiPasswordField;
 import org.frantictools.franticmod.util.ApiLib;
@@ -78,14 +80,26 @@ public class GuiLogin extends GuiScreen {
         }
         else if (par1GuiButton.id == 0)
         {
-             if (ApiLib.login(userField.getText(), passwordField.getText())) {
-            	 FranticMod.loggedIn = true;
-            	 mc.displayGuiScreen(null);
-             } else {
-            	 title = "Bad Username/Password";
-             }
+        	title = "Logging in";
+        	FranticMod.fm = new FranticMeAPI(userField.getText(), passwordField.getText());
+        	FranticMod.fm.login(new ICallback<Boolean>()
+			{
+				public void onFinish(Boolean result)
+				{
+					if (result)
+					{
+						mc.displayGuiScreen(null);
+						FranticMod.fm.loggedIn = true;
+					} else
+					{
+						title = "Bad Login";
+						FranticMod.fm = null;
+					}
+				}
+			});
         }
     }
+    
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).

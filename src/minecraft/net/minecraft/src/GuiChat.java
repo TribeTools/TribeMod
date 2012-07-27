@@ -4,6 +4,8 @@ import java.lang.reflect.Method;
 import java.net.URI;
 import java.util.*;
 import net.minecraft.client.Minecraft;
+
+import org.frantictools.franticmod.FranticMod;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -191,6 +193,22 @@ public class GuiChat extends GuiScreen
                     mc.displayGuiScreen(new GuiChatConfirmLink(this, this, chatclickdata.func_50088_a(), 0, chatclickdata));
                     return;
                 }
+            }
+            
+            
+        }
+        
+        if (par3 == 1)
+        {
+            ChatClickData chatclickdata = mc.ingameGUI.getChatClickDataFromMouse(Mouse.getX(), Mouse.getY());
+
+            if (chatclickdata != null)
+            {
+            	
+            	String s = chatclickdata.getWord();
+            	if (FranticMod.userList.contains(s)) {
+            		System.out.println(s); //Show menu here
+            	}
             }
         }
 
