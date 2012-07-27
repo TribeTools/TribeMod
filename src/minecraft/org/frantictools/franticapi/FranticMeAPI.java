@@ -25,7 +25,7 @@ public class FranticMeAPI
 	final String password;
 	
 	public boolean loggedIn = false;
-	static final String url = "http://franticme.com";
+	static final String url = "http://www.franticme.com";
 	
 	public FranticMeAPI(String username, String password)
 	{
@@ -43,7 +43,7 @@ public class FranticMeAPI
 				HttpClient client = new DefaultHttpClient();
 				try
 				{
-					String target = "http://www.franticme.com/?r=login";
+					String target = url + "/?r=login";
 
 					BasicNameValuePair[] params =
 					{ new BasicNameValuePair("franticPostUsername", username), new BasicNameValuePair("franticPostPassword", password), new BasicNameValuePair("api", "FMOD") };
