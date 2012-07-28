@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.http.HttpResponse;
@@ -34,6 +36,16 @@ public class FranticMeAPI
 
 	}
 	
+	private List<BasicNameValuePair> makeNameValueList(String[][] x)
+	{
+		List<BasicNameValuePair> result = new ArrayList<BasicNameValuePair>();
+		for (String[] pair : x)
+		{
+			result.add(new BasicNameValuePair(pair[0], pair[1]));
+		}
+		return result;
+	}
+	
 	public void login(final ICallback<Boolean> cb)
 	{
 		Thread t = new Thread()
@@ -45,12 +57,16 @@ public class FranticMeAPI
 				{
 					String target = url + "/?r=login";
 
-					BasicNameValuePair[] params =
-					{ new BasicNameValuePair("franticPostUsername", username), new BasicNameValuePair("franticPostPassword", password), new BasicNameValuePair("api", "FMOD") };
 					
-					HttpResponse response = dispatchPostRequest(target, params, client);
-
-					String rawData = getResult(response);
+					String[][] x = {
+							{"franticPostUsername", username},
+							{"franticPostPassword", password},
+							{"api", "FMOD"}
+					};
+					
+					List<BasicNameValuePair> params = makeNameValueList(x);
+					
+					String rawData = getResult(dispatchPostRequest(target, params, client));
 
 					Yaml yaml = new Yaml();
 					Map map = (Map) yaml.load(rawData.substring(3));
@@ -93,6 +109,8 @@ public class FranticMeAPI
 		
 	}
 	
+	
+	/* ** These functions are to move the ugliness away from the api functionality ** */
 	private static String getResult(HttpResponse response) throws IllegalStateException, IOException
 	{
 		InputStream input = response.getEntity().getContent();
@@ -109,11 +127,11 @@ public class FranticMeAPI
 		return rawData;
 	}
 	
-	private static HttpResponse dispatchPostRequest(String target, BasicNameValuePair[] params, HttpClient client) throws ClientProtocolException, IOException
+	private static HttpResponse dispatchPostRequest(String target, List<BasicNameValuePair> params, HttpClient client) throws ClientProtocolException, IOException
 	{
 		HttpPost httpPost = new HttpPost(target);
 
-		UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(Arrays.asList(params));
+		UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(params);
 		urlEncodedFormEntity.setContentEncoding(HTTP.UTF_8);
 		httpPost.setEntity(urlEncodedFormEntity);
 		return client.execute(httpPost);

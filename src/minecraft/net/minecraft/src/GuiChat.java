@@ -206,7 +206,7 @@ public class GuiChat extends GuiScreen
             {
             	
             	String s = chatclickdata.getWord();
-            	if (FranticMod.userList.contains(s)) {
+            	if (s.endsWith(":") && FranticMod.userList.contains(s.substring(0, s.length() - 1))) {
             		System.out.println(s); //Show menu here
             	}
             }

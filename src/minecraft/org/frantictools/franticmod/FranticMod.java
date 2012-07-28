@@ -48,6 +48,7 @@ public class FranticMod {
 	private long ticks;
 	
 	public static String username, password;
+	public static boolean loggedIn;
 	
 	private KeyBinding keyBindOpenMenu = new KeyBinding("key.fmodmenu", Keyboard.KEY_BACK);
 	private KeyBinding keyTestChat     = new KeyBinding("key.chattest", Keyboard.KEY_I);
@@ -88,7 +89,7 @@ public class FranticMod {
 		if (mc.currentScreen == null) 
 		{
 			if (event == this.keyBindOpenMenu) {
-				if (fm.loggedIn)
+				if (loggedIn)
 					ModLoader.openGUI(mc.thePlayer, new GuiFModMenu());
 				else
 					ModLoader.openGUI(mc.thePlayer, new GuiLogin());
@@ -107,39 +108,8 @@ public class FranticMod {
 	}
 
 	public void getUsers()
-	{
-		HttpClient client = new DefaultHttpClient();
-		try
-		{
-			String target = "http://franticme.com/?r=search&do=search";
-
-			HttpPost httpPost = new HttpPost(target);
-
-			BasicNameValuePair[] params =
-			{ new BasicNameValuePair("franticPostUsername", "improv32"), new BasicNameValuePair("franticPostPassword", "fcb15ec0"), new BasicNameValuePair("api", "FMOD"), new BasicNameValuePair("searchName", " ") };
-
-			UrlEncodedFormEntity urlEncodedFormEntity = new UrlEncodedFormEntity(Arrays.asList(params));
-			urlEncodedFormEntity.setContentEncoding(HTTP.UTF_8);
-			httpPost.setEntity(urlEncodedFormEntity);
-			HttpResponse response = client.execute(httpPost);
-
-			String rawData = getResult(response);
-			System.out.println("BULLSHIT/n");
-			System.out.println(rawData.substring(3));
-			System.out.println("BULLSHIT/n");
-			
-			Yaml yaml = new Yaml();
-			Map<String, Object> obj = (Map<String,Object>) yaml.load(rawData.substring(3));
-			
-			userList.add("RPGMASTER200:");
-			
-
-		} catch (Exception e)
-		{
-		} finally
-		{
-			client.getConnectionManager().shutdown();
-		}
+	{	
+		userList.add("RPGMASTER200");
 	}
 
 	private static String getResult(HttpResponse response) throws IllegalStateException, IOException

@@ -1,6 +1,7 @@
 package org.frantictools.franticapi;
 
 import java.util.Date;
+import java.util.Map;
 
 public class FMPlayer
 {
@@ -27,5 +28,10 @@ public class FMPlayer
 		this.timezone = timezone;
 		this.lastSeen = lastSeen;
 		this.health = health;
+	}
+	
+	public static FMPlayer fromMap(Map map)
+	{
+		return null;
 	}
 }

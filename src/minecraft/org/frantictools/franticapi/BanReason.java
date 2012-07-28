@@ -8,10 +8,7 @@ public enum BanReason
 	RECRUITING(4),
 	LANGUAGE(5);
 	
-	private BanReason(int id)
-	{
-		this.id = id;
-	}
+	private BanReason(int id) { this.id = id; }
 	
 	public final int id; 
 }
