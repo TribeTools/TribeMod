@@ -53,11 +53,11 @@ public class FranticMeAPI
 						{"api", "FMOD"}
 					});
 					
-					String rawData = getResult(dispatchPostRequest(target, params, client));
+					String result = getResult(dispatchPostRequest(target, params, client));
 					
 					// Now do something with the data
 					Yaml yaml = new Yaml();
-					Map map = (Map) yaml.load(rawData.substring(3));
+					Map map = (Map) yaml.load(result.substring(3));
 					
 					FranticMod.username = (String) map.get("username");
 					FranticMod.password = (String) map.get("password");
@@ -89,7 +89,44 @@ public class FranticMeAPI
 	
 	public void searchPlayers(final String query, final ICallback<FMPlayer[]> cb)
 	{
-		
+		Thread t = new Thread()
+		{
+			public void run()
+			{
+				HttpClient client = new DefaultHttpClient();
+				try
+				{
+					String target = url + "/?r=search&do=search";
+					
+					List<BasicNameValuePair> params = makeNameValueList(new String[][] {
+						{"franticPostUsername", username},
+						{"franticPostPassword", password},
+						{"api", "FMOD"},
+						{"searchName", query}
+					});
+					
+					String result = getResult(dispatchPostRequest(target, params, client));
+					
+					// Now do something with the data
+					Yaml yaml = new Yaml();
+					Map map = (Map) yaml.load(result.substring(3));
+					
+					FranticMod.username = (String) map.get("username");
+					FranticMod.password = (String) map.get("password");
+					//cb.onFinish(true);
+
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+					cb.onFinish(new FMPlayer[0]);
+				} finally
+				{
+					client.getConnectionManager().shutdown();
+				}
+			}
+		};
+		t.setPriority(Thread.MIN_PRIORITY);
+		t.start();
 	}
 	
 	public void approveMember(final String guest, final ICallback<Boolean> cb)
@@ -125,7 +162,7 @@ public class FranticMeAPI
 		return client.execute(httpPost);
 	}
 	
-	private List<BasicNameValuePair> makeNameValueList(String[][] x)
+	private static List<BasicNameValuePair> makeNameValueList(String[][] x)
 	{
 		List<BasicNameValuePair> result = new ArrayList<BasicNameValuePair>();
 		for (String[] pair : x)

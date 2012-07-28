@@ -6,6 +6,8 @@ import java.util.*;
 import net.minecraft.client.Minecraft;
 
 import org.frantictools.franticmod.FranticMod;
+import org.frantictools.franticmod.gui.GuiFModMenu;
+import org.frantictools.franticmod.gui.GuiPlayerMenu;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.input.Mouse;
 
@@ -207,7 +209,7 @@ public class GuiChat extends GuiScreen
             	
             	String s = chatclickdata.getWord();
             	if (s.endsWith(":") && FranticMod.userList.contains(s.substring(0, s.length() - 1))) {
-            		System.out.println(s); //Show menu here
+            		mc.displayGuiScreen(new GuiPlayerMenu(s.substring(0, s.length() - 1)));
             	}
             }
         }
