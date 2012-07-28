@@ -36,16 +36,6 @@ public class FranticMeAPI
 
 	}
 	
-	private List<BasicNameValuePair> makeNameValueList(String[][] x)
-	{
-		List<BasicNameValuePair> result = new ArrayList<BasicNameValuePair>();
-		for (String[] pair : x)
-		{
-			result.add(new BasicNameValuePair(pair[0], pair[1]));
-		}
-		return result;
-	}
-	
 	public void login(final ICallback<Boolean> cb)
 	{
 		Thread t = new Thread()
@@ -56,18 +46,16 @@ public class FranticMeAPI
 				try
 				{
 					String target = url + "/?r=login";
-
 					
-					String[][] x = {
-							{"franticPostUsername", username},
-							{"franticPostPassword", password},
-							{"api", "FMOD"}
-					};
-					
-					List<BasicNameValuePair> params = makeNameValueList(x);
+					List<BasicNameValuePair> params = makeNameValueList(new String[][] {
+						{"franticPostUsername", username},
+						{"franticPostPassword", password},
+						{"api", "FMOD"}
+					});
 					
 					String rawData = getResult(dispatchPostRequest(target, params, client));
-
+					
+					// Now do something with the data
 					Yaml yaml = new Yaml();
 					Map map = (Map) yaml.load(rawData.substring(3));
 					
@@ -135,5 +123,15 @@ public class FranticMeAPI
 		urlEncodedFormEntity.setContentEncoding(HTTP.UTF_8);
 		httpPost.setEntity(urlEncodedFormEntity);
 		return client.execute(httpPost);
+	}
+	
+	private List<BasicNameValuePair> makeNameValueList(String[][] x)
+	{
+		List<BasicNameValuePair> result = new ArrayList<BasicNameValuePair>();
+		for (String[] pair : x)
+		{
+			result.add(new BasicNameValuePair(pair[0], pair[1]));
+		}
+		return result;
 	}
 }
