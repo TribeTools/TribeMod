@@ -91,6 +91,7 @@ public class FranticMeAPI
 	{
 		Thread t = new Thread()
 		{
+			@SuppressWarnings("unchecked")
 			public void run()
 			{
 				HttpClient client = new DefaultHttpClient();
@@ -110,10 +111,16 @@ public class FranticMeAPI
 					// Now do something with the data
 					Yaml yaml = new Yaml();
 					Map map = (Map) yaml.load(result.substring(3));
+
+					List<Map> users = (List<Map>) map.get("users");
+					FMPlayer[] resultArray = new FMPlayer[(int) map.get("results")];
 					
-					FranticMod.username = (String) map.get("username");
-					FranticMod.password = (String) map.get("password");
-					//cb.onFinish(true);
+					int i = 0;
+					for (Map x : users)
+					{
+						resultArray[i++] = new FMPlayer(x);
+					}
+					cb.onFinish(resultArray);
 
 				} catch (Exception e)
 				{

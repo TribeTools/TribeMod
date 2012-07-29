@@ -51,7 +51,7 @@ public class FranticMod {
 	public static boolean loggedIn;
 	
 	private KeyBinding keyBindOpenMenu = new KeyBinding("key.fmodmenu", Keyboard.KEY_BACK);
-	private KeyBinding keyTestChat     = new KeyBinding("key.chattest", Keyboard.KEY_I);
+//	private KeyBinding keyTestChat     = new KeyBinding("key.chattest", Keyboard.KEY_I);
 
 	public static ArrayList<String> userList = new ArrayList<String>();
 	public FranticMod(mod_FranticMod mod) {
@@ -60,7 +60,7 @@ public class FranticMod {
 
 	public void Initialize() {
 		ModLoader.registerKey(fMod, keyBindOpenMenu, false);
-		ModLoader.registerKey(fMod, keyTestChat, false);
+//		ModLoader.registerKey(fMod, keyTestChat, false);
 		getUsers();
 
 		ModLoader.addLocalization("key.fmodmenu", "Open FMod Menu");
