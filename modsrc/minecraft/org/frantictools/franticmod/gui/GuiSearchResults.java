@@ -1,6 +1,11 @@
 package org.frantictools.franticmod.gui;
 
+import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
+
+import org.frantictools.franticapi.FMPlayer;
+import org.frantictools.franticapi.ICallback;
+import org.frantictools.franticmod.FranticMod;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
@@ -59,11 +64,7 @@ public class GuiSearchResults extends GuiScreen
         }
         if(guibutton.id == 1)
         {
-//        	if(selectedSlot.results.keySet().toArray(new String[] {})[selected] != null)
-//        		mc.displayGuiScreen(new GuiPlayerInfo(selctedSlot.results.keySet().toArray(new String[] {})[selected]));
-//        	else
-//        		mod_FranticMod.showModMessage("FMod - Error", "You must select a name", Block.tnt.blockID);
-        	
+        	mc.displayGuiScreen(new GuiPlayerMenu(playerList.playerMap.get(playerList.results.keySet().toArray(new String[] {})[selected]))); // TODO Change this ugly fuckup
         }
     }
 
@@ -73,6 +74,11 @@ public class GuiSearchResults extends GuiScreen
         playerList.drawScreen(i, j, f);
         drawCenteredString(fontRenderer, "Search Results (" + playerList.getSize() + ")", width / 2, 20, 0xffffff);
         super.drawScreen(i, j, f);
+    }
+    
+    public void enableButton()
+    {
+    	((GuiButton) controlList.get(1)).enabled = true;
     }
 
 
@@ -86,26 +92,30 @@ public class GuiSearchResults extends GuiScreen
 class GuiSlotPlayer extends GuiSlot
 {
 
-    final GuiScreen parent; /* synthetic field */
+    GuiSearchResults parent; /* synthetic field */
     static Minecraft mc = ModLoader.getMinecraftInstance();
+    public boolean hasSelection;
 
     public GuiSlotPlayer(GuiSearchResults guiplayerlist, String searchQuery)
     {
-    	super(mc, 40, guiplayerlist.height, 32, guiplayerlist.height - 64, 10);
-    	results = new ConcurrentHashMap<String, String>();
+    	super(mc, guiplayerlist.width, guiplayerlist.height, 32, guiplayerlist.height - 64, 10);
         parent = guiplayerlist;
         func_27258_a(false);
-
-        	showResults(searchQuery);
+        showResults(searchQuery);
     }
     
-    protected void showResults(String AQuery)
+    public HashMap<String, FMPlayer> playerMap = new HashMap<String, FMPlayer>();
+    
+    protected void showResults(String query)
     {
-    	results.put("improv32", "Moderator");
-    	results.put("imprvot22", "Regular");
-    	results.put("impwfwrov32", "Moderfweator");
-    	results.put("impfewfrvot22", "Regfewfular");
-
+    	FranticMod.fm.searchPlayers(query, new ICallback<FMPlayer[]>() { public void onFinish(FMPlayer[] result)
+		{
+    		for (FMPlayer x : result)
+    		{
+    			results.put(x.username, x.group);
+    			playerMap.put(x.username, x);
+    		}
+		}});
     }
 
     @Override
@@ -117,6 +127,7 @@ class GuiSlotPlayer extends GuiSlot
     @Override
 	protected void elementClicked(int i, boolean flag)
     {
+    	parent.enableButton();
     	GuiSearchResults.selected = i;
     }
 
@@ -138,12 +149,12 @@ class GuiSlotPlayer extends GuiSlot
         parent.drawDefaultBackground();
     }
     
-    public static ConcurrentHashMap<String, String> results;
+    public HashMap<String, String> results = new HashMap<String, String>();
 
     @Override
 	protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator)
     {
-    	ConcurrentHashMap<String, String> localResults = results;
+    	HashMap<String, String> localResults = results;
     	String name = localResults.keySet().toArray(new String[] {})[i];
     	name = isSelected(i) ? "> " + name : name;
         mc.fontRenderer.drawString(name, j + 2, k + 1, isSelected(i) ? 0x00ff00 : 0xffffff);

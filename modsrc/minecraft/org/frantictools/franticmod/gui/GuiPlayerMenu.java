@@ -1,8 +1,10 @@
 package org.frantictools.franticmod.gui;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 
+import org.frantictools.franticapi.FMPlayer;
 import org.lwjgl.input.Keyboard;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -25,22 +27,21 @@ public class GuiPlayerMenu extends GuiScreen
 	private float ySize_lo;
 
 	private String player;
-	private String playerId;
 	private String rank;
 	private String joinDate;
 	private String lastBan;
 	private String banLevel;
 	
 	@SuppressWarnings("unchecked")
-	public GuiPlayerMenu(String name)
+	public GuiPlayerMenu(FMPlayer player)
 	{
 		
-		player 		= 	name;
-		rank 		= 	"Guest";
-		joinDate 	= 	"5 January 2011";
-		playerId 	= 	"123";
-		lastBan 	= 	"Not Implemented";
-		banLevel 	= 	"Not Implemented";
+		this.player 	= 	player.username;
+		this.rank 		= 	player.group;
+		this.joinDate 	= 	new SimpleDateFormat("dd MMMMM yy").format(player.registered);
+		
+		this.lastBan 	= 	"Not Implemented";
+		this.banLevel 	= 	"Not Implemented";
 		
 	}
 	
@@ -79,14 +80,14 @@ public class GuiPlayerMenu extends GuiScreen
 	{
 		Keyboard.enableRepeatEvents(true);
 		controlList.clear();
-		controlList.add(new GuiButton(0, width / 2 - 85, height / 4 + 80, 80, 20, "Everyone"));
-		controlList.add(new GuiButton(1, width / 2 - 85, height / 4 + 102, 80, 20, "Donor"));
-		controlList.add(new GuiButton(2, width / 2 + 4, height / 4 + 102, 80, 20, "Donorator"));
-		controlList.add(new GuiButton(3, width / 2 + 4, height / 4 + 80, 80, 20, "Regular"));
 		controlList.add(new GuiButton(4, width / 2 + 65, height / 2 - 82, 20, 20, "X"));
-		controlList.add(new GuiButton(5, width / 2 - 85, height / 4 + 124, 80, 20, "Baby Mod"));
-		controlList.add(new GuiButton(6, width / 2 + 4, height / 4 + 124, 80, 20, "Mayor"));
-		controlList.add(new GuiButton(7, width / 2 + 24, height / 4 +58, 60, 20, "SuperStalk"));
+		controlList.add(new GuiButton(0, width / 2 - 85, height / 4 + 80, 80, 20, "Ban"));
+//		controlList.add(new GuiButton(1, width / 2 - 85, height / 4 + 102, 80, 20, "Set Rank"));
+//		controlList.add(new GuiButton(2, width / 2 + 4, height / 4 + 102, 80, 20, "Set Rank"));
+		controlList.add(new GuiButton(3, width / 2 + 4, height / 4 + 80, 80, 20, "Set Rank"));
+//		controlList.add(new GuiButton(5, width / 2 - 85, height / 4 + 124, 80, 20, "Baby Mod"));
+//		controlList.add(new GuiButton(6, width / 2 + 4, height / 4 + 124, 80, 20, "Mayor"));
+//		controlList.add(new GuiButton(7, width / 2 + 24, height / 4 +58, 60, 20, "SuperStalk"));
 	}
 	
 	@Override
@@ -178,25 +179,25 @@ public class GuiPlayerMenu extends GuiScreen
 		drawDefaultBackground();
 		drawBackgroundContainer(f, i, j);
 		
-		fontRenderer.drawString("Set rank:", width / 2 - 84, height / 4 + 70, 0x404040);
+		fontRenderer.drawString("Actions:", width / 2 - 84, height / 4 + 70, 0xffffff);
 		
 		fontRenderer.drawStringWithShadow("Player Information", width / 2 - 84, height / 4 - 20, 0x00FFFF);
 		
-		fontRenderer.drawString("Username:", width / 2 - 84, height / 4, 0x404040);
-		fontRenderer.drawString("Rank:", width / 2 - 84, height / 4 + 10, 0x404040);
-		fontRenderer.drawString("Joined:", width / 2 - 84, height / 4 + 20, 0x404040);
-		fontRenderer.drawString("Last Ban:", width / 2 - 84, height / 4 + 30, 0x404040);
-		fontRenderer.drawString("Ban Level:", width / 2 - 84, height / 4 + 40, 0x404040);
+		fontRenderer.drawString("Username:", width / 2 - 84, height / 4, 0xffffff);
+		fontRenderer.drawString("Rank:", width / 2 - 84, height / 4 + 10, 0xffffff);
+		fontRenderer.drawString("Joined:", width / 2 - 84, height / 4 + 20, 0xffffff);
+		fontRenderer.drawString("Last Ban:", width / 2 - 84, height / 4 + 30, 0xffffff);
+		fontRenderer.drawString("Ban Level:", width / 2 - 84, height / 4 + 40, 0xffffff);
 		
 //		if(mod_FranticMod.playerIsOnline(player))
 //			fontRenderer.drawString(player, width / 2 -30, height / 4, 0x3ADF00);
 //		else
-			fontRenderer.drawString(player, width / 2 -30, height / 4, 0x404040);
+			fontRenderer.drawString(player, width / 2 -30, height / 4, 0xffffff);
 		
-		fontRenderer.drawString(rank, width / 2 -30, height / 4 + 10, 0x404040);
-		fontRenderer.drawString(joinDate, width / 2 -30, height / 4 + 20, 0x404040);
-		fontRenderer.drawString(lastBan, width / 2 -30, height / 4 + 30, 0x404040);
-		fontRenderer.drawString(banLevel, width / 2 -30, height / 4 + 40, 0x404040);
+		fontRenderer.drawString(rank, width / 2 -30, height / 4 + 10, 0xffffff);
+		fontRenderer.drawString(joinDate, width / 2 -30, height / 4 + 20, 0xffffff);
+		fontRenderer.drawString(lastBan, width / 2 -30, height / 4 + 30, 0xffffff);
+		fontRenderer.drawString(banLevel, width / 2 -30, height / 4 + 40, 0xffffff);
 		
 		super.drawScreen(i, j, f);
 		
@@ -212,7 +213,7 @@ public class GuiPlayerMenu extends GuiScreen
 //		 int l = (width - 176) / 2;
 //		 int i1 = (height - 166) / 2;
 //		 drawRect(width / 4 - 0, height / 4 - 22, width / 4 + 100, height / 4  + 100, 0x404040);
-		 drawBorderedRect(width / 4 + 18, height / 4 - 25, width / 4 + 195, height / 4 + 150, 2, 0xffC2C2C2, 0xaa666666);
+//		 drawBorderedRect(width / 4 + 18, height / 4 - 25, width / 4 + 195, height / 4 + 150, 2, 0xffC2C2C2, 0xaa666666);
 //		 drawTexturedModalRect(l, i1, 0, 0, 176, 166);
 //		 GL11.glEnable(32826 /*GL_RESCALE_NORMAL_EXT*/);
 //		 GL11.glEnable(2903 /*GL_COLOR_MATERIAL*/);

@@ -32,15 +32,15 @@ public class FMPlayer
 	
 	public FMPlayer(Map map)
 	{
-		id = (int) map.get("id");
+		id = (Integer) map.get("id");
 		username = (String) map.get("username");
 		group = (String) map.get("group");
-		registered = new Date( ((long)((int) map.get("datereg"))) * 1000 );
+		registered = new Date( (new Long((Integer) map.get("datereg"))) * 1000 );
 		confirmed = false;/*(boolean) map.get("confirmed");*/
 		country = (String) map.get("country");
 		forumBanned = false /*(boolean) map.get("forum_banned")*/;
 		timezone = (String) map.get("timezone");
-		lastSeen = new Date( ((int) map.get("last_time_seen")) * 1000) ;
-		health = (int) map.get("health");
+		lastSeen = new Date(2);/*new Date( ((int) map.get("last_time_seen")) * 1000);*/
+		health = (Integer) map.get("health");
 	}
 }

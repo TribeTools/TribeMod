@@ -94,25 +94,22 @@ public class GuiLogin extends GuiScreen {
         	((GuiButton)controlList.get(2)).enabled = false;
         	
         	FranticMod.fm = new FranticMeAPI(userField.getText(), passwordField.getText());
-        	FranticMod.fm.login(new ICallback<Boolean>()
+        	FranticMod.fm.login(new ICallback<Boolean>() { public void onFinish(Boolean result)
 			{
-				public void onFinish(Boolean result)
+				if (result)
 				{
-					if (result)
-					{
-						mc.displayGuiScreen(null);
-						FranticMod.loggedIn = true;
-					} else
-					{
-						flash = "Couldn't login. Is your information correct?";
-						flashColor = 0xF05050;
-						FranticMod.fm = null;
-						((GuiButton)controlList.get(0)).enabled = passwordField.getText().length() > 0 && userField.getText().length() > 0;
-						((GuiButton)controlList.get(1)).enabled = true;
-						((GuiButton)controlList.get(2)).enabled = true;
-					}
+					mc.displayGuiScreen(null);
+					FranticMod.loggedIn = true;
+				} else
+				{
+					flash = "Couldn't login. Is your information correct?";
+					flashColor = 0xF05050;
+					FranticMod.fm = null;
+					((GuiButton)controlList.get(0)).enabled = passwordField.getText().length() > 0 && userField.getText().length() > 0;
+					((GuiButton)controlList.get(1)).enabled = true;
+					((GuiButton)controlList.get(2)).enabled = true;
 				}
-			});
+			}});
         }
         
         if (par1GuiButton.id == 2)

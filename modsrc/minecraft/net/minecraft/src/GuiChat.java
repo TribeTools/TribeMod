@@ -209,7 +209,7 @@ public class GuiChat extends GuiScreen
             	
             	String s = chatclickdata.getWord();
             	if (s.endsWith(":") && FranticMod.userList.contains(s.substring(0, s.length() - 1))) {
-            		mc.displayGuiScreen(new GuiPlayerMenu(s.substring(0, s.length() - 1)));
+            		//mc.displayGuiScreen(new GuiPlayerMenu(s.substring(0, s.length() - 1)));
             	}
             }
         }

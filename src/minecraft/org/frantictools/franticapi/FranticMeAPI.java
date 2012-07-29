@@ -113,7 +113,7 @@ public class FranticMeAPI
 					Map map = (Map) yaml.load(result.substring(3));
 
 					List<Map> users = (List<Map>) map.get("users");
-					FMPlayer[] resultArray = new FMPlayer[(int) map.get("results")];
+					FMPlayer[] resultArray = new FMPlayer[(Integer) map.get("results")];
 					
 					int i = 0;
 					for (Map x : users)
