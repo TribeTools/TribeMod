@@ -95,9 +95,9 @@ public class FranticMod {
 					ModLoader.openGUI(mc.thePlayer, new GuiLogin());
 			}
 		
-			if (event == this.keyTestChat) {
-				mc.thePlayer.addChatMessage("[g] RPGMASTER200: bleh http://google.com bleh");
-			}
+//			if (event == this.keyTestChat) {
+//				mc.thePlayer.addChatMessage("[g] RPGMASTER200: bleh http://google.com bleh");
+//			}
 		}
 	}
 	
