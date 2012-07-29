@@ -13,8 +13,11 @@ import net.minecraft.src.GuiScreen;
 import net.minecraft.src.GuiTextField;
 import net.minecraft.src.ModLoader;
 
+import org.frantictools.franticapi.FranticMeAPI;
+import org.frantictools.franticapi.ICallback;
 import org.frantictools.franticmod.FranticMod;
 import org.frantictools.franticmod.gui.controls.GuiPasswordField;
+import org.frantictools.franticmod.gui.controls.GuiToggleButton;
 import org.frantictools.franticmod.util.ApiLib;
 
 import org.lwjgl.input.Keyboard;
@@ -24,6 +27,9 @@ public class GuiLogin extends GuiScreen {
     private GuiTextField userField;
 
     String title = "Login";
+	String flash = "";
+	int flashColor = 0xFFFFFF;
+	
     /**
      * Called from the main game loop to update the screen.
      */
@@ -40,8 +46,10 @@ public class GuiLogin extends GuiScreen {
     {
         Keyboard.enableRepeatEvents(true);
         controlList.clear();
+        
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + 12, "Login"));
-        controlList.add(new GuiButton(1, width / 2 - 100, height / 4 + 120 + 12, "Cancel"));
+        controlList.add(new GuiButton(1, width / 2 - 100, (height / 4 + 48) + 72 + 12, 98, 20, "Cancel"));
+        controlList.add(new GuiToggleButton(2, width / 2 + 2, (height / 4 + 48) + 72 + 12, 98, 20, "Rember", false));
         
         userField = new GuiTextField(fontRenderer, width / 2 - 100, 76, 200, 20);
         userField.setFocused(true);
@@ -76,16 +84,41 @@ public class GuiLogin extends GuiScreen {
         {
         	mc.displayGuiScreen(null);
         }
-        else if (par1GuiButton.id == 0)
+        
+        if (par1GuiButton.id == 0)
         {
-             if (ApiLib.login(userField.getText(), passwordField.getText())) {
-            	 FranticMod.loggedIn = true;
-            	 mc.displayGuiScreen(null);
-             } else {
-            	 title = "Bad Username/Password";
-             }
+        	flash = "Logging in, please wait.";
+        	flashColor = 0xF0F050;
+        	((GuiButton)controlList.get(0)).enabled = false;
+        	((GuiButton)controlList.get(1)).enabled = false;
+        	((GuiButton)controlList.get(2)).enabled = false;
+        	
+        	FranticMod.fm = new FranticMeAPI(userField.getText(), passwordField.getText());
+        	FranticMod.fm.login(new ICallback<Boolean>()
+			{
+				public void onFinish(Boolean result)
+				{
+					if (result)
+					{
+						mc.displayGuiScreen(null);
+						FranticMod.loggedIn = true;
+					} else
+					{
+						flash = "Couldn't login. Is your information correct?";
+						flashColor = 0xF05050;
+						FranticMod.fm = null;
+						((GuiButton)controlList.get(0)).enabled = passwordField.getText().length() > 0 && userField.getText().length() > 0;
+						((GuiButton)controlList.get(1)).enabled = true;
+						((GuiButton)controlList.get(2)).enabled = true;
+					}
+				}
+			});
         }
+        
+        if (par1GuiButton.id == 2)
+        	((GuiToggleButton) par1GuiButton).toggleState = !((GuiToggleButton) par1GuiButton).toggleState;
     }
+    
 
     /**
      * Fired when a key is typed. This is the equivalent of KeyListener.keyTyped(KeyEvent e).
@@ -144,11 +177,15 @@ public class GuiLogin extends GuiScreen {
     public void drawScreen(int par1, int par2, float par3)
     {
         drawDefaultBackground();
+        
         drawCenteredString(fontRenderer, title, width / 2, (height / 4 - 60) + 20, 0xffffff);
+        drawCenteredString(fontRenderer, flash, width / 2, (height / 4 - 60) + 50, flashColor);
+        
         drawString(fontRenderer, "Username:", width / 2 - 100, 63, 0xa0a0a0);
         drawString(fontRenderer, "Password:", width / 2 - 100, 104, 0xa0a0a0);
         userField.drawTextBox();
         passwordField.drawTextBox();
+        
         super.drawScreen(par1, par2, par3);
     }
 }

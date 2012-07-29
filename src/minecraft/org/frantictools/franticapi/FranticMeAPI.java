@@ -135,6 +135,13 @@ public class FranticMeAPI
 	}
 	
 	
+	
+	
+	/**********************************************************************************************************************************/
+	
+	
+	
+	
 	/* ** These functions are to move the ugliness away from the api functionality ** */
 	private static String getResult(HttpResponse response) throws IllegalStateException, IOException
 	{

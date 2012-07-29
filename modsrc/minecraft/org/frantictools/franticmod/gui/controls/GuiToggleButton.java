@@ -55,7 +55,9 @@ public class GuiToggleButton extends GuiButton
             j = 0xffffa0;
         }
         
-        String x = (toggleState ? "§a" : "§c") + displayString;
-        drawCenteredString(fontrenderer, x, xPosition + width / 2, yPosition + (height - 8) / 2, j);
+        j = toggleState? 0x50F050 : 0xF05050;
+        
+        drawCenteredString(fontrenderer, displayString, xPosition + width / 2, yPosition + (height - 8) / 2, j);
     }
+    
 }
