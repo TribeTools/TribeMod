@@ -26,7 +26,7 @@ public class GuiFModMenu extends GuiScreen
         controlList.add(new GuiButton(4, width / 2 - 100, height / 4 + 24 + byte0, "Lookup Player"));
         controlList.add(new GuiButton(0, width / 2 - 100, height / 4 + 96 + byte0, "Settings"));
         controlList.add(new GuiButton(5, width / 2 - 100, height / 4 + 48 + byte0, 98, 20, "Ban Guest"));
-        controlList.add(new GuiButton(6, width / 2 + 2, height / 4 + 48 + byte0, 98, 20, "Ban Player"));
+        controlList.add(new GuiButton(6, width / 2 + 2, height / 4 + 48 + byte0, 98, 20, "Approve Member"));
         
         controlList.add(new GuiButtonLanguage(7, width / 2 - 124, height / 4 + 120 + byte0));
     }
@@ -61,8 +61,7 @@ public class GuiFModMenu extends GuiScreen
                 break;
 
             case 6:
-                mc.displayGuiScreen(null);
-                mc.setIngameFocus();
+                mc.displayGuiScreen(new GuiApproveMember(this));
                 break;
         }
     }

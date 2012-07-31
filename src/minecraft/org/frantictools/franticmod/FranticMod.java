@@ -20,10 +20,12 @@ import org.apache.http.protocol.HTTP;
 import org.frantictools.franticapi.FranticMeAPI;
 import org.frantictools.franticmod.gui.GuiFModMenu;
 import org.frantictools.franticmod.gui.GuiLogin;
+import org.frantictools.franticmod.gui.GuiMessage;
 import org.lwjgl.input.Keyboard;
 import org.yaml.snakeyaml.Yaml;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.src.Block;
 import net.minecraft.src.GuiControls;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.Item;
@@ -42,7 +44,7 @@ public class FranticMod {
 	public Minecraft mc = ModLoader.getMinecraftInstance();
 	private mod_FranticMod fMod;
 	
-	
+	public static GuiMessage message = new GuiMessage();
 	public static FranticMeAPI fm;
 	
 	private long ticks;
@@ -79,6 +81,8 @@ public class FranticMod {
 		{
 			//checkVanished();
 		}
+		
+		message.updateMessageWindow();
 	}
 	
 	public void processGuiTick(float f, Minecraft minecraft, GuiScreen guiscreen) {
@@ -96,7 +100,7 @@ public class FranticMod {
 			}
 		
 //			if (event == this.keyTestChat) {
-//				mc.thePlayer.addChatMessage("[g] RPGMASTER200: bleh http://google.com bleh");
+//				message.queueMessage("Loren ipsum dolor sit amlet", new ItemStack(Block.gravel));
 //			}
 		}
 	}
