@@ -64,7 +64,7 @@ public class GuiSearchResults extends GuiScreen
         }
         if(guibutton.id == 1)
         {
-        	mc.displayGuiScreen(new GuiPlayerMenu(playerList.playerMap.get(playerList.results.keySet().toArray(new String[] {})[selected]))); // TODO Change this ugly fuckup
+        	mc.displayGuiScreen(new GuiPlayerMenu(playerList.playerMap.get(playerList.results.keySet().toArray(new String[] {})[selected]))); // TODO Fix this ugly fuckup
         }
     }
 
@@ -72,7 +72,7 @@ public class GuiSearchResults extends GuiScreen
 	public void drawScreen(int i, int j, float f)
     {
         playerList.drawScreen(i, j, f);
-        drawCenteredString(fontRenderer, "Search Results (" + playerList.getSize() + ")", width / 2, 20, 0xffffff);
+        drawCenteredString(fontRenderer, searchDone ? "Search Results (" + playerList.getSize() + ")" : "Searching", width / 2, 20, 0xffffff);
         super.drawScreen(i, j, f);
     }
     
@@ -85,6 +85,7 @@ public class GuiSearchResults extends GuiScreen
     protected GuiScreen parentGui;
     protected String title;
     private GuiSlotPlayer playerList;
+    public boolean searchDone;
 
 }
 
@@ -96,10 +97,10 @@ class GuiSlotPlayer extends GuiSlot
     static Minecraft mc = ModLoader.getMinecraftInstance();
     public boolean hasSelection;
 
-    public GuiSlotPlayer(GuiSearchResults guiplayerlist, String searchQuery)
+    public GuiSlotPlayer(GuiSearchResults guisearchresults, String searchQuery)
     {
-    	super(mc, guiplayerlist.width, guiplayerlist.height, 32, guiplayerlist.height - 64, 10);
-        parent = guiplayerlist;
+    	super(mc, guisearchresults.width, guisearchresults.height, 32, guisearchresults.height - 64, 10);
+        parent = guisearchresults;
         func_27258_a(false);
         showResults(searchQuery);
     }
@@ -114,6 +115,7 @@ class GuiSlotPlayer extends GuiSlot
     		{
     			results.put(x.username, x.group);
     			playerMap.put(x.username, x);
+    			parent.searchDone = true;
     		}
 		}});
     }

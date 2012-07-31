@@ -26,7 +26,8 @@ public class GuiPlayerMenu extends GuiScreen
 	private float xSize_lo;
 	private float ySize_lo;
 
-	private String player;
+	private FMPlayer player;
+	private String playerName;
 	private String rank;
 	private String joinDate;
 	private String lastBan;
@@ -35,8 +36,8 @@ public class GuiPlayerMenu extends GuiScreen
 	@SuppressWarnings("unchecked")
 	public GuiPlayerMenu(FMPlayer player)
 	{
-		
-		this.player 	= 	player.username;
+		this.player 	= 	player;
+		this.playerName = 	player.username;
 		this.rank 		= 	player.group;
 		this.joinDate 	= 	new SimpleDateFormat("dd MMMMM yy").format(player.registered);
 		
@@ -130,15 +131,10 @@ public class GuiPlayerMenu extends GuiScreen
 //				e.printStackTrace();
 //			}
 //		}
-//		if(guibutton.id == 3)
-//		{
-//			try {
-//				UrlLib.promote(playerId,"3");
-//			} catch (Exception e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
+		if(guibutton.id == 3)
+		{
+			mc.displayGuiScreen(new GuiSetRank(player, this));
+		}
 //		if(guibutton.id == 5)
 //		{
 //			try {
@@ -192,7 +188,7 @@ public class GuiPlayerMenu extends GuiScreen
 //		if(mod_FranticMod.playerIsOnline(player))
 //			fontRenderer.drawString(player, width / 2 -30, height / 4, 0x3ADF00);
 //		else
-			fontRenderer.drawString(player, width / 2 -30, height / 4, 0xffffff);
+			fontRenderer.drawString(playerName, width / 2 -30, height / 4, 0xffffff);
 		
 		fontRenderer.drawString(rank, width / 2 -30, height / 4 + 10, 0xffffff);
 		fontRenderer.drawString(joinDate, width / 2 -30, height / 4 + 20, 0xffffff);
