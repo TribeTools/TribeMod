@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 
@@ -22,11 +23,13 @@ import org.frantictools.franticmod.gui.GuiFModMenu;
 import org.frantictools.franticmod.gui.GuiLogin;
 import org.frantictools.franticmod.gui.GuiMessage;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 import org.yaml.snakeyaml.Yaml;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
 import net.minecraft.src.GuiControls;
+import net.minecraft.src.GuiPlayerInfo;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.Item;
 import net.minecraft.src.ItemStack;
@@ -53,7 +56,7 @@ public class FranticMod {
 	public static boolean loggedIn;
 	
 	private KeyBinding keyBindOpenMenu = new KeyBinding("key.fmodmenu", Keyboard.KEY_BACK);
-//	private KeyBinding keyTestChat     = new KeyBinding("key.chattest", Keyboard.KEY_I);
+	private KeyBinding keyTestChat     = new KeyBinding("key.chattest", Keyboard.KEY_HOME);
 
 	public static ArrayList<String> userList = new ArrayList<String>();
 	public FranticMod(mod_FranticMod mod) {
@@ -62,7 +65,7 @@ public class FranticMod {
 
 	public void Initialize() {
 		ModLoader.registerKey(fMod, keyBindOpenMenu, false);
-//		ModLoader.registerKey(fMod, keyTestChat, false);
+		ModLoader.registerKey(fMod, keyTestChat, false);
 		getUsers();
 
 		ModLoader.addLocalization("key.fmodmenu", "Open FMod Menu");
@@ -99,9 +102,9 @@ public class FranticMod {
 					ModLoader.openGUI(mc.thePlayer, new GuiLogin());
 			}
 		
-//			if (event == this.keyTestChat) {
-//				message.queueMessage("Loren ipsum dolor sit amlet", new ItemStack(Block.gravel));
-//			}
+			if (event == this.keyTestChat) {
+				message.queueMessage("Lorem ipsum dlor sit amet", new ItemStack(Block.gravel));
+			}
 		}
 	}
 	

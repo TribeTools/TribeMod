@@ -6,10 +6,13 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.src.Block;
+import net.minecraft.src.EntityClientPlayerMP;
 import net.minecraft.src.GuiButton;
+import net.minecraft.src.GuiPlayerInfo;
 import net.minecraft.src.GuiScreen;
 import net.minecraft.src.GuiSlot;
 import net.minecraft.src.ModLoader;
+import net.minecraft.src.NetClientHandler;
 import net.minecraft.src.Tessellator;
 
 public class GuiApproveMember extends GuiScreen
@@ -53,7 +56,14 @@ public class GuiApproveMember extends GuiScreen
         }
         if(guibutton.id == 1)
         {
-        	// Approve
+        	if (playerIsOnline(playerList.results.keySet().toArray(new String[] {})[selected].toString()))
+        	{
+        		// Approve
+        	} else
+        	{
+        		// Confirm
+        	}
+        	
         }
         if(guibutton.id == 2)
         {
@@ -77,8 +87,22 @@ public class GuiApproveMember extends GuiScreen
     
     protected GuiScreen parent;
     protected String title;
-    private GuiSlotApprove slotGeneral;
-    private GuiSlot playerList;
+    private GuiSlotApprove playerList;
+    
+    
+	public static boolean playerIsOnline(String playerName) {
+		NetClientHandler netclienthandler = ((EntityClientPlayerMP)ModLoader.getMinecraftInstance().thePlayer).sendQueue;
+        java.util.List<?> list = netclienthandler.playerInfoList;
+        int sz = list.size();
+        int i = 0;
+        while(i < sz) {
+        	if(((GuiPlayerInfo) list.get(i)).name.equalsIgnoreCase(playerName)) {
+        		return true;
+        	}
+        	i++;
+        }
+        return false;
+	}
 }
 
 class GuiSlotApprove extends GuiSlot
@@ -133,7 +157,7 @@ class GuiSlotApprove extends GuiSlot
         parent.drawDefaultBackground();
     }
     
-    public static ConcurrentHashMap<String, String> results;
+    public ConcurrentHashMap<String, String> results;
 
     @Override
 	protected void drawSlot(int i, int j, int k, int l, Tessellator tessellator)

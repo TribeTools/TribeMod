@@ -44,7 +44,14 @@ public class GuiFModMenu extends GuiScreen
                 break;
 
             case 0:
-                mc.displayGuiScreen(new GuiSearchResults(this, "bleh"));
+                mc.displayGuiScreen(new GuiManuelPage(this, "test", new String[]
+                {
+                		"Lorem ipsum dolor sit amet",
+                		"amet sit dolor ipsum Lorem",
+                		"stuff stuff stuff",
+                		" !\"#$%&'()*+,-./0123456789:;<=>?@ABCDEFGHIJKLMNOPQRSTUVWXYZ[\\]^_'abcdefghijklmnopqrstuvwxyz{|}~⌂ÇüéâäàåçêëèïîìÄÅÉæÆôöòûùÿÖÜø£Ø×ƒáíóúñÑªº¿®¬½¼¡«»",
+                		"\247l\247m\247n\247otest\247r"
+                }));
                 break;
 
             case 1:

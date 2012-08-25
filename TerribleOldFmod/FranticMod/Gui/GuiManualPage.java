@@ -61,7 +61,7 @@ public class GuiManualPage extends GuiScreen {
 
 			if (line.startsWith("[C]")) {
 				line = line.substring(3);
-				fontRenderer.drawString(line, (width / 2) - (fontRenderer.getStringWidth(line) / 2), c * 10 + 10, 0xffffff);
+				fontRenderer.drawString(line, (width / 2) - (fontRenderer.getStringWidth(fontRenderer.stripColorCodes(line)) / 2), c * 10 + 10, 0xffffff);
 			} else {
 				fontRenderer.drawString(line, 15, c * 10 + 10, 0xffffff);
 			}
