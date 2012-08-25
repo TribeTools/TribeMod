@@ -1,4 +1,4 @@
-FranticMod
+TribeMod
 ==========
 
 Moderator Mod for Frantic Me!
